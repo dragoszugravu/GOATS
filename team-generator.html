@@ -15,6 +15,8 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .generator-controls {
@@ -79,6 +81,8 @@
             margin-bottom: 3rem;
             max-height: calc(100vh - 200px);
             overflow-y: auto;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .player-card {
@@ -232,11 +236,31 @@
         }
 
         @media (max-width: 768px) {
+            .generator-container {
+                padding: 1rem;
+                min-height: auto;
+                width: 100vw;
+                overflow-x: hidden;
+            }
+
             .player-selection {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 0.5rem;
                 padding: 0.5rem;
                 max-height: calc(100vh - 150px);
+                width: 100%;
+                margin: 0;
+            }
+
+            body {
+                overflow-x: hidden;
+                width: 100%;
+                position: relative;
+            }
+
+            main {
+                width: 100%;
+                overflow-x: hidden;
             }
 
             .player-card {
@@ -258,11 +282,6 @@
 
             .player-position {
                 font-size: 0.6rem;
-            }
-
-            .generator-container {
-                padding: 1rem;
-                min-height: auto;
             }
 
             .generate-btn-container {
