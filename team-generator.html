@@ -247,12 +247,13 @@
             .generator-container {
                 padding: 1rem;
                 min-height: auto;
-                width: 100vw;
+                width: 100%;
                 overflow-x: hidden;
                 padding-bottom: 80px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                margin: 0 auto;
             }
 
             .player-selection {
@@ -264,7 +265,7 @@
                 margin-bottom: 80px;
                 justify-items: center;
                 width: 100%;
-                max-width: 400px;
+                max-width: 360px;
                 overflow-y: auto;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
@@ -276,7 +277,7 @@
 
             .player-card {
                 width: 100%;
-                max-width: 120px;
+                max-width: 110px;
                 height: 120px;
                 aspect-ratio: 3/4;
                 margin: 0 auto;
@@ -306,6 +307,8 @@
                 padding: 0.6rem;
                 background: rgba(0, 0, 0, 0.95);
                 z-index: 100;
+                display: flex;
+                justify-content: center;
             }
 
             .generate-btn {
@@ -313,6 +316,13 @@
                 font-size: 0.9rem;
                 border-radius: 6px;
                 box-shadow: 0 2px 6px rgba(255, 75, 43, 0.2);
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+                text-align: center;
+                width: 100%;
             }
         }
     </style>
