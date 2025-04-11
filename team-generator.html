@@ -77,6 +77,8 @@
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 1.5rem;
             margin-bottom: 3rem;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
         }
 
         .player-card {
@@ -227,6 +229,51 @@
 
         .team-section li:last-child {
             border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .player-selection {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+                padding: 0.5rem;
+                max-height: calc(100vh - 150px);
+            }
+
+            .player-card {
+                height: 120px;
+                aspect-ratio: 3/4;
+            }
+
+            .player-image {
+                height: 90px;
+            }
+
+            .player-info {
+                padding: 0.3rem;
+            }
+
+            .player-name {
+                font-size: 0.7rem;
+            }
+
+            .player-position {
+                font-size: 0.6rem;
+            }
+
+            .generator-container {
+                padding: 1rem;
+                min-height: auto;
+            }
+
+            .generate-btn-container {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 1rem;
+                background: rgba(0, 0, 0, 0.9);
+                z-index: 100;
+            }
         }
     </style>
 </head>
