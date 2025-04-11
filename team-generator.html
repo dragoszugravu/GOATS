@@ -193,16 +193,13 @@
         }
 
         .generated-team {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 2.5rem 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem 1rem;
+            border-radius: 15px;
             margin-top: 2rem;
-            box-shadow: 0 10px 30px rgba(255, 75, 43, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 75, 43, 0.1);
-            width: 90%;
-            max-width: 1200px;
+            color: white;
+            position: relative;
+            max-width: 400px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -214,36 +211,16 @@
             text-align: center;
         }
 
-        .generated-team .logo {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-        }
-
-        .team-section {
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
         .team-section h3 {
             color: var(--accent-color);
             margin-bottom: 1rem;
             font-size: 1.5rem;
         }
 
-        .team-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
         .team-section li {
             padding: 0.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
-        }
-
-        .team-section li:last-child {
-            border-bottom: none;
         }
 
         @media (max-width: 768px) {
@@ -358,6 +335,68 @@
                 padding: 0.3rem 0;
             }
         }
+
+        /* Preview Modal Styles */
+        .preview-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .preview-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+        }
+
+        .preview-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        .preview-btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .preview-download {
+            background: linear-gradient(45deg, var(--accent-color), var(--highlight-color));
+            color: white;
+        }
+
+        .preview-cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -407,6 +446,18 @@
                 <div class="team-section">
                     <h3>Forwards</h3>
                     <ul id="forwardsList"></ul>
+                </div>
+            </div>
+
+            <!-- Preview Modal -->
+            <div class="preview-modal" id="previewModal">
+                <div class="preview-content">
+                    <button class="preview-close" onclick="closePreview()">&times;</button>
+                    <div id="previewTeam"></div>
+                    <div class="preview-actions">
+                        <button class="preview-btn preview-download" onclick="downloadTeam()">Download</button>
+                        <button class="preview-btn preview-cancel" onclick="closePreview()">Cancel</button>
+                    </div>
                 </div>
             </div>
 
@@ -526,42 +577,8 @@
             const generatedTeam = document.getElementById('generatedTeam');
             generatedTeam.style.display = 'block';
 
-            // Create and download the image
-            try {
-                // Wait for the team to be displayed
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                
-                const canvas = await html2canvas(generatedTeam, {
-                    backgroundColor: null,
-                    scale: 2,
-                    logging: true,
-                    useCORS: true,
-                    allowTaint: true,
-                    onclone: (clonedDoc) => {
-                        const clonedTeam = clonedDoc.getElementById('generatedTeam');
-                        clonedTeam.style.display = 'block';
-                    }
-                });
-                
-                // Create a temporary link and trigger download
-                const link = document.createElement('a');
-                const dataURL = canvas.toDataURL('image/png');
-                link.href = dataURL;
-                link.download = 'LOT.png';
-                
-                // Create a temporary click event
-                const clickEvent = new MouseEvent('click', {
-                    view: window,
-                    bubbles: true,
-                    cancelable: true
-                });
-                
-                // Trigger the download
-                link.dispatchEvent(clickEvent);
-            } catch (error) {
-                console.error('Error generating image:', error);
-                alert('Error generating team image. Please try again.');
-            }
+            // Show preview modal
+            showPreview();
         }
 
         function selectRandomPlayers(players, count) {
@@ -576,6 +593,57 @@
                 li.textContent = player.name;
                 list.appendChild(li);
             });
+        }
+
+        function showPreview() {
+            const previewModal = document.getElementById('previewModal');
+            const previewTeam = document.getElementById('previewTeam');
+            const generatedTeam = document.getElementById('generatedTeam');
+            
+            // Clone the generated team for preview
+            previewTeam.innerHTML = '';
+            previewTeam.appendChild(generatedTeam.cloneNode(true));
+            
+            // Show the modal
+            previewModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePreview() {
+            const previewModal = document.getElementById('previewModal');
+            previewModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        async function downloadTeam() {
+            const generatedTeam = document.getElementById('generatedTeam');
+            
+            try {
+                const canvas = await html2canvas(generatedTeam, {
+                    backgroundColor: null,
+                    scale: 2,
+                    logging: true,
+                    useCORS: true,
+                    allowTaint: true
+                });
+                
+                const link = document.createElement('a');
+                const dataURL = canvas.toDataURL('image/png');
+                link.href = dataURL;
+                link.download = 'LOT.png';
+                
+                const clickEvent = new MouseEvent('click', {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true
+                });
+                
+                link.dispatchEvent(clickEvent);
+                closePreview();
+            } catch (error) {
+                console.error('Error generating image:', error);
+                alert('Error generating team image. Please try again.');
+            }
         }
 
         // Initialize the page
