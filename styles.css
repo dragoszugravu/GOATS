@@ -603,12 +603,13 @@ main {
         gap: 0.8rem;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        margin: 0 1rem;
     }
 
     .players-grid::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, Opera */
+        display: none;
     }
 
     .player-card {
@@ -616,6 +617,7 @@ main {
         width: 140px;
         height: 180px;
         scroll-snap-align: start;
+        margin: 0;
     }
 
     .player-image {
@@ -632,6 +634,11 @@ main {
 
     .player-position {
         font-size: 0.7rem;
+    }
+
+    /* Remove the old grid styles */
+    .players-grid {
+        grid-template-columns: none;
     }
 }
 
@@ -790,11 +797,6 @@ main {
     .player-logo {
         width: 40px;
         height: 40px;
-    }
-    
-    .players-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 1rem;
     }
     
     /* Team Generator Mobile Styles */
