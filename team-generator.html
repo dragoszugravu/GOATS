@@ -511,24 +511,34 @@
             ];
 
             allPlayers.forEach(player => {
-                const card = document.createElement('div');
-                card.className = 'player-card';
-                card.dataset.name = player.name;
-                card.dataset.position = player.position;
-                card.innerHTML = `
-                    <img src="images/${player.name.replace(/\s+/g, '')}.jpg" alt="${player.name}" class="player-image" onerror="this.src='images/default.jpg'">
-                    <div class="player-info">
-                        <div class="player-name">${player.name}</div>
-                        <div class="player-position" data-position="${player.position}">${player.position}</div>
-                    </div>
-                `;
-                
+                const card = createPlayerCard(player);
                 card.addEventListener('click', () => {
                     card.classList.toggle('selected');
                 });
                 
                 container.appendChild(card);
             });
+        }
+
+        function createPlayerCard(player) {
+            const card = document.createElement('div');
+            card.className = 'player-card';
+            card.dataset.position = player.position;
+            
+            // Split name into parts and format
+            const nameParts = player.name.split(' ');
+            const lastName = nameParts[0].toUpperCase();
+            const firstName = nameParts.slice(1).join(' ').replace(/\b\w/g, l => l.toUpperCase());
+            
+            card.innerHTML = `
+                <img src="images/${player.name.replace(/\s+/g, '')}.jpg" alt="${player.name}" class="player-image" onerror="this.src='images/default.jpg'">
+                <div class="player-info">
+                    <div class="player-name">${lastName}<br>${firstName}</div>
+                    <div class="player-position" data-position="${player.position}">${player.position}</div>
+                </div>
+            `;
+            
+            return card;
         }
 
         // Generate team based on selected players
