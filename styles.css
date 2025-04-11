@@ -479,25 +479,123 @@ main {
     }
     
     .section-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        margin-bottom: 2rem;
     }
     
     .player-card {
-        height: 300px;
+        height: 280px;
+        aspect-ratio: 3/4;
     }
     
     .player-image {
-        height: 200px;
+        height: 220px;
     }
     
     .player-logo {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
     }
     
     .players-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: 1rem;
+        padding: 0.5rem;
+    }
+
+    /* Team Generator Mobile Styles */
+    .generator-container {
+        padding: 1rem;
+    }
+
+    .generator-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .player-count {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .player-count input {
+        width: 80px;
+        font-size: 1.1rem;
+    }
+
+    .player-selection {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 0.8rem;
+    }
+
+    .player-card {
+        height: 200px;
+    }
+
+    .player-image {
+        height: 160px;
+    }
+
+    .player-info {
+        padding: 0.6rem;
+    }
+
+    .player-name {
+        font-size: 0.9rem;
+    }
+
+    .player-position {
+        font-size: 0.8rem;
+    }
+
+    .generate-btn-container {
+        padding: 1.5rem 0;
+    }
+
+    .generate-btn {
+        padding: 0.8rem 2rem;
+        font-size: 1.1rem;
+    }
+
+    .generated-team {
+        width: 100%;
+        max-width: none;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    /* Header Mobile Styles */
+    header {
+        padding: 1rem;
+    }
+
+    .logo-container {
+        gap: 0.5rem;
+    }
+
+    .logo-image {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logo-text {
+        font-size: 1.5rem;
+    }
+
+    /* Motion Graphics Mobile Optimizations */
+    .motion-circle {
+        opacity: 0.03;
+        filter: blur(30px);
+    }
+    
+    .line {
+        opacity: 0.3;
+    }
+    
+    .section-title::before {
+        animation: none;
     }
 }
 
