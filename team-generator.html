@@ -254,10 +254,6 @@
             <h1 class="section-title">Team Generator</h1>
             
             <div class="generator-controls">
-                <div class="player-count">
-                    <label for="playerCount">Number of Players:</label>
-                    <input type="number" id="playerCount" min="7" max="11" value="7">
-                </div>
             </div>
 
             <div class="player-selection" id="playerSelection">
@@ -361,8 +357,8 @@
                     position: card.dataset.position
                 }));
 
-            if (selectedPlayers.length < 7) {
-                alert('Please select at least 7 players');
+            if (selectedPlayers.length < 6) {
+                alert('Please select at least 6 players');
                 return;
             }
 
