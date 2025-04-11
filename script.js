@@ -72,6 +72,12 @@ const players = {
             image: "images/players/GEMALESCU_Romeo.jpg"
         },
         {
+            name: "Sebi Budan",
+            position: "Midfielder",
+            number: 14,
+            image: "images/players/BUDAN_Sebi.jpg"
+        },
+        {
             name: "Jawdat Rostom",
             position: "Midfielder",
             number: 14,
