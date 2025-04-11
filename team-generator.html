@@ -241,15 +241,16 @@
                 min-height: auto;
                 width: 100vw;
                 overflow-x: hidden;
+                padding-bottom: 80px;
             }
 
             .player-selection {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 0.5rem;
                 padding: 0.5rem;
-                max-height: calc(100vh - 150px);
-                width: 100%;
-                margin: 0;
+                max-height: none;
+                height: auto;
+                margin-bottom: 80px;
             }
 
             body {
@@ -289,9 +290,16 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
-                padding: 1rem;
-                background: rgba(0, 0, 0, 0.9);
+                padding: 0.8rem;
+                background: rgba(0, 0, 0, 0.95);
                 z-index: 100;
+            }
+
+            .generate-btn {
+                padding: 0.6rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(255, 75, 43, 0.2);
             }
         }
     </style>
