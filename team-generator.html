@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOATS FC - Team Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        .generator-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            color: white;
+        }
+
+        .generator-controls {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .player-count {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .player-count input {
+            width: 60px;
+            padding: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .generate-btn {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(45deg, var(--accent-color), var(--highlight-color));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .player-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .player-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 2px solid transparent;
+            height: 280px;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .player-card[data-position="Goalkeeper"] {
+            border-color: #FF0000;
+        }
+
+        .player-card[data-position="Defender"] {
+            border-color: #0000FF;
+        }
+
+        .player-card[data-position="Midfielder"] {
+            border-color: #FFA500;
+        }
+
+        .player-card[data-position="Forward"] {
+            border-color: #D2B48C;
+        }
+
+        .player-card.selected {
+            animation: rotateCard 0.5s ease;
+            border-color: #4CAF50 !important;
+            background: rgba(76, 175, 80, 0.2) !important;
+        }
+
+        @keyframes rotateCard {
+            0% {
+                transform: rotateY(0deg);
+            }
+            50% {
+                transform: rotateY(180deg);
+            }
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+
+        .player-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .player-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .player-info {
+            padding: 0.8rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .player-name {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: #ffffff;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .player-position {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .player-position[data-position="Goalkeeper"] {
+            color: #FF0000;
+        }
+
+        .player-position[data-position="Defender"] {
+            color: #0000FF;
+        }
+
+        .player-position[data-position="Midfielder"] {
+            color: #FFA500;
+        }
+
+        .player-position[data-position="Forward"] {
+            color: #D2B48C;
+        }
+
+        .generated-team {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem 1rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            color: white;
+            position: relative;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .generated-team h2 {
+            color: white;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .generated-team .logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .team-section {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .team-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .team-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .team-section li {
+            padding: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .team-section li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo-container">
+                <img src="images/GOATS.png" alt="GOATS FC Logo" class="logo-image">
+                <div class="logo-text">GOATS FC</div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Players</a>
+                <a href="team-generator.html" class="active">Team Generator</a>
+            </div>
+            <button class="hamburger-menu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="generator-container">
+            <h1 class="section-title">Team Generator</h1>
+            
+            <div class="generator-controls">
+                <button class="generate-btn" onclick="generateTeam()">Generate Team</button>
+            </div>
+
+            <div class="player-selection" id="playerSelection">
+                <!-- Player cards will be added here dynamically -->
+            </div>
+
+            <div class="generated-team" id="generatedTeam" style="display: none;">
+                <h2>LOT</h2>
+                <div class="team-section">
+                    <h3>Goalkeeper</h3>
+                    <ul id="goalkeeperList"></ul>
+                </div>
+                <div class="team-section">
+                    <h3>Defenders</h3>
+                    <ul id="defendersList"></ul>
+                </div>
+                <div class="team-section">
+                    <h3>Midfielders</h3>
+                    <ul id="midfieldersList"></ul>
+                </div>
+                <div class="team-section">
+                    <h3>Forwards</h3>
+                    <ul id="forwardsList"></ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const players = {
+            goalkeepers: [
+                { name: "CIULPAN Gabriel", position: "Goalkeeper" },
+                { name: "CRETU Stefan", position: "Goalkeeper" },
+                { name: "CALIN Theodor", position: "Goalkeeper" }
+            ],
+            defenders: [
+                { name: "ZUGRAVU Dragos", position: "Defender" },
+                { name: "PLAIASU Sebastian", position: "Defender" },
+                { name: "FITA Robert", position: "Defender" },
+                { name: "STANCIU Alex", position: "Defender" },
+                { name: "POPA Traian", position: "Defender" }
+            ],
+            midfielders: [
+                { name: "PETRACHE Adrian", position: "Midfielder" },
+                { name: "SPIREA Luca", position: "Midfielder" },
+                { name: "GEMALESCU Romeo", position: "Midfielder" },
+                { name: "ROSTOM Jawdat", position: "Midfielder" },
+                { name: "FOTEA Alexandru", position: "Midfielder" },
+                { name: "DINU Alexandru", position: "Midfielder" },
+                { name: "NICOLAE Catalin", position: "Midfielder" }
+            ],
+            forwards: [
+                { name: "MARCU Andrei", position: "Forward" },
+                { name: "BUSTEA Ionut", position: "Forward" }
+            ]
+        };
+
+        // Initialize player selection cards
+        function initializePlayerSelection() {
+            const container = document.getElementById('playerSelection');
+            container.innerHTML = '';
+
+            // Combine all players
+            const allPlayers = [
+                ...players.goalkeepers,
+                ...players.defenders,
+                ...players.midfielders,
+                ...players.forwards
+            ];
+
+            allPlayers.forEach(player => {
+                const card = document.createElement('div');
+                card.className = 'player-card';
+                card.dataset.name = player.name;
+                card.dataset.position = player.position;
+                card.innerHTML = `
+                    <img src="images/${player.name.replace(/\s+/g, '')}.jpg" alt="${player.name}" class="player-image" onerror="this.src='images/default.jpg'">
+                    <div class="player-info">
+                        <div class="player-name">${player.name}</div>
+                        <div class="player-position" data-position="${player.position}">${player.position}</div>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => {
+                    card.classList.toggle('selected');
+                });
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Generate team based on selected players
+        async function generateTeam() {
+            const selectedPlayers = Array.from(document.querySelectorAll('.player-card.selected'))
+                .map(card => ({
+                    name: card.dataset.name,
+                    position: card.dataset.position
+                }));
+
+            if (selectedPlayers.length < 7) {
+                alert('Please select at least 7 players');
+                return;
+            }
+
+            // Clear previous team
+            document.getElementById('goalkeeperList').innerHTML = '';
+            document.getElementById('defendersList').innerHTML = '';
+            document.getElementById('midfieldersList').innerHTML = '';
+            document.getElementById('forwardsList').innerHTML = '';
+
+            // Filter players by position
+            const goalkeepers = selectedPlayers.filter(p => p.position === 'Goalkeeper');
+            const defenders = selectedPlayers.filter(p => p.position === 'Defender');
+            const midfielders = selectedPlayers.filter(p => p.position === 'Midfielder');
+            const forwards = selectedPlayers.filter(p => p.position === 'Forward');
+
+            // Calculate how many players to select from each position
+            const totalSelected = selectedPlayers.length;
+            const gkCount = Math.min(1, goalkeepers.length);
+            const defCount = Math.min(Math.floor(totalSelected * 0.4), defenders.length);
+            const midCount = Math.min(Math.floor(totalSelected * 0.4), midfielders.length);
+            const fwdCount = Math.min(totalSelected - gkCount - defCount - midCount, forwards.length);
+
+            // Select random players for each position
+            const selectedGk = selectRandomPlayers(goalkeepers, gkCount);
+            const selectedDef = selectRandomPlayers(defenders, defCount);
+            const selectedMid = selectRandomPlayers(midfielders, midCount);
+            const selectedFwd = selectRandomPlayers(forwards, fwdCount);
+
+            // Display the selected team
+            displayPlayers(selectedGk, 'goalkeeperList');
+            displayPlayers(selectedDef, 'defendersList');
+            displayPlayers(selectedMid, 'midfieldersList');
+            displayPlayers(selectedFwd, 'forwardsList');
+
+            const generatedTeam = document.getElementById('generatedTeam');
+            generatedTeam.style.display = 'block';
+
+            // Create and download the image
+            try {
+                // Wait for the team to be displayed
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                const canvas = await html2canvas(generatedTeam, {
+                    backgroundColor: null,
+                    scale: 2,
+                    logging: true,
+                    useCORS: true,
+                    allowTaint: true,
+                    onclone: (clonedDoc) => {
+                        const clonedTeam = clonedDoc.getElementById('generatedTeam');
+                        clonedTeam.style.display = 'block';
+                    }
+                });
+                
+                // Create a temporary link and trigger download
+                const link = document.createElement('a');
+                const dataURL = canvas.toDataURL('image/png');
+                link.href = dataURL;
+                link.download = 'LOT.png';
+                
+                // Create a temporary click event
+                const clickEvent = new MouseEvent('click', {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true
+                });
+                
+                // Trigger the download
+                link.dispatchEvent(clickEvent);
+            } catch (error) {
+                console.error('Error generating image:', error);
+                alert('Error generating team image. Please try again.');
+            }
+        }
+
+        function selectRandomPlayers(players, count) {
+            const shuffled = [...players].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        function displayPlayers(players, listId) {
+            const list = document.getElementById(listId);
+            players.forEach(player => {
+                const li = document.createElement('li');
+                li.textContent = player.name;
+                list.appendChild(li);
+            });
+        }
+
+        // Initialize the page
+        window.onload = initializePlayerSelection;
+
+        // Mobile Menu Functionality
+        function initMobileMenu() {
+            const hamburger = document.querySelector('.hamburger-menu');
+            const mobileNav = document.createElement('div');
+            mobileNav.className = 'mobile-nav';
+            
+            // Copy navigation links to mobile menu
+            const navLinks = document.querySelector('.nav-links').cloneNode(true);
+            mobileNav.appendChild(navLinks);
+            document.body.appendChild(mobileNav);
+            
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+                document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+            });
+            
+            // Close menu when clicking a link
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+
+        // Initialize mobile menu
+        initMobileMenu();
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html> 
