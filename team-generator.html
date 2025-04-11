@@ -524,6 +524,7 @@
             const card = document.createElement('div');
             card.className = 'player-card';
             card.dataset.position = player.position;
+            card.dataset.name = player.name;  // Store the full name in dataset
             
             // Split name into parts and format
             const nameParts = player.name.split(' ');
@@ -601,7 +602,11 @@
             const list = document.getElementById(listId);
             players.forEach(player => {
                 const li = document.createElement('li');
-                li.textContent = player.name;
+                // Split name into parts and format
+                const nameParts = player.name.split(' ');
+                const lastName = nameParts[0].toUpperCase();
+                const firstName = nameParts.slice(1).join(' ').replace(/\b\w/g, l => l.toUpperCase());
+                li.textContent = `${lastName}\n${firstName}`;
                 list.appendChild(li);
             });
         }
