@@ -44,44 +44,44 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(139, 0, 0, 1); /* Dark red background */
+    background: rgba(0, 0, 0, 1); /* Dark background */
     box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
     transition: 0.5s;
 }
 
 .wave span {
     position: absolute;
-    width: 325vh;
-    height: 325vh;
-    top: 0;
+    width: 200vh;
+    height: 200vh;
+    bottom: 0;
     left: 50%;
-    transform: translate(-50%, -75%);
+    transform: translate(-50%, 75%);
 }
 
 .wave span:nth-child(1) {
     border-radius: 45%;
-    background: rgba(0, 0, 0, 1); /* Solid black */
+    background: rgba(0, 0, 0, 0.9); /* Most dominant dark layer */
     animation: animate 5s linear infinite;
 }
 
 .wave span:nth-child(2) {
     border-radius: 40%;
-    background: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+    background: rgba(139, 0, 0, 0.8); /* Semi-transparent dark red */
     animation: animate 10s linear infinite;
 }
 
 .wave span:nth-child(3) {
     border-radius: 42.5%;
-    background: rgba(0, 0, 0, 0.6); /* More transparent black */
+    background: rgba(139, 119, 0, 0.6); /* Dark faded yellow */
     animation: animate 15s linear infinite;
 }
 
 @keyframes animate {
     0% {
-        transform: translate(-50%, -75%) rotate(0deg);
+        transform: translate(-50%, 75%) rotate(0deg);
     }
     100% {
-        transform: translate(-50%, -75%) rotate(360deg);
+        transform: translate(-50%, 75%) rotate(360deg);
     }
 }
 
@@ -891,13 +891,68 @@ main {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
+}
+
+/* Download button styles */
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.5rem;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    text-decoration: none;
+    gap: 0.5rem;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 75, 43, 0.3);
+}
+
+.download-btn i {
+    font-size: 1.2rem;
 }
 
 @media (max-width: 768px) {
     .generated-team {
         width: 95%;
-        padding: 1.5rem 2rem;
+        padding: 1.5rem;
         margin: 1rem auto;
+        overflow-x: hidden;
+        overflow-y: visible;
+    }
+
+    .download-btn {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        white-space: nowrap;
+        width: auto;
+        min-width: 200px;
+    }
+
+    .download-btn:hover {
+        transform: translateX(-50%) translateY(-2px);
+    }
+
+    /* Ensure the button is visible over the wave animation */
+    .download-btn {
+        background: linear-gradient(45deg, var(--accent-color), var(--highlight-color));
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 }
 
@@ -923,4 +978,57 @@ main {
 .position-section {
     text-align: center;
     margin-bottom: 3rem;
+}
+
+/* Scroll-triggered Lines */
+.scroll-lines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.scroll-line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    height: 3px;  /* Increased from 1px */
+    opacity: 0.4; /* Increased from 0.2 */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    filter: blur(0.5px); /* Added subtle blur for better visibility */
+}
+
+.scroll-line-1 { width: 200px; top: 15%; left: 5%; animation: slideIn 6s ease-out infinite; }
+.scroll-line-2 { width: 250px; top: 25%; right: 8%; animation: slideIn 8s ease-out 1s infinite; }
+.scroll-line-3 { width: 220px; top: 35%; left: 12%; animation: slideIn 7s ease-out 2s infinite; }
+.scroll-line-4 { width: 270px; top: 45%; right: 15%; animation: slideIn 9s ease-out 3s infinite; }
+.scroll-line-5 { width: 230px; top: 55%; left: 8%; animation: slideIn 6.5s ease-out 4s infinite; }
+.scroll-line-6 { width: 240px; top: 65%; right: 10%; animation: slideIn 7.5s ease-out 5s infinite; }
+.scroll-line-7 { width: 210px; top: 75%; left: 15%; animation: slideIn 8.5s ease-out 6s infinite; }
+.scroll-line-8 { width: 260px; top: 85%; right: 5%; animation: slideIn 9.5s ease-out 7s infinite; }
+.scroll-line-9 { width: 220px; top: 20%; right: 20%; animation: slideIn 7s ease-out 8s infinite; }
+.scroll-line-10 { width: 250px; top: 30%; left: 25%; animation: slideIn 8s ease-out 9s infinite; }
+.scroll-line-11 { width: 230px; top: 40%; right: 30%; animation: slideIn 6.5s ease-out 10s infinite; }
+.scroll-line-12 { width: 240px; top: 50%; left: 35%; animation: slideIn 7.5s ease-out 11s infinite; }
+.scroll-line-13 { width: 210px; top: 60%; right: 40%; animation: slideIn 8.5s ease-out 12s infinite; }
+.scroll-line-14 { width: 260px; top: 70%; left: 45%; animation: slideIn 9.5s ease-out 13s infinite; }
+.scroll-line-15 { width: 220px; top: 80%; right: 50%; animation: slideIn 7s ease-out 14s infinite; }
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(0);
+        opacity: 0.4; /* Increased from 0.2 */
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
 } 

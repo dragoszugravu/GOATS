@@ -231,6 +231,37 @@ function optimizeAnimations() {
     }
 }
 
+// Scroll Animation
+function initScrollAnimation() {
+    const scrollLines = document.querySelectorAll('.scroll-line');
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    
+    function updateLines() {
+        const scrollPosition = window.scrollY;
+        const scrollDelta = scrollPosition - lastScrollY;
+        
+        scrollLines.forEach((line, index) => {
+            const speed = 0.8 + (index * 0.2); // Increased base speed
+            const yPos = scrollPosition * speed;
+            const opacity = Math.min(0.6, 0.4 + Math.abs(scrollDelta) * 0.01); // Dynamic opacity based on scroll speed
+            
+            line.style.transform = `translateY(${yPos}px)`;
+            line.style.opacity = opacity;
+        });
+        
+        lastScrollY = scrollPosition;
+        ticking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(updateLines);
+            ticking = true;
+        }
+    });
+}
+
 // Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
     displayPlayers();
@@ -243,4 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Re-optimize on window resize
     window.addEventListener('resize', optimizeAnimations);
+    
+    // Initialize scroll animation
+    initScrollAnimation();
 }); 
