@@ -927,17 +927,29 @@
             const selectedMid = selectRandomPlayers(midfielders, midCount);
             const selectedFwd = selectRandomPlayers(forwards, fwdCount);
 
-            // Display the selected team
-            displayPlayers(selectedGk, 'goalkeeper');
-            displayPlayers(selectedDef, 'defenders');
-            displayPlayers(selectedMid, 'midfielders');
-            displayPlayers(selectedFwd, 'forwards');
+            // Create a temporary team container for the preview
+            const tempTeam = document.createElement('div');
+            tempTeam.className = 'generated-team';
+            tempTeam.innerHTML = `
+                <div class="field-container">
+                    <div class="formation-row goalkeeper"></div>
+                    <div class="formation-row defenders"></div>
+                    <div class="formation-row midfielders"></div>
+                    <div class="formation-row forwards"></div>
+                </div>
+                <div class="team-logos">
+                    <img src="images/GOATS.png" alt="Team Logo">
+                </div>
+            `;
 
-            const generatedTeam = document.getElementById('generatedTeam');
-            generatedTeam.style.display = 'block';
+            // Display the selected team in the temporary container
+            displayPlayers(selectedGk, 'goalkeeper', tempTeam);
+            displayPlayers(selectedDef, 'defenders', tempTeam);
+            displayPlayers(selectedMid, 'midfielders', tempTeam);
+            displayPlayers(selectedFwd, 'forwards', tempTeam);
 
-            // Show preview modal
-            await showPreview();
+            // Show preview modal with the temporary team
+            await showPreview(tempTeam);
         }
 
         function selectRandomPlayers(players, count) {
@@ -945,8 +957,8 @@
             return shuffled.slice(0, count);
         }
 
-        function displayPlayers(players, position) {
-            const row = document.querySelector(`.formation-row.${position.toLowerCase()}`);
+        function displayPlayers(players, position, container) {
+            const row = container.querySelector(`.formation-row.${position.toLowerCase()}`);
             if (!row) return;
             
             row.innerHTML = '';
@@ -968,22 +980,17 @@
             });
         }
 
-        async function showPreview() {
+        async function showPreview(teamContainer) {
             const previewModal = document.getElementById('previewModal');
             const previewTeam = document.getElementById('previewTeam');
-            const generatedTeam = document.getElementById('generatedTeam');
             const previewContent = previewModal.querySelector('.preview-content');
             
-            // Clone the generated team
-            const clone = generatedTeam.cloneNode(true);
-            clone.style.display = 'block';
-            
-            // Clear and update preview
+            // Clear and update preview with the provided team container
             previewTeam.innerHTML = '';
-            previewTeam.appendChild(clone);
+            previewTeam.appendChild(teamContainer);
             
             // Pre-load all images in the preview
-            const images = Array.from(clone.getElementsByTagName('img'));
+            const images = Array.from(teamContainer.getElementsByTagName('img'));
             await Promise.all(images.map(img => 
                 new Promise((resolve) => {
                     const newImg = new Image();
@@ -1191,37 +1198,11 @@
 
                 const tempCanvas = document.createElement('canvas');
                 const isMobile = window.innerWidth <= 768;
-                const isLandscape = window.innerWidth > window.innerHeight;
                 
-                let width, height, scale;
-                
-                if (isMobile) {
-                    if (isLandscape) {
-                        height = window.innerHeight * 0.8;
-                        width = height * 0.75;
-                        scale = 1.5;
-                    } else {
-                        width = window.innerWidth * 0.95;
-                        height = width * 4/3;
-                        scale = 1.5;
-                    }
-                } else {
-                    width = 600;
-                    height = 800;
-                    scale = 2;
-                }
-                
-                // Adjust dimensions for WhatsApp
-                const whatsappAspectRatio = 1.33; // 4:3 aspect ratio
-                if (isMobile) {
-                    if (isLandscape) {
-                        width = Math.min(width, height * whatsappAspectRatio);
-                        height = width / whatsappAspectRatio;
-                    } else {
-                        height = Math.min(height, width * whatsappAspectRatio);
-                        width = height * whatsappAspectRatio;
-                    }
-                }
+                // Force portrait mode dimensions for WhatsApp
+                const width = 400; // Fixed width for better WhatsApp display
+                const height = 600; // Fixed height for portrait mode
+                const scale = 2; // Higher scale for better quality
                 
                 tempCanvas.width = width * scale;
                 tempCanvas.height = height * scale;
@@ -1262,7 +1243,7 @@
                 // Draw player circles and names
                 const rows = teamToCapture.querySelectorAll('.formation-row');
                 const rowHeight = height / (rows.length + 1);
-                const circleRadius = Math.min(width * 0.04, height * 0.03);
+                const circleRadius = 25; // Fixed larger radius for better visibility
                 
                 rows.forEach((row, rowIndex) => {
                     const circles = row.querySelectorAll('.player-circle');
@@ -1271,8 +1252,8 @@
                     circles.forEach((circle, circleIndex) => {
                         const position = circle.dataset.position;
                         const totalCircles = circles.length;
-                        const spacing = width * 0.8 / (totalCircles + 1);
-                        const x = width * 0.1 + (circleIndex + 1) * spacing;
+                        const spacing = width * 0.9 / (totalCircles + 1); // Increased spacing
+                        const x = width * 0.05 + (circleIndex + 1) * spacing; // Reduced side margins
                         
                         // Draw circle
                         ctx.beginPath();
@@ -1312,22 +1293,21 @@
                             const [lastName, firstName] = name.split('\n').map(n => n.trim());
                             
                             // Draw last name in thin and larger
-                            ctx.font = `100 ${circleRadius * 0.4}px Arial`;
+                            ctx.font = '100 14px Arial'; // Increased font size
                             ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                             ctx.textAlign = 'center';
                             ctx.textBaseline = 'top';
                             ctx.fillText(lastName.toUpperCase(), x, rowY + circleRadius * 1.5);
                             
                             // Draw first name in thinner and smaller
-                            ctx.font = `100 ${circleRadius * 0.35}px Arial`;
+                            ctx.font = '100 12px Arial'; // Increased font size
                             ctx.fillText(firstName, x, rowY + circleRadius * 2.2);
                         }
                     });
                 });
 
-                // Adjust quality based on device and orientation
-                const quality = isMobile ? (isLandscape ? 0.85 : 0.8) : 1.0;
-                const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, 'image/jpeg', quality));
+                // Create high quality image for WhatsApp
+                const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, 'image/jpeg', 0.9));
                 
                 if (navigator.share) {
                     const file = new File([blob], 'LOT.jpg', { type: 'image/jpeg' });
@@ -1337,7 +1317,7 @@
                         text: '⚽ LOT ⚽\nReactionati cu like daca sunteti prezenti! ⭐\n\n⚽ ⭐ ⚽ ⭐ ⚽'
                     });
                 } else {
-                    const dataUrl = tempCanvas.toDataURL('image/jpeg', quality);
+                    const dataUrl = tempCanvas.toDataURL('image/jpeg', 0.9);
                     const link = document.createElement('a');
                     link.download = 'LOT.jpg';
                     link.href = dataUrl;
