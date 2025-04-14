@@ -10,24 +10,37 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="images/GOATS.png">
+    <style>
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-link:hover {
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-    <div class="motion-graphics">
-        <div class="motion-circle circle-1"></div>
-        <div class="motion-circle circle-2"></div>
-    </div>
-
-    <div class="abstract-lines">
-        <div class="line line-1"></div>
-        <div class="line line-2"></div>
-        <div class="line line-3"></div>
-    </div>
+    <section class="wave-section">
+        <div class="wave">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </section>
 
     <header>
         <nav>
             <div class="logo-container">
-                <img src="images/GOATS.png" alt="GOATS FC Logo" class="logo-image">
-                <div class="logo-text">GOATS FC</div>
+                <a href="index.html" class="logo-link">
+                    <img src="images/GOATS.png" alt="GOATS FC Logo" class="logo-image">
+                    <div class="logo-text">GOATS FC</div>
+                </a>
             </div>
             <div class="nav-links">
                 <a href="index.html" class="active">Players</a>
@@ -43,7 +56,21 @@
 
     <main>
         <section class="players-grid">
-            <!-- Player cards will be dynamically added here -->
+            <div class="players-row goalkeepers">
+                <!-- Goalkeeper cards will be added here -->
+            </div>
+
+            <div class="players-row defenders">
+                <!-- Defender cards will be added here -->
+            </div>
+
+            <div class="players-row midfielders">
+                <!-- Midfielder cards will be added here -->
+            </div>
+
+            <div class="players-row forwards">
+                <!-- Forward cards will be added here -->
+            </div>
         </section>
     </main>
 

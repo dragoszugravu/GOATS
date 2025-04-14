@@ -3,8 +3,8 @@
     --secondary-color: #86868b;
     --accent-color: #ff4b2b;
     --highlight-color: #ff416c;
-    --background-color: #ffffff;
-    --text-color: #1d1d1f;
+    --background-color: #000000;  /* Dark background */
+    --text-color: #ffffff;
     --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     --gradient-start: #000000;
     --gradient-end: #1d1d1f;
@@ -15,12 +15,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 300;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background-color: var(--background-color);
+    background-color: #000000; /* Dark background */
     color: var(--text-color);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -28,17 +27,69 @@ body {
     position: relative;
 }
 
-/* Background Image */
-body::before {
-    content: '';
+/* Wave Animation */
+.wave-section {
     position: fixed;
-    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+}
+
+.wave {
+    position: absolute;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
-    opacity: 0.95;
-    z-index: -2;
+    background: rgba(139, 0, 0, 1); /* Dark red background */
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
+}
+
+.wave span {
+    position: absolute;
+    width: 325vh;
+    height: 325vh;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -75%);
+}
+
+.wave span:nth-child(1) {
+    border-radius: 45%;
+    background: rgba(0, 0, 0, 1); /* Solid black */
+    animation: animate 5s linear infinite;
+}
+
+.wave span:nth-child(2) {
+    border-radius: 40%;
+    background: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+    animation: animate 10s linear infinite;
+}
+
+.wave span:nth-child(3) {
+    border-radius: 42.5%;
+    background: rgba(0, 0, 0, 0.6); /* More transparent black */
+    animation: animate 15s linear infinite;
+}
+
+@keyframes animate {
+    0% {
+        transform: translate(-50%, -75%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -75%) rotate(360deg);
+    }
+}
+
+/* Remove old background styles */
+.motion-graphics,
+.abstract-lines,
+body::before {
+    display: none;
 }
 
 /* Abstract Lines */
@@ -55,9 +106,9 @@ body::before {
 
 .line {
     position: absolute;
-    background: linear-gradient(90deg, transparent, #FFD700, transparent);
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
     height: 2px;
-    opacity: 0;
+    opacity: 0.3;
     transform: translateX(-100%);
     transition: transform 0.5s ease-out, opacity 0.5s ease-out;
 }
@@ -66,21 +117,21 @@ body::before {
     width: 200px;
     top: 20%;
     left: 10%;
-    animation: slideIn 1s ease-out forwards;
+    animation: slideIn 8s ease-out infinite;
 }
 
 .line-2 {
     width: 300px;
     top: 40%;
     right: 10%;
-    animation: slideIn 1s ease-out 0.5s forwards;
+    animation: slideIn 8s ease-out 2s infinite;
 }
 
 .line-3 {
     width: 250px;
     bottom: 30%;
     left: 20%;
-    animation: slideIn 1s ease-out 1s forwards;
+    animation: slideIn 8s ease-out 4s infinite;
 }
 
 @keyframes slideIn {
@@ -88,9 +139,13 @@ body::before {
         transform: translateX(-100%);
         opacity: 0;
     }
-    100% {
+    50% {
         transform: translateX(0);
-        opacity: 0.5;
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
     }
 }
 
@@ -109,37 +164,37 @@ body::before {
     position: absolute;
     border-radius: 50%;
     background: linear-gradient(45deg, var(--accent-color), var(--highlight-color));
-    opacity: 0.05;
-    filter: blur(40px);
+    opacity: 0.1;
+    filter: blur(60px);
     transform: translateZ(0);
     will-change: transform;
 }
 
 .circle-1 {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     top: 20%;
     right: 10%;
-    animation: float 20s ease-in-out infinite;
+    animation: float 15s ease-in-out infinite;
 }
 
 .circle-2 {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
     bottom: 20%;
     left: 10%;
-    animation: float 25s ease-in-out infinite reverse;
+    animation: float 20s ease-in-out infinite reverse;
 }
 
 @keyframes float {
     0% {
-        transform: translate(0, 0) rotate(0deg);
+        transform: translate(0, 0) rotate(0deg) scale(1);
     }
     50% {
-        transform: translate(20px, 20px) rotate(180deg);
+        transform: translate(50px, 50px) rotate(180deg) scale(1.1);
     }
     100% {
-        transform: translate(0, 0) rotate(360deg);
+        transform: translate(0, 0) rotate(360deg) scale(1);
     }
 }
 
@@ -844,4 +899,28 @@ main {
         padding: 1.5rem 2rem;
         margin: 1rem auto;
     }
+}
+
+/* Remove position title styles */
+.position-title,
+.position-section {
+    display: none;
+}
+
+/* Position Title Styles */
+.position-title {
+    font-size: 2.2rem;
+    font-weight: 200;
+    color: #FFD700;
+    text-shadow: 0 0 15px rgba(139, 0, 0, 0.5);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    display: inline-block;
+    margin: 0 1rem;
+}
+
+.position-section {
+    text-align: center;
+    margin-bottom: 3rem;
 } 
