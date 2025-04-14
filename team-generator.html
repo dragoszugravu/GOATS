@@ -535,6 +535,13 @@
             flex: 1;
             position: relative;
             z-index: 1;
+            min-height: 100px;
+            padding: 20px 0;
+        }
+
+        .formation-row.drop-zone {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
         }
 
         .generated-team {
@@ -1043,12 +1050,17 @@
                     throw new Error('Could not find team to capture');
                 }
 
-                // Create a temporary canvas
+                // Create a temporary canvas with responsive dimensions
                 const tempCanvas = document.createElement('canvas');
-                tempCanvas.width = 600 * 2; // Scale by 2 for better quality
-                tempCanvas.height = 800 * 2;
+                const isMobile = window.innerWidth <= 768;
+                const scale = isMobile ? 1.5 : 2; // Lower scale for mobile
+                const width = isMobile ? window.innerWidth : 600;
+                const height = isMobile ? (window.innerWidth * 4/3) : 800;
+                
+                tempCanvas.width = width * scale;
+                tempCanvas.height = height * scale;
                 const ctx = tempCanvas.getContext('2d');
-                ctx.scale(2, 2);
+                ctx.scale(scale, scale);
 
                 // Set background color and scaling
                 ctx.fillStyle = '#0a1f0a';
@@ -1144,23 +1156,19 @@
                     });
                 });
 
-                // Convert canvas to blob
-                const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, 'image/jpeg', 1.0));
+                // Convert canvas to blob with adjusted quality for mobile
+                const quality = isMobile ? 0.8 : 1.0; // Lower quality for mobile to reduce file size
+                const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, 'image/jpeg', quality));
                 
-                // Check if Web Share API is available
                 if (navigator.share) {
-                    // Create a File object from the blob
                     const file = new File([blob], 'GOATS_FC_Team.jpg', { type: 'image/jpeg' });
-                    
-                    // Share the file
                     await navigator.share({
                         files: [file],
                         title: 'GOATS FC Team',
                         text: 'Check out my GOATS FC team!'
                     });
                 } else {
-                    // Fallback for browsers that don't support Web Share API
-                    const dataUrl = tempCanvas.toDataURL('image/jpeg', 1.0);
+                    const dataUrl = tempCanvas.toDataURL('image/jpeg', quality);
                     const link = document.createElement('a');
                     link.download = 'GOATS_FC_Team.jpg';
                     link.href = dataUrl;
