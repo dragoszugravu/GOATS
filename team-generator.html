@@ -593,6 +593,190 @@
         .player-card:hover .player-position {
             color: var(--accent-color);
         }
+
+        @media (max-width: 768px) {
+            .preview-modal .preview-content {
+                padding: 1rem;
+                width: 95%;
+                max-height: 85vh;
+                overflow-y: auto;
+                margin: 10px auto;
+                position: relative;
+            }
+
+            .preview-actions {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--secondary-bg);
+                padding: 1rem;
+                margin: 0;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+                z-index: 1001;
+                display: flex;
+                justify-content: space-around;
+                gap: 0.5rem;
+            }
+
+            .preview-btn {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+                flex: 1;
+                max-width: 120px;
+                white-space: nowrap;
+            }
+
+            #previewTeam {
+                padding-bottom: 70px;
+            }
+
+            #previewTeam .generated-team {
+                transform: scale(0.95);
+                transform-origin: top center;
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                aspect-ratio: 3/4;
+                padding: 1rem;
+            }
+
+            .field-container {
+                height: 100%;
+                gap: 1.5rem;
+                padding: 10px;
+            }
+
+            .formation-row {
+                min-height: 60px;
+                padding: 10px 0;
+            }
+
+            .player-circle {
+                width: 35px;
+                height: 35px;
+            }
+
+            .player-circle .name {
+                font-size: 7px;
+                bottom: -25px;
+            }
+
+            .player-circle .name::first-line {
+                font-size: 8px;
+            }
+        }
+
+        /* Landscape mode styles */
+        @media (max-width: 900px) and (orientation: landscape) {
+            .preview-modal .preview-content {
+                max-height: 90vh;
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+                align-items: center;
+                padding: 1rem;
+            }
+
+            #previewTeam {
+                flex: 1;
+                min-width: 0;
+                padding-bottom: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #previewTeam .generated-team {
+                height: 80vh;
+                width: auto;
+                transform: scale(0.9);
+                margin: 0;
+            }
+
+            .preview-actions {
+                position: static;
+                flex-direction: column;
+                padding: 0;
+                box-shadow: none;
+                margin-right: 1rem;
+            }
+
+            .preview-btn {
+                width: 100px;
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+
+            .preview-close {
+                top: 5px;
+                right: 5px;
+                width: 25px;
+                height: 25px;
+                font-size: 16px;
+            }
+
+            .field-container {
+                gap: 1rem;
+            }
+
+            .formation-row {
+                min-height: 45px;
+                padding: 5px 0;
+            }
+
+            .player-circle {
+                width: 30px;
+                height: 30px;
+            }
+
+            .player-circle .name {
+                font-size: 6px;
+                bottom: -20px;
+            }
+
+            .player-circle .name::first-line {
+                font-size: 7px;
+            }
+
+            .team-logos img {
+                width: 25px;
+                height: 25px;
+                margin-top: 5px;
+            }
+        }
+
+        /* Very small screens in landscape */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .preview-modal .preview-content {
+                padding: 0.5rem;
+            }
+
+            #previewTeam .generated-team {
+                height: 90vh;
+                transform: scale(0.85);
+            }
+
+            .preview-btn {
+                width: 90px;
+                padding: 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .player-circle {
+                width: 25px;
+                height: 25px;
+            }
+
+            .player-circle .name {
+                font-size: 5px;
+                bottom: -15px;
+            }
+
+            .player-circle .name::first-line {
+                font-size: 6px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1043,6 +1227,39 @@
             }
         }
 
+        // Initialize the page
+        window.onload = initializePlayerSelection;
+
+        // Mobile Menu Functionality
+        function initMobileMenu() {
+            const hamburger = document.querySelector('.hamburger-menu');
+            const mobileNav = document.createElement('div');
+            mobileNav.className = 'mobile-nav';
+            
+            // Copy navigation links to mobile menu
+            const navLinks = document.querySelector('.nav-links').cloneNode(true);
+            mobileNav.appendChild(navLinks);
+            document.body.appendChild(mobileNav);
+            
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+                document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+            });
+            
+            // Close menu when clicking a link
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+
+        // Initialize mobile menu
+        initMobileMenu();
+
         async function shareTeam() {
             try {
                 const teamToCapture = document.querySelector('#previewTeam .generated-team');
@@ -1050,12 +1267,27 @@
                     throw new Error('Could not find team to capture');
                 }
 
-                // Create a temporary canvas with responsive dimensions
                 const tempCanvas = document.createElement('canvas');
                 const isMobile = window.innerWidth <= 768;
-                const scale = isMobile ? 1.5 : 2; // Lower scale for mobile
-                const width = isMobile ? window.innerWidth : 600;
-                const height = isMobile ? (window.innerWidth * 4/3) : 800;
+                const isLandscape = window.innerWidth > window.innerHeight;
+                
+                let width, height, scale;
+                
+                if (isMobile) {
+                    if (isLandscape) {
+                        height = window.innerHeight * 0.8;
+                        width = height * 0.75;
+                        scale = 1.5;
+                    } else {
+                        width = window.innerWidth * 0.95;
+                        height = width * 4/3;
+                        scale = 1.5;
+                    }
+                } else {
+                    width = 600;
+                    height = 800;
+                    scale = 2;
+                }
                 
                 tempCanvas.width = width * scale;
                 tempCanvas.height = height * scale;
@@ -1156,8 +1388,8 @@
                     });
                 });
 
-                // Convert canvas to blob with adjusted quality for mobile
-                const quality = isMobile ? 0.8 : 1.0; // Lower quality for mobile to reduce file size
+                // Adjust quality based on device and orientation
+                const quality = isMobile ? (isLandscape ? 0.85 : 0.8) : 1.0;
                 const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, 'image/jpeg', quality));
                 
                 if (navigator.share) {
@@ -1180,39 +1412,6 @@
                 alert('Error sharing team image: ' + error.message);
             }
         }
-
-        // Initialize the page
-        window.onload = initializePlayerSelection;
-
-        // Mobile Menu Functionality
-        function initMobileMenu() {
-            const hamburger = document.querySelector('.hamburger-menu');
-            const mobileNav = document.createElement('div');
-            mobileNav.className = 'mobile-nav';
-            
-            // Copy navigation links to mobile menu
-            const navLinks = document.querySelector('.nav-links').cloneNode(true);
-            mobileNav.appendChild(navLinks);
-            document.body.appendChild(mobileNav);
-            
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active');
-                mobileNav.classList.toggle('active');
-                document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
-            });
-            
-            // Close menu when clicking a link
-            mobileNav.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    hamburger.classList.remove('active');
-                    mobileNav.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-            });
-        }
-
-        // Initialize mobile menu
-        initMobileMenu();
     </script>
 
     <script src="script.js"></script>
