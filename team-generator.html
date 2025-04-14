@@ -1211,6 +1211,18 @@
                     scale = 2;
                 }
                 
+                // Adjust dimensions for WhatsApp
+                const whatsappAspectRatio = 1.33; // 4:3 aspect ratio
+                if (isMobile) {
+                    if (isLandscape) {
+                        width = Math.min(width, height * whatsappAspectRatio);
+                        height = width / whatsappAspectRatio;
+                    } else {
+                        height = Math.min(height, width * whatsappAspectRatio);
+                        width = height * whatsappAspectRatio;
+                    }
+                }
+                
                 tempCanvas.width = width * scale;
                 tempCanvas.height = height * scale;
                 const ctx = tempCanvas.getContext('2d');
@@ -1218,50 +1230,53 @@
 
                 // Set background color and scaling
                 ctx.fillStyle = '#0a1f0a';
-                ctx.fillRect(0, 0, 600, 800);
+                ctx.fillRect(0, 0, width, height);
                 
                 // Add grid pattern
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
                 ctx.lineWidth = 0.5;
                 
                 // Draw vertical lines
-                for (let x = 0; x < 600; x += 50) {
+                for (let x = 0; x < width; x += 50) {
                     ctx.beginPath();
                     ctx.moveTo(x, 0);
-                    ctx.lineTo(x, 800);
+                    ctx.lineTo(x, height);
                     ctx.stroke();
                 }
                 
                 // Draw horizontal lines
-                for (let y = 0; y < 800; y += 50) {
+                for (let y = 0; y < height; y += 50) {
                     ctx.beginPath();
                     ctx.moveTo(0, y);
-                    ctx.lineTo(600, y);
+                    ctx.lineTo(width, y);
                     ctx.stroke();
                 }
                 
                 // Add gradient overlay
-                const gradient = ctx.createLinearGradient(0, 0, 0, 800);
+                const gradient = ctx.createLinearGradient(0, 0, 0, height);
                 gradient.addColorStop(0, 'rgba(0, 0, 0, 0.4)');
                 gradient.addColorStop(1, 'rgba(0, 0, 0, 0.6)');
                 ctx.fillStyle = gradient;
-                ctx.fillRect(0, 0, 600, 800);
+                ctx.fillRect(0, 0, width, height);
 
                 // Draw player circles and names
                 const rows = teamToCapture.querySelectorAll('.formation-row');
+                const rowHeight = height / (rows.length + 1);
+                const circleRadius = Math.min(width * 0.04, height * 0.03);
+                
                 rows.forEach((row, rowIndex) => {
                     const circles = row.querySelectorAll('.player-circle');
-                    const rowY = 120 + rowIndex * 200;
+                    const rowY = rowHeight + rowIndex * rowHeight;
                     
                     circles.forEach((circle, circleIndex) => {
                         const position = circle.dataset.position;
                         const totalCircles = circles.length;
-                        const spacing = 500 / (totalCircles + 1);
-                        const x = 50 + (circleIndex + 1) * spacing;
+                        const spacing = width * 0.8 / (totalCircles + 1);
+                        const x = width * 0.1 + (circleIndex + 1) * spacing;
                         
                         // Draw circle
                         ctx.beginPath();
-                        ctx.arc(x, rowY, 22.5, 0, Math.PI * 2);
+                        ctx.arc(x, rowY, circleRadius, 0, Math.PI * 2);
                         
                         // Set circle colors based on position
                         let borderColor, fillColor;
@@ -1297,15 +1312,15 @@
                             const [lastName, firstName] = name.split('\n').map(n => n.trim());
                             
                             // Draw last name in thin and larger
-                            ctx.font = '100 9px Arial';
+                            ctx.font = `100 ${circleRadius * 0.4}px Arial`;
                             ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                             ctx.textAlign = 'center';
                             ctx.textBaseline = 'top';
-                            ctx.fillText(lastName.toUpperCase(), x, rowY + 35);
+                            ctx.fillText(lastName.toUpperCase(), x, rowY + circleRadius * 1.5);
                             
                             // Draw first name in thinner and smaller
-                            ctx.font = '100 8px Arial';
-                            ctx.fillText(firstName, x, rowY + 50);
+                            ctx.font = `100 ${circleRadius * 0.35}px Arial`;
+                            ctx.fillText(firstName, x, rowY + circleRadius * 2.2);
                         }
                     });
                 });
@@ -1315,16 +1330,16 @@
                 const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, 'image/jpeg', quality));
                 
                 if (navigator.share) {
-                    const file = new File([blob], 'GOATS_FC_Team.jpg', { type: 'image/jpeg' });
+                    const file = new File([blob], 'LOT.jpg', { type: 'image/jpeg' });
                     await navigator.share({
                         files: [file],
-                        title: 'GOATS FC Team',
-                        text: 'Check out my GOATS FC team!'
+                        title: 'LOT',
+                        text: '⚽ LOT ⚽\nReactionati cu like daca sunteti prezenti! ⭐\n\n⚽ ⭐ ⚽ ⭐ ⚽'
                     });
                 } else {
                     const dataUrl = tempCanvas.toDataURL('image/jpeg', quality);
                     const link = document.createElement('a');
-                    link.download = 'GOATS_FC_Team.jpg';
+                    link.download = 'LOT.jpg';
                     link.href = dataUrl;
                     link.click();
                 }
