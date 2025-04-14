@@ -222,17 +222,29 @@
             height: 45px;
             border-radius: 50%;
             position: relative;
-            border: 1px solid var(--border-color);
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            background: var(--secondary-bg);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .player-circle:hover {
-            transform: scale(1.1);
-            border-color: var(--accent-color);
-            box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3);
+        .player-circle[data-position="Goalkeeper"] {
+            background: rgba(255, 0, 0, 0.3);
+            border: 2px solid #FF0000;
+        }
+
+        .player-circle[data-position="Defender"] {
+            background: rgba(0, 0, 255, 0.3);
+            border: 2px solid #0000FF;
+        }
+
+        .player-circle[data-position="Midfielder"] {
+            background: rgba(255, 165, 0, 0.3);
+            border: 2px solid #FFA500;
+        }
+
+        .player-circle[data-position="Forward"] {
+            background: rgba(210, 180, 140, 0.3);
+            border: 2px solid #D2B48C;
         }
 
         .player-circle .name {
@@ -244,15 +256,16 @@
             text-align: center;
             font-size: 8px;
             font-weight: 400;
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.95);
             line-height: 1.4;
             letter-spacing: 0.05em;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .player-circle .name::first-line {
             font-weight: 500;
             font-size: 9px;
-            color: var(--text-color);
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .team-logos {
@@ -446,6 +459,7 @@
             transform-origin: center;
             transform: scale(0.9);
             display: block !important;
+            background: #0a1f0a;
         }
 
         .preview-actions {
@@ -471,7 +485,14 @@
             box-shadow: 0 4px 15px rgba(0, 113, 227, 0.3);
         }
 
-        .preview-download:hover {
+        .preview-share {
+            background: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .preview-download:hover,
+        .preview-share:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 113, 227, 0.4);
         }
@@ -517,7 +538,7 @@
         }
 
         .generated-team {
-            background: var(--secondary-bg);
+            background: #0a1f0a;
             border-radius: 24px;
             padding: 2.5rem;
             margin-top: 2rem;
@@ -532,6 +553,10 @@
             justify-content: space-between;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border-color);
+            background-image: 
+                linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%),
+                repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(255, 255, 255, 0.05) 50px),
+                repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(255, 255, 255, 0.05) 50px);
         }
 
         .generated-team::before {
@@ -648,6 +673,7 @@
                     <div id="previewTeam"></div>
                     <div class="preview-actions">
                         <button class="preview-btn preview-download" onclick="downloadTeam()">Download</button>
+                        <button class="preview-btn preview-share" onclick="shareTeam()">Share</button>
                         <button class="preview-btn preview-cancel" onclick="closePreview()">Cancel</button>
                     </div>
                 </div>
@@ -662,30 +688,30 @@
     <script>
         const players = {
             goalkeepers: [
-                { name: "CIULPAN Gabriel", position: "Goalkeeper", image: "images/CIULPAN_Gabriel.jpg" },
-                { name: "CRETU Stefan", position: "Goalkeeper", image: "images/CRETU_Stefan.jpg" },
-                { name: "CALIN Theodor", position: "Goalkeeper", image: "images/CALIN_Theodor.jpg" }
+                { name: "CIULPAN Gabriel", position: "Goalkeeper", image: "images/CIULPAN_Gabriel.jpg", celebration: "images/CIULPAN_Gabriel_celebration.jpg" },
+                { name: "CRETU Stefan", position: "Goalkeeper", image: "images/CRETU_Stefan.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "CALIN Theodor", position: "Goalkeeper", image: "images/CALIN_Theodor.jpg", celebration: "images/default_celebration.jpg" }
             ],
             defenders: [
-                { name: "ZUGRAVU Dragos", position: "Defender", image: "images/ZUGRAVU_Dragos.jpg" },
-                { name: "PLAIASU Sebastian", position: "Defender", image: "images/PLAIASU_Sebastian.jpg" },
-                { name: "FITA Robert", position: "Defender", image: "images/FITA_Robert.jpg" },
-                { name: "STANCIU Alex", position: "Defender", image: "images/STANCIU_Alex.jpg" },
-                { name: "POPA Traian", position: "Defender", image: "images/POPA_Traian.jpg" }
+                { name: "ZUGRAVU Dragos", position: "Defender", image: "images/ZUGRAVU_Dragos.jpg", celebration: "images/ZUGRAVU_Dragos_celebration.jpg" },
+                { name: "PLAIASU Sebastian", position: "Defender", image: "images/PLAIASU_Sebastian.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "FITA Robert", position: "Defender", image: "images/FITA_Robert.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "STANCIU Alex", position: "Defender", image: "images/STANCIU_Alex.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "POPA Traian", position: "Defender", image: "images/POPA_Traian.jpg", celebration: "images/default_celebration.jpg" }
             ],
             midfielders: [
-                { name: "PETRACHE Adrian", position: "Midfielder", image: "images/PETRACHE_Adrian.jpg" },
-                { name: "SPIREA Luca", position: "Midfielder", image: "images/SPIREA_Luca.jpg" },
-                { name: "GEMALESCU Romeo", position: "Midfielder", image: "images/GEMALESCU_Romeo.jpg" },
-                { name: "BUDAN Sebi", position: "Midfielder", image: "images/BUDAN_Sebi.jpg" },
-                { name: "ROSTOM Jawdat", position: "Midfielder", image: "images/ROSTOM_Jawdat.jpg" },
-                { name: "FOTEA Alexandru", position: "Midfielder", image: "images/FOTEA_Alexandru.jpg" },
-                { name: "DINU Alexandru", position: "Midfielder", image: "images/DINU_Alexandru.jpg" },
-                { name: "NICOLAE Catalin", position: "Midfielder", image: "images/NICOLAE_Catalin.jpg" }
+                { name: "PETRACHE Adrian", position: "Midfielder", image: "images/PETRACHE_Adrian.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "SPIREA Luca", position: "Midfielder", image: "images/SPIREA_Luca.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "GEMALESCU Romeo", position: "Midfielder", image: "images/GEMALESCU_Romeo.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "BUDAN Sebi", position: "Midfielder", image: "images/BUDAN_Sebi.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "ROSTOM Jawdat", position: "Midfielder", image: "images/ROSTOM_Jawdat.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "FOTEA Alexandru", position: "Midfielder", image: "images/FOTEA_Alexandru.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "DINU Alexandru", position: "Midfielder", image: "images/DINU_Alexandru.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "NICOLAE Catalin", position: "Midfielder", image: "images/NICOLAE_Catalin.jpg", celebration: "images/default_celebration.jpg" }
             ],
             forwards: [
-                { name: "MARCU Andrei", position: "Forward", image: "images/MARCU_Andrei.jpg" },
-                { name: "BUSTEA Ionut", position: "Forward", image: "images/BUSTEA_Ionut.jpg" }
+                { name: "MARCU Andrei", position: "Forward", image: "images/MARCU_Andrei.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "BUSTEA Ionut", position: "Forward", image: "images/BUSTEA_Ionut.jpg", celebration: "images/default_celebration.jpg" }
             ]
         };
 
@@ -706,6 +732,28 @@
                 const card = createPlayerCard(player);
                 card.addEventListener('click', () => {
                     card.classList.toggle('selected');
+                    const img = card.querySelector('.player-image');
+                    if (card.classList.contains('selected')) {
+                        // Try to load celebration image, fallback to default celebration if it fails
+                        const celebrationImg = new Image();
+                        celebrationImg.onload = () => {
+                            img.src = player.celebration;
+                        };
+                        celebrationImg.onerror = () => {
+                            img.src = 'images/default_celebration.jpg';
+                        };
+                        celebrationImg.src = player.celebration;
+                    } else {
+                        // Try to load normal image, fallback to default if it fails
+                        const normalImg = new Image();
+                        normalImg.onload = () => {
+                            img.src = player.image;
+                        };
+                        normalImg.onerror = () => {
+                            img.src = 'images/default.jpg';
+                        };
+                        normalImg.src = player.image;
+                    }
                 });
                 
                 container.appendChild(card);
@@ -985,6 +1033,143 @@
             } catch (error) {
                 console.error('Download error:', error);
                 alert('Error generating team image: ' + error.message);
+            }
+        }
+
+        async function shareTeam() {
+            try {
+                const teamToCapture = document.querySelector('#previewTeam .generated-team');
+                if (!teamToCapture) {
+                    throw new Error('Could not find team to capture');
+                }
+
+                // Create a temporary canvas
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = 600 * 2; // Scale by 2 for better quality
+                tempCanvas.height = 800 * 2;
+                const ctx = tempCanvas.getContext('2d');
+                ctx.scale(2, 2);
+
+                // Set background color and scaling
+                ctx.fillStyle = '#0a1f0a';
+                ctx.fillRect(0, 0, 600, 800);
+                
+                // Add grid pattern
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                ctx.lineWidth = 0.5;
+                
+                // Draw vertical lines
+                for (let x = 0; x < 600; x += 50) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, 800);
+                    ctx.stroke();
+                }
+                
+                // Draw horizontal lines
+                for (let y = 0; y < 800; y += 50) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(600, y);
+                    ctx.stroke();
+                }
+                
+                // Add gradient overlay
+                const gradient = ctx.createLinearGradient(0, 0, 0, 800);
+                gradient.addColorStop(0, 'rgba(0, 0, 0, 0.4)');
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0.6)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 600, 800);
+
+                // Draw player circles and names
+                const rows = teamToCapture.querySelectorAll('.formation-row');
+                rows.forEach((row, rowIndex) => {
+                    const circles = row.querySelectorAll('.player-circle');
+                    const rowY = 120 + rowIndex * 200;
+                    
+                    circles.forEach((circle, circleIndex) => {
+                        const position = circle.dataset.position;
+                        const totalCircles = circles.length;
+                        const spacing = 500 / (totalCircles + 1);
+                        const x = 50 + (circleIndex + 1) * spacing;
+                        
+                        // Draw circle
+                        ctx.beginPath();
+                        ctx.arc(x, rowY, 22.5, 0, Math.PI * 2);
+                        
+                        // Set circle colors based on position
+                        let borderColor, fillColor;
+                        switch(position) {
+                            case 'Goalkeeper':
+                                borderColor = '#FF0000';
+                                fillColor = 'rgba(255, 0, 0, 0.3)';
+                                break;
+                            case 'Defender':
+                                borderColor = '#0000FF';
+                                fillColor = 'rgba(0, 0, 255, 0.3)';
+                                break;
+                            case 'Midfielder':
+                                borderColor = '#FFA500';
+                                fillColor = 'rgba(255, 165, 0, 0.3)';
+                                break;
+                            case 'Forward':
+                                borderColor = '#D2B48C';
+                                fillColor = 'rgba(210, 180, 140, 0.3)';
+                                break;
+                        }
+                        
+                        ctx.fillStyle = fillColor;
+                        ctx.fill();
+                        ctx.strokeStyle = borderColor;
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+
+                        // Draw player name
+                        const nameElement = circle.querySelector('.name');
+                        if (nameElement) {
+                            const name = nameElement.textContent;
+                            const [lastName, firstName] = name.split('\n').map(n => n.trim());
+                            
+                            // Draw last name in thin and larger
+                            ctx.font = '100 9px Arial';
+                            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'top';
+                            ctx.fillText(lastName.toUpperCase(), x, rowY + 35);
+                            
+                            // Draw first name in thinner and smaller
+                            ctx.font = '100 8px Arial';
+                            ctx.fillText(firstName, x, rowY + 50);
+                        }
+                    });
+                });
+
+                // Convert canvas to blob
+                const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, 'image/jpeg', 1.0));
+                
+                // Check if Web Share API is available
+                if (navigator.share) {
+                    // Create a File object from the blob
+                    const file = new File([blob], 'GOATS_FC_Team.jpg', { type: 'image/jpeg' });
+                    
+                    // Share the file
+                    await navigator.share({
+                        files: [file],
+                        title: 'GOATS FC Team',
+                        text: 'Check out my GOATS FC team!'
+                    });
+                } else {
+                    // Fallback for browsers that don't support Web Share API
+                    const dataUrl = tempCanvas.toDataURL('image/jpeg', 1.0);
+                    const link = document.createElement('a');
+                    link.download = 'GOATS_FC_Team.jpg';
+                    link.href = dataUrl;
+                    link.click();
+                }
+
+            } catch (error) {
+                console.error('Share error:', error);
+                alert('Error sharing team image: ' + error.message);
             }
         }
 
