@@ -412,17 +412,19 @@ main {
 }
 
 .player-card {
-    width: 280px;
-    height: 380px;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 8px;
-    padding: 15px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(255, 75, 43, 0.1);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    position: relative;
+    border: 1px solid rgba(255, 75, 43, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease;
+    height: 350px;
 }
 
 .player-card::before {
@@ -538,13 +540,12 @@ main {
     }
     
     .player-card {
-        width: 260px;
-        height: 360px;
-        margin: 0 auto;
+        height: 180px;
+        aspect-ratio: 3/4;
     }
     
     .player-image {
-        height: 250px;
+        height: 140px;
     }
     
     .player-logo {
@@ -553,43 +554,9 @@ main {
     }
     
     .players-grid {
-        display: flex;
-        overflow-x: auto;
-        padding: 0.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         gap: 0.8rem;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        margin: 0 1rem;
-    }
-
-    .players-grid::-webkit-scrollbar {
-        display: none;
-    }
-
-    .player-card {
-        flex: 0 0 auto;
-        width: 260px;
-        height: 360px;
-        scroll-snap-align: start;
-        margin: 0;
-    }
-
-    .player-image {
-        height: 250px;
-    }
-
-    .player-info {
-        padding: 1rem;
-    }
-
-    .player-name {
-        font-size: 1.2rem;
-    }
-
-    .player-position {
-        font-size: 0.9rem;
+        padding: 0.5rem;
     }
 
     /* Team Generator Mobile Styles */
@@ -702,26 +669,26 @@ main {
 
     .player-card {
         flex: 0 0 auto;
-        width: 260px;
-        height: 360px;
+        width: 140px;
+        height: 180px;
         scroll-snap-align: start;
         margin: 0;
     }
 
     .player-image {
-        height: 250px;
+        height: 140px;
     }
 
     .player-info {
-        padding: 1rem;
+        padding: 0.5rem;
     }
 
     .player-name {
-        font-size: 1.2rem;
+        font-size: 0.8rem;
     }
 
     .player-position {
-        font-size: 0.9rem;
+        font-size: 0.7rem;
     }
 
     /* Remove the old grid styles */
