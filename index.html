@@ -502,5 +502,65 @@
     <footer>Created by Dragos Zughy</footer>
 
     <script src="script.js"></script>
+    <script>
+        // Mobile menu functionality
+        function initMobileMenu() {
+            const hamburger = document.querySelector('.hamburger-menu');
+            const mobileNav = document.createElement('div');
+            mobileNav.className = 'mobile-nav';
+            
+            const navLinks = document.querySelector('.nav-links').cloneNode(true);
+            mobileNav.appendChild(navLinks);
+            document.body.appendChild(mobileNav);
+
+            // Create overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'mobile-nav-overlay';
+            document.body.appendChild(overlay);
+            
+            let isMenuOpen = false;
+            
+            const openMenu = () => {
+                hamburger.classList.add('active');
+                mobileNav.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                isMenuOpen = true;
+            };
+            
+            const closeMenu = () => {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                isMenuOpen = false;
+            };
+            
+            hamburger.addEventListener('click', () => {
+                if (isMenuOpen) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            });
+            
+            overlay.addEventListener('click', closeMenu);
+            
+            document.addEventListener('click', (e) => {
+                if (isMenuOpen && 
+                    !mobileNav.contains(e.target) && 
+                    !hamburger.contains(e.target)) {
+                    closeMenu();
+                }
+            });
+            
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        }
+
+        // Initialize mobile menu
+        initMobileMenu();
+    </script>
 </body>
 </html>

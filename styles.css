@@ -757,21 +757,23 @@ main {
 .mobile-nav {
     position: fixed;
     top: 0;
-    right: 0;
-    width: 100%;
+    left: 0;
+    width: 80%;
+    max-width: 300px;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    transform: translateX(100%);
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+    transform: translateX(-100%);
     transition: transform 0.3s ease;
     z-index: 100;
     padding: 2rem;
+    padding-top: 80px;
 }
 
 .mobile-nav.active {
@@ -781,19 +783,19 @@ main {
 .mobile-nav .nav-links {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+    align-items: flex-start;
+    gap: 1.5rem;
     width: 100%;
 }
 
 .mobile-nav a {
     color: white;
     text-decoration: none;
-    font-size: 1.5rem;
-    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
     transition: all 0.3s ease;
     width: 100%;
-    text-align: center;
+    text-align: left;
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.05);
 }
@@ -802,79 +804,52 @@ main {
 .mobile-nav a.active {
     color: var(--accent-color);
     background: rgba(255, 75, 43, 0.1);
-    transform: translateY(-2px);
+    transform: translateX(5px);
 }
 
-/* Animation Optimizations */
+/* Overlay for closing menu when clicking outside */
+.mobile-nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.mobile-nav-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 @media (max-width: 768px) {
-    .motion-circle {
-        opacity: 0.03;
-        filter: blur(30px);
-    }
-    
-    .line {
-        opacity: 0.3;
-    }
-    
-    .section-title::before {
-        animation: none;
-    }
-    
-    .player-card {
-        transform: none !important;
-        transition: transform 0.2s ease;
-    }
-    
-    .player-card:hover {
-        transform: translateY(-5px) !important;
-    }
-    
     .hamburger-menu {
         display: block;
+        position: relative;
+        z-index: 101;
     }
     
-    .nav-links {
-        display: none;
+    .hamburger-menu span {
+        background: white;
+        transition: all 0.3s ease;
     }
     
-    .section-title {
-        font-size: 2.5rem;
+    .hamburger-menu.active span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
     }
     
-    .player-card {
-        height: 300px;
+    .hamburger-menu.active span:nth-child(2) {
+        opacity: 0;
     }
     
-    .player-image {
-        height: 200px;
-    }
-    
-    .player-logo {
-        width: 40px;
-        height: 40px;
-    }
-    
-    /* Team Generator Mobile Styles */
-    .generator-controls {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1rem;
-    }
-    
-    .player-selection {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    }
-    
-    .player-checkbox {
-        flex-direction: column;
-        text-align: center;
-        padding: 0.8rem;
-    }
-    
-    .generated-team {
-        width: 100%;
-        max-width: none;
-        padding: 1.5rem;
+    .hamburger-menu.active span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
     }
 }
 

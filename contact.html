@@ -317,17 +317,32 @@
             const navLinks = document.querySelector('.nav-links').cloneNode(true);
             mobileNav.appendChild(navLinks);
             document.body.appendChild(mobileNav);
+
+            // Create overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'mobile-nav-overlay';
+            document.body.appendChild(overlay);
             
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 mobileNav.classList.toggle('active');
+                overlay.classList.toggle('active');
                 document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+            });
+            
+            // Close menu when clicking overlay
+            overlay.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
             });
             
             mobileNav.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     hamburger.classList.remove('active');
                     mobileNav.classList.remove('active');
+                    overlay.classList.remove('active');
                     document.body.style.overflow = '';
                 });
             });
