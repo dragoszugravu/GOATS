@@ -220,15 +220,13 @@
         }
 
         .player-circle {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             position: relative;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            flex-shrink: 0;
-            margin: 0 10px;
         }
 
         .player-circle[data-position="Goalkeeper"] {
@@ -253,38 +251,23 @@
 
         .player-circle .name {
             position: absolute;
-            bottom: -45px;
+            bottom: -40px;
             left: 50%;
             transform: translateX(-50%);
             white-space: pre-line;
             text-align: center;
-            font-size: 7px;
+            font-size: 8px;
             font-weight: 400;
             color: rgba(255, 255, 255, 0.95);
-            line-height: 1.2;
+            line-height: 1.4;
             letter-spacing: 0.05em;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-            width: 60px;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .player-circle .name::first-line {
             font-weight: 500;
-            font-size: 7px;
+            font-size: 9px;
             color: rgba(255, 255, 255, 0.95);
-        }
-
-        .player-circle .circle-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 8px;
-            font-weight: bold;
-            color: rgba(255, 255, 255, 0.95);
-            text-align: center;
-            width: 100%;
         }
 
         .team-logos {
@@ -629,15 +612,13 @@
 
         .formation-row {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
             flex: 1;
             position: relative;
             z-index: 1;
-            min-height: 120px;
+            min-height: 100px;
             padding: 20px 0;
-            width: 100%;
-            overflow: visible;
         }
 
         .formation-row.drop-zone {
@@ -693,6 +674,18 @@
 
         .player-card:hover .player-position {
             color: var(--accent-color);
+        }
+
+        .player-circle .circle-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            width: 100%;
         }
 
         @media (max-width: 768px) {
@@ -821,6 +814,7 @@
             ],
             forwards: [
                 { name: "MARCU Andrei", position: "Forward", image: "images/MARCU_Andrei.jpg", celebration: "images/default_celebration.jpg" },
+                { name: "SPIREA Luca", position: "Forward", image: "images/SPIREA_Luca.jpg", celebration: "images/default_celebration.jpg" },
                 { name: "BUSTEA Ionut", position: "Forward", image: "images/BUSTEA_Ionut.jpg", celebration: "images/default_celebration.jpg" }
             ]
         };
