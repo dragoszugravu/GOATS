@@ -540,12 +540,12 @@ main {
     }
     
     .player-card {
-        height: 180px;
+        height: 250px;  /* Increased height */
         aspect-ratio: 3/4;
     }
     
     .player-image {
-        height: 140px;
+        height: 200px;  /* Increased height */
     }
     
     .player-logo {
@@ -577,11 +577,11 @@ main {
     }
 
     .player-card {
-        height: 160px;
+        height: 250px;  /* Consistent height */
     }
 
     .player-image {
-        height: 120px;
+        height: 200px;  /* Consistent height */
     }
 
     .player-info {
@@ -670,13 +670,13 @@ main {
     .player-card {
         flex: 0 0 auto;
         width: 140px;
-        height: 220px;
+        height: 250px;  /* Consistent height */
         scroll-snap-align: start;
         margin: 0;
     }
 
     .player-image {
-        height: 180px;
+        height: 200px;  /* Consistent height */
     }
 
     .player-info {
@@ -690,10 +690,20 @@ main {
     .player-position {
         font-size: 0.7rem;
     }
+}
 
-    /* Remove the old grid styles */
+/* Landscape mode specific adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+    .player-card {
+        height: 280px;  /* Even taller in landscape */
+    }
+    
+    .player-image {
+        height: 220px;  /* Even taller in landscape */
+    }
+    
     .players-grid {
-        grid-template-columns: none;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 }
 
