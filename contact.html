@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOATS FC - Contact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/GOATS.png">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        .contact-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #fff, rgba(255,255,255,0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .contact-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-input {
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        textarea.form-input {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            padding: 1rem 2.5rem;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            margin-top: 1rem;
+            align-self: center;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 113, 227, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 113, 227, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .contact-title {
+                font-size: 2rem;
+            }
+
+            .form-input {
+                font-size: 16px; /* Prevents zoom on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="wave-section">
+        <div class="wave">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </section>
+
+    <div class="scroll-lines">
+        <div class="scroll-line scroll-line-1"></div>
+        <div class="scroll-line scroll-line-2"></div>
+        <div class="scroll-line scroll-line-3"></div>
+        <div class="scroll-line scroll-line-4"></div>
+        <div class="scroll-line scroll-line-5"></div>
+        <div class="scroll-line scroll-line-6"></div>
+        <div class="scroll-line scroll-line-7"></div>
+        <div class="scroll-line scroll-line-8"></div>
+        <div class="scroll-line scroll-line-9"></div>
+        <div class="scroll-line scroll-line-10"></div>
+        <div class="scroll-line scroll-line-11"></div>
+        <div class="scroll-line scroll-line-12"></div>
+        <div class="scroll-line scroll-line-13"></div>
+        <div class="scroll-line scroll-line-14"></div>
+        <div class="scroll-line scroll-line-15"></div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo-container">
+                <a href="index.html" class="logo-link">
+                    <img src="images/GOATS.png" alt="GOATS FC Logo" class="logo-image">
+                    <div class="logo-text">GOATS FC</div>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Players</a>
+                <a href="team-generator.html">Team Generator</a>
+                <a href="https://victorycup.ro/echipe/315?s=goats&page=meciuri" target="_blank">Matches</a>
+                <a href="contact.html" class="active">Contact</a>
+            </div>
+            <button class="hamburger-menu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="contact-container">
+            <h1 class="contact-title">Formular de contact</h1>
+            <p class="contact-subtitle">Bulevardul Ghencea 31, Sector 6, Bucuresti, Romania</p>
+            
+            <form class="contact-form" id="contactForm" onsubmit="sendEmail(event)">
+                <div class="form-group">
+                    <input type="text" class="form-input" id="lastName" name="lastName" placeholder="Nume de familie" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" class="form-input" id="firstName" name="firstName" placeholder="Prenume" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="tel" class="form-input" id="phone" name="phone" placeholder="Nr. de telefon" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" class="form-input" id="email" name="email" placeholder="Adresa de email" required>
+                </div>
+                
+                <div class="form-group">
+                    <textarea class="form-input" id="message" name="message" placeholder="Mesajul tau" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Trimite</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu functionality
+        function initMobileMenu() {
+            const hamburger = document.querySelector('.hamburger-menu');
+            const mobileNav = document.createElement('div');
+            mobileNav.className = 'mobile-nav';
+            
+            const navLinks = document.querySelector('.nav-links').cloneNode(true);
+            mobileNav.appendChild(navLinks);
+            document.body.appendChild(mobileNav);
+            
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+                document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+            });
+            
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+
+        // Initialize mobile menu
+        initMobileMenu();
+
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("8JYST7psiB3cYuAkS");
+        })();
+
+        // Email sending functionality
+        async function sendEmail(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Se trimite...';
+            
+            const formData = {
+                lastName: document.getElementById('lastName').value,
+                firstName: document.getElementById('firstName').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value
+            };
+
+            try {
+                await emailjs.send(
+                    "service_410s1uu",
+                    "template_d48of9j",
+                    {
+                        name: `${formData.firstName} ${formData.lastName}`,
+                        email: formData.email,
+                        phone: formData.phone,
+                        message: formData.message,
+                        time: new Date().toLocaleString()
+                    }
+                );
+
+                // Show success message
+                alert('Mesajul a fost trimis cu succes!');
+                document.getElementById('contactForm').reset();
+            } catch (error) {
+                console.error('Error details:', error);
+                alert(`Eroare: ${error.text || 'A apărut o eroare la trimiterea mesajului. Vă rugăm să încercați din nou.'}`);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Trimite';
+            }
+        }
+    </script>
+</body>
+</html> 
