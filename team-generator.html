@@ -1236,9 +1236,9 @@
                 const tempCanvas = document.createElement('canvas');
                 const isMobile = window.innerWidth <= 768;
                 
-                // Optimize dimensions for WhatsApp mobile screens
-                const width = 1080; // Standard WhatsApp image width
-                const height = 1350; // Optimized height for portrait
+                // Optimize dimensions for WhatsApp - more compact
+                const width = 600; // Reduced from 800 to make it more compact
+                const height = 800; // Reduced from 1000 to make it more compact
                 const scale = 2; // Higher scale for better quality
                 
                 tempCanvas.width = width * scale;
@@ -1280,7 +1280,7 @@
                 // Draw player circles and names
                 const rows = teamToCapture.querySelectorAll('.formation-row');
                 const rowHeight = height / (rows.length + 1);
-                const circleRadius = 60; // Increased from 40
+                const circleRadius = 40; // Increased from 35
                 
                 rows.forEach((row, rowIndex) => {
                     const circles = row.querySelectorAll('.player-circle');
@@ -1290,8 +1290,8 @@
                         const position = circle.dataset.position;
                         const totalCircles = circles.length;
                         // Calculate positions to ensure all players fit - use more of the width
-                        const availableWidth = width * 0.95;
-                        const minSpacing = 100; // Increased from 70
+                        const availableWidth = width * 0.95; // Increased from 0.9
+                        const minSpacing = 70; // Minimum spacing between circles
                         const spacing = Math.max(minSpacing, availableWidth / (totalCircles + 1));
                         const x = (width - availableWidth) / 2 + (circleIndex + 1) * spacing;
                         
@@ -1327,11 +1327,11 @@
                         ctx.fillStyle = fillColor;
                         ctx.fill();
                         ctx.strokeStyle = borderColor;
-                        ctx.lineWidth = 6; // Increased from 4
+                        ctx.lineWidth = 4; // Increased from 3
                         ctx.stroke();
 
                         // Draw position abbreviation
-                        ctx.font = 'bold 28px Arial'; // Increased from 18px
+                        ctx.font = 'bold 18px Arial'; // Increased from 16px
                         ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'middle';
@@ -1344,15 +1344,15 @@
                             const [lastName, firstName] = name.split('\n').map(n => n.trim());
                             
                             // Draw last name in thin and larger
-                            ctx.font = '100 22px Arial'; // Increased from 14px
+                            ctx.font = '100 14px Arial'; // Increased from 12px
                             ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                             ctx.textAlign = 'center';
                             ctx.textBaseline = 'top';
-                            ctx.fillText(lastName.toUpperCase(), x, rowY + 75); // Increased from 50
+                            ctx.fillText(lastName.toUpperCase(), x, rowY + 50); // Increased from 45
                             
                             // Draw first name in thinner and smaller
-                            ctx.font = '100 18px Arial'; // Increased from 12px
-                            ctx.fillText(firstName, x, rowY + 100); // Increased from 65
+                            ctx.font = '100 12px Arial'; // Increased from 10px
+                            ctx.fillText(firstName, x, rowY + 65); // Increased from 60
                         }
                     });
                 });
@@ -1362,33 +1362,11 @@
                 
                 if (navigator.share) {
                     const file = new File([blob], 'LOT.jpg', { type: 'image/jpeg' });
-                    const shareData = {
+                    await navigator.share({
                         files: [file],
                         title: 'LOT',
                         text: '⚽ LOT ⚽\nReactionati cu like daca sunteti prezenti! ⭐\n\n⚽ ⭐ ⚽ ⭐ ⚽'
-                    };
-
-                    // Check if it's Android
-                    const isAndroid = /Android/i.test(navigator.userAgent);
-                    
-                    if (isAndroid) {
-                        // For Android, we'll create a temporary link to share
-                        const dataUrl = tempCanvas.toDataURL('image/jpeg', 0.9);
-                        const link = document.createElement('a');
-                        link.href = `whatsapp://send?text=${encodeURIComponent(shareData.text)}`;
-                        link.click();
-                        
-                        // After a short delay, create another link for the image
-                        setTimeout(() => {
-                            const imgLink = document.createElement('a');
-                            imgLink.href = dataUrl;
-                            imgLink.download = 'LOT.jpg';
-                            imgLink.click();
-                        }, 100);
-                    } else {
-                        // For iOS and other platforms, use the Web Share API
-                        await navigator.share(shareData);
-                    }
+                    });
                 } else {
                     const dataUrl = tempCanvas.toDataURL('image/jpeg', 0.9);
                     const link = document.createElement('a');
