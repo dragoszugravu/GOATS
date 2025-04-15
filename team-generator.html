@@ -286,50 +286,64 @@
         @media (max-width: 768px) {
             .generator-container {
                 padding: 1rem;
+                min-height: auto;
+                width: 100%;
+                overflow-x: hidden;
+                padding-bottom: 80px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 0 auto;
             }
 
             .section-title {
-                font-size: 1.8rem;
-                font-weight: 300;
+                font-size: 2rem;
+                font-weight: 400;
                 margin-bottom: 1.5rem;
                 letter-spacing: -0.01em;
             }
 
-            .generator-controls {
-                flex-direction: column;
-                gap: 1rem;
-                margin-bottom: 2rem;
+            .player-selection {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+                padding: 0.5rem;
+                max-height: none;
+                height: auto;
+                margin-bottom: 80px;
+                justify-items: center;
+                width: 100%;
+                max-width: 360px;
+                overflow-y: auto;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
             }
 
-            .player-selection {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 1.5rem;
-                padding: 0 1rem;
+            .player-selection::-webkit-scrollbar {
+                display: none;
             }
 
             .player-card {
-                height: 280px;
+                width: 100%;
+                max-width: 110px;
+                height: 120px;
+                aspect-ratio: 3/4;
+                margin: 0 auto;
             }
 
             .player-image {
-                height: 220px;
+                height: 90px;
             }
 
             .player-info {
-                padding: 1.2rem;
+                padding: 0.3rem;
             }
 
             .player-name {
-                font-size: 1.1rem;
+                font-size: 0.7rem;
             }
 
             .player-position {
-                font-size: 0.8rem;
-            }
-
-            .generate-btn {
-                padding: 1rem 2.5rem;
-                font-size: 1rem;
+                font-size: 0.6rem;
             }
 
             .generate-btn-container {
@@ -341,6 +355,13 @@
                 z-index: 100;
                 display: flex;
                 justify-content: center;
+            }
+
+            .generate-btn {
+                padding: 0.8rem 2rem;
+                font-size: 0.9rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             }
         }
 
