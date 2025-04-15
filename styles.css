@@ -1030,4 +1030,16 @@ footer {
         font-size: 0.75rem;
         padding: 0 15px;
     }
+}
+
+.next-match-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+}
+
+.next-match-link:hover .next-match-card {
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
 } 
