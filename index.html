@@ -55,6 +55,13 @@
             align-items: center;
             position: relative;
             overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .next-match-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 113, 227, 0.3);
         }
 
         .next-match-card::before {
@@ -67,9 +74,9 @@
             border-radius: 8px;
             padding: 1px;
             background: linear-gradient(45deg, 
-                rgba(0, 113, 227, 0.5),  /* Reduced opacity from 0.8 */
-                rgba(255, 215, 0, 0.5),  /* Reduced opacity from 0.8 */
-                rgba(0, 113, 227, 0.5)   /* Reduced opacity from 0.8 */
+                rgba(0, 113, 227, 0.5),
+                rgba(255, 215, 0, 0.5),
+                rgba(0, 113, 227, 0.5)
             );
             -webkit-mask: 
                 linear-gradient(#fff 0 0) content-box, 
@@ -78,6 +85,11 @@
             mask-composite: exclude;
             pointer-events: none;
             animation: outlinePulse 3s ease-in-out infinite;
+            transition: opacity 0.3s ease;
+        }
+
+        .next-match-card:hover::before {
+            opacity: 0.8;
         }
 
         .next-match-card::after {
@@ -96,45 +108,11 @@
             );
             pointer-events: none;
             animation: glowPulse 3s ease-in-out infinite;
+            transition: opacity 0.3s ease;
         }
 
-        @keyframes outlinePulse {
-            0% {
-                opacity: 0.3;  /* Reduced from 0.5 */
-                background: linear-gradient(45deg, 
-                    rgba(0, 113, 227, 0.5),
-                    rgba(255, 215, 0, 0.5),
-                    rgba(0, 113, 227, 0.5)
-                );
-            }
-            50% {
-                opacity: 0.6;  /* Reduced from 1 */
-                background: linear-gradient(45deg, 
-                    rgba(0, 113, 227, 0.7),
-                    rgba(255, 215, 0, 0.7),
-                    rgba(0, 113, 227, 0.7)
-                );
-            }
-            100% {
-                opacity: 0.3;  /* Reduced from 0.5 */
-                background: linear-gradient(45deg, 
-                    rgba(0, 113, 227, 0.5),
-                    rgba(255, 215, 0, 0.5),
-                    rgba(0, 113, 227, 0.5)
-                );
-            }
-        }
-
-        @keyframes glowPulse {
-            0% {
-                opacity: 0.2;
-            }
-            50% {
-                opacity: 0.4;
-            }
-            100% {
-                opacity: 0.2;
-            }
+        .next-match-card:hover::after {
+            opacity: 0.6;
         }
 
         .competition-logo {
@@ -450,7 +428,7 @@
     </header>
 
     <div class="next-match-container">
-        <div class="next-match-card">
+        <div class="next-match-card" onclick="window.open('https://youtu.be/8XyA_08kGgw', '_blank')" style="cursor: pointer;">
             <div class="competition-logo">
                 <img src="./images/vc.jpg" alt="Victory Cup Logo" onerror="this.src='./images/default.jpg'">
             </div>
