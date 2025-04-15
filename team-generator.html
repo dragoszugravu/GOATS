@@ -286,57 +286,50 @@
         @media (max-width: 768px) {
             .generator-container {
                 padding: 1rem;
-                min-height: auto;
-                width: 100%;
-                overflow-x: hidden;
-                padding-bottom: 80px;
-                display: flex;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                font-weight: 300;
+                margin-bottom: 1.5rem;
+                letter-spacing: -0.01em;
+            }
+
+            .generator-controls {
                 flex-direction: column;
-                align-items: center;
-                margin: 0 auto;
+                gap: 1rem;
+                margin-bottom: 2rem;
             }
 
             .player-selection {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.5rem;
-                padding: 0.5rem;
-                max-height: none;
-                height: auto;
-                margin-bottom: 80px;
-                justify-items: center;
-                width: 100%;
-                max-width: 360px;
-                overflow-y: auto;
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-            }
-
-            .player-selection::-webkit-scrollbar {
-                display: none;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+                padding: 0 0.5rem;
             }
 
             .player-card {
-                width: 100%;
-                max-width: 110px;
-                height: 120px;
-                aspect-ratio: 3/4;
-                margin: 0 auto;
+                height: 240px;
             }
 
             .player-image {
-                height: 90px;
+                height: 180px;
             }
 
             .player-info {
-                padding: 0.3rem;
+                padding: 1rem;
             }
 
             .player-name {
-                font-size: 0.7rem;
+                font-size: 1rem;
             }
 
             .player-position {
-                font-size: 0.6rem;
+                font-size: 0.75rem;
+            }
+
+            .generate-btn {
+                padding: 0.8rem 2rem;
+                font-size: 0.9rem;
             }
 
             .generate-btn-container {
@@ -348,13 +341,6 @@
                 z-index: 100;
                 display: flex;
                 justify-content: center;
-            }
-
-            .generate-btn {
-                padding: 0.8rem 2rem;
-                font-size: 0.9rem;
-                border-radius: 8px;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             }
         }
 
