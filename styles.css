@@ -670,13 +670,13 @@ main {
     .player-card {
         flex: 0 0 auto;
         width: 140px;
-        height: 180px;
+        height: 220px;
         scroll-snap-align: start;
         margin: 0;
     }
 
     .player-image {
-        height: 140px;
+        height: 180px;
     }
 
     .player-info {
