@@ -554,59 +554,9 @@ main {
     }
     
     .players-grid {
-        display: flex;
-        overflow-x: auto;
-        padding: 0.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         gap: 0.8rem;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        margin: 0 0.5rem;
-        width: calc(100% - 1rem);
-    }
-
-    .players-grid::-webkit-scrollbar {
-        display: none;
-    }
-
-    .player-card {
-        flex: 0 0 auto;
-        width: 150px;
-        height: 200px;
-        scroll-snap-align: start;
-        margin: 0;
-    }
-
-    .player-image {
-        height: 150px;
-    }
-
-    .player-info {
         padding: 0.5rem;
-    }
-
-    .player-name {
-        font-size: 0.9rem;
-        margin-bottom: 0.2rem;
-    }
-
-    .player-position {
-        font-size: 0.75rem;
-    }
-
-    .player-number {
-        font-size: 2rem;
-        top: -2rem;
-        right: 1.5rem;
-        padding: 0.6rem 1.2rem;
-    }
-
-    .player-logo {
-        width: 35px;
-        height: 35px;
-        bottom: 0.3rem;
-        right: 0.3rem;
     }
 
     /* Team Generator Mobile Styles */
@@ -710,8 +660,7 @@ main {
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
         -ms-overflow-style: none;
-        margin: 0 0.5rem;
-        width: calc(100% - 1rem);
+        margin: 0 1rem;
     }
 
     .players-grid::-webkit-scrollbar {
@@ -720,14 +669,14 @@ main {
 
     .player-card {
         flex: 0 0 auto;
-        width: 150px;
-        height: 200px;
+        width: 140px;
+        height: 180px;
         scroll-snap-align: start;
         margin: 0;
     }
 
     .player-image {
-        height: 150px;
+        height: 140px;
     }
 
     .player-info {
@@ -735,26 +684,11 @@ main {
     }
 
     .player-name {
-        font-size: 0.9rem;
-        margin-bottom: 0.2rem;
+        font-size: 0.8rem;
     }
 
     .player-position {
-        font-size: 0.75rem;
-    }
-
-    .player-number {
-        font-size: 2rem;
-        top: -2rem;
-        right: 1.5rem;
-        padding: 0.6rem 1.2rem;
-    }
-
-    .player-logo {
-        width: 35px;
-        height: 35px;
-        bottom: 0.3rem;
-        right: 0.3rem;
+        font-size: 0.7rem;
     }
 
     /* Remove the old grid styles */
@@ -1096,16 +1030,4 @@ footer {
         font-size: 0.75rem;
         padding: 0 15px;
     }
-}
-
-.next-match-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    width: 100%;
-}
-
-.next-match-link:hover .next-match-card {
-    transform: scale(1.02);
-    transition: transform 0.3s ease;
 } 
