@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOATS FC - Contact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/GOATS.png">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        .contact-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #fff, rgba(255,255,255,0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .contact-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(var(--accent-color-rgb), 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            color: #4CAF50;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1rem;
+            display: none;
+        }
+
+        .error-message {
+            color: #f44336;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1rem;
+            display: none;
+        }
+
+        /* Logo styles */
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-link:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 300;
+            background: linear-gradient(45deg, var(--accent-color), var(--highlight-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 75, 43, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                margin: 1rem;
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+
+            .contact-title {
+                font-size: 2rem;
+            }
+
+            .contact-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .form-group label {
+                font-size: 0.85rem;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 0.7rem;
+                font-size: 0.9rem;
+            }
+
+            .submit-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .logo-container {
+                gap: 0.5rem;
+            }
+
+            .logo-image {
+                width: 40px;
+                height: 40px;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+
+            header {
+                padding: 1rem;
+            }
+
+            nav {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .logo-text,
+            .logo-link {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="wave-section">
+        <div class="wave">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </section>
+
+    <div class="scroll-lines">
+        <div class="scroll-line scroll-line-1"></div>
+        <div class="scroll-line scroll-line-2"></div>
+        <div class="scroll-line scroll-line-3"></div>
+        <div class="scroll-line scroll-line-4"></div>
+        <div class="scroll-line scroll-line-5"></div>
+        <div class="scroll-line scroll-line-6"></div>
+        <div class="scroll-line scroll-line-7"></div>
+        <div class="scroll-line scroll-line-8"></div>
+        <div class="scroll-line scroll-line-9"></div>
+        <div class="scroll-line scroll-line-10"></div>
+        <div class="scroll-line scroll-line-11"></div>
+        <div class="scroll-line scroll-line-12"></div>
+        <div class="scroll-line scroll-line-13"></div>
+        <div class="scroll-line scroll-line-14"></div>
+        <div class="scroll-line scroll-line-15"></div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo-container">
+                <a href="index.html" class="logo-link">
+                    <img src="images/GOATS.png" alt="GOATS FC Logo" class="logo-image">
+                    <div class="logo-text">GOATS FC</div>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Players</a>
+                <a href="team-generator.html">Team Generator</a>
+                <a href="https://victorycup.ro/echipe/315?s=goats&page=meciuri" target="_blank">Matches</a>
+                <a href="contact.html" class="active">Contact</a>
+            </div>
+            <button class="hamburger-menu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="contact-container">
+            <h1 class="contact-title">Formular de contact</h1>
+            <p class="contact-subtitle">Bulevardul Ghencea 31, Sector 6, Bucuresti, Romania</p>
+            
+            <form class="contact-form" id="contactForm" onsubmit="sendEmail(event)">
+                <div class="form-group">
+                    <input type="text" class="form-input" id="lastName" name="lastName" placeholder="Nume de familie" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" class="form-input" id="firstName" name="firstName" placeholder="Prenume" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="tel" class="form-input" id="phone" name="phone" placeholder="Nr. de telefon" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" class="form-input" id="email" name="email" placeholder="Adresa de email" required>
+                </div>
+                
+                <div class="form-group">
+                    <textarea class="form-input" id="message" name="message" placeholder="Mesajul tau" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Trimite</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu functionality
+        function initMobileMenu() {
+            const hamburger = document.querySelector('.hamburger-menu');
+            const mobileNav = document.createElement('div');
+            mobileNav.className = 'mobile-nav';
+            
+            const navLinks = document.querySelector('.nav-links').cloneNode(true);
+            mobileNav.appendChild(navLinks);
+            document.body.appendChild(mobileNav);
+            
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+                document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+            });
+            
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+
+        // Initialize mobile menu
+        initMobileMenu();
+
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+            
+            const form = document.querySelector('.contact-form');
+            const successMessage = document.querySelector('.success-message');
+            const errorMessage = document.querySelector('.error-message');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Basic form validation
+                const name = form.querySelector('input[name="name"]').value;
+                const email = form.querySelector('input[name="email"]').value;
+                const message = form.querySelector('textarea[name="message"]').value;
+
+                if (!name || !email || !message) {
+                    showError('Please fill in all fields');
+                    return;
+                }
+
+                if (!isValidEmail(email)) {
+                    showError('Please enter a valid email address');
+                    return;
+                }
+
+                // Send email using EmailJS
+                emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form)
+                    .then(function() {
+                        showSuccess('Message sent successfully!');
+                        form.reset();
+                    }, function(error) {
+                        showError('Failed to send message. Please try again later.');
+                        console.error('EmailJS error:', error);
+                    });
+            });
+
+            function isValidEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            function showSuccess(message) {
+                successMessage.textContent = message;
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            }
+
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 5000);
+            }
+        })();
+    </script>
+</body>
+</html> 
