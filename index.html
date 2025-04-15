@@ -65,11 +65,11 @@
             right: 0;
             bottom: 0;
             border-radius: 8px;
-            padding: 2px;
+            padding: 1px;
             background: linear-gradient(45deg, 
-                rgba(0, 113, 227, 0.8),  /* Blue */
-                rgba(255, 215, 0, 0.8),  /* Gold */
-                rgba(0, 113, 227, 0.8)   /* Blue */
+                rgba(0, 113, 227, 0.5),  /* Reduced opacity from 0.8 */
+                rgba(255, 215, 0, 0.5),  /* Reduced opacity from 0.8 */
+                rgba(0, 113, 227, 0.5)   /* Reduced opacity from 0.8 */
             );
             -webkit-mask: 
                 linear-gradient(#fff 0 0) content-box, 
@@ -100,27 +100,27 @@
 
         @keyframes outlinePulse {
             0% {
-                opacity: 0.5;
+                opacity: 0.3;  /* Reduced from 0.5 */
                 background: linear-gradient(45deg, 
-                    rgba(0, 113, 227, 0.8),
-                    rgba(255, 215, 0, 0.8),
-                    rgba(0, 113, 227, 0.8)
+                    rgba(0, 113, 227, 0.5),
+                    rgba(255, 215, 0, 0.5),
+                    rgba(0, 113, 227, 0.5)
                 );
             }
             50% {
-                opacity: 1;
+                opacity: 0.6;  /* Reduced from 1 */
                 background: linear-gradient(45deg, 
-                    rgba(0, 113, 227, 1),
-                    rgba(255, 215, 0, 1),
-                    rgba(0, 113, 227, 1)
+                    rgba(0, 113, 227, 0.7),
+                    rgba(255, 215, 0, 0.7),
+                    rgba(0, 113, 227, 0.7)
                 );
             }
             100% {
-                opacity: 0.5;
+                opacity: 0.3;  /* Reduced from 0.5 */
                 background: linear-gradient(45deg, 
-                    rgba(0, 113, 227, 0.8),
-                    rgba(255, 215, 0, 0.8),
-                    rgba(0, 113, 227, 0.8)
+                    rgba(0, 113, 227, 0.5),
+                    rgba(255, 215, 0, 0.5),
+                    rgba(0, 113, 227, 0.5)
                 );
             }
         }
@@ -333,7 +333,7 @@
             }
 
             .next-match-card::before {
-                padding: 2.5px;
+                padding: 1.5px;  /* Reduced from 2.5px */
             }
 
             .match-date, .match-competition {
@@ -452,7 +452,7 @@
     <div class="next-match-container">
         <div class="next-match-card">
             <div class="competition-logo">
-                <img src="images/VC.jpg" alt="Victory Cup Logo">
+                <img src="./images/vc.jpg" alt="Victory Cup Logo" onerror="this.src='./images/default.jpg'">
             </div>
             <div class="match-content">
                 <div class="match-header">

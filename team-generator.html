@@ -14,6 +14,8 @@
             --text-color: #ffffff;
             --text-secondary: rgba(255, 255, 255, 0.8);
             --border-color: rgba(255, 255, 255, 0.1);
+            --accent-color-rgb: 0, 113, 227;
+            --highlight-color: #ff4b2b;
         }
 
         body {
@@ -295,8 +297,8 @@
             }
 
             .player-selection {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.5rem;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
                 padding: 0.5rem;
                 max-height: none;
                 height: auto;
@@ -316,25 +318,25 @@
             .player-card {
                 width: 100%;
                 max-width: 110px;
-                height: 120px;
+                height: 240px;
                 aspect-ratio: 3/4;
                 margin: 0 auto;
             }
 
             .player-image {
-                height: 90px;
+                height: 180px;
             }
 
             .player-info {
-                padding: 0.3rem;
+                padding: 1rem;
             }
 
             .player-name {
-                font-size: 0.7rem;
+                font-size: 1rem;
             }
 
             .player-position {
-                font-size: 0.6rem;
+                font-size: 0.75rem;
             }
 
             .generate-btn-container {

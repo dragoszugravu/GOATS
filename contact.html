@@ -334,49 +334,64 @@
 
         // Initialize EmailJS
         (function() {
-            emailjs.init("8JYST7psiB3cYuAkS");
-        })();
-
-        // Email sending functionality
-        async function sendEmail(event) {
-            event.preventDefault();
+            emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
             
-            const submitBtn = document.querySelector('.submit-btn');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Se trimite...';
-            
-            const formData = {
-                lastName: document.getElementById('lastName').value,
-                firstName: document.getElementById('firstName').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                message: document.getElementById('message').value
-            };
+            const form = document.querySelector('.contact-form');
+            const successMessage = document.querySelector('.success-message');
+            const errorMessage = document.querySelector('.error-message');
 
-            try {
-                await emailjs.send(
-                    "service_410s1uu",
-                    "template_d48of9j",
-                    {
-                        name: `${formData.firstName} ${formData.lastName}`,
-                        email: formData.email,
-                        phone: formData.phone,
-                        message: formData.message,
-                        time: new Date().toLocaleString()
-                    }
-                );
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Basic form validation
+                const name = form.querySelector('input[name="name"]').value;
+                const email = form.querySelector('input[name="email"]').value;
+                const message = form.querySelector('textarea[name="message"]').value;
 
-                // Show success message
-                alert('Mesajul a fost trimis cu succes!');
-                document.getElementById('contactForm').reset();
-            } catch (error) {
-                console.error('Error details:', error);
-                alert(`Eroare: ${error.text || 'A apărut o eroare la trimiterea mesajului. Vă rugăm să încercați din nou.'}`);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Trimite';
+                if (!name || !email || !message) {
+                    showError('Please fill in all fields');
+                    return;
+                }
+
+                if (!isValidEmail(email)) {
+                    showError('Please enter a valid email address');
+                    return;
+                }
+
+                // Send email using EmailJS
+                emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form)
+                    .then(function() {
+                        showSuccess('Message sent successfully!');
+                        form.reset();
+                    }, function(error) {
+                        showError('Failed to send message. Please try again later.');
+                        console.error('EmailJS error:', error);
+                    });
+            });
+
+            function isValidEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
             }
-        }
+
+            function showSuccess(message) {
+                successMessage.textContent = message;
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            }
+
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 5000);
+            }
+        })();
     </script>
 </body>
 </html> 
