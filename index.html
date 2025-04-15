@@ -26,7 +26,7 @@
 
         .next-match-container {
             width: 100%;
-            max-width: 400px;
+            max-width: 350px;
             margin: 1.5rem auto;
             padding: 0 1rem;
             animation: containerPulse 3s ease-in-out infinite;
@@ -45,43 +45,139 @@
         }
 
         .next-match-card {
-            background: rgba(26, 26, 26, 0.8);
-            border-radius: 8px;
-            padding: 1.25rem;
-            color: white;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            animation: cardGlow 3s ease-in-out infinite;
-            transform-origin: center center;
+            border-radius: 8px;
+            padding: 15px;
+            animation: fadeIn 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes cardGlow {
+        .next-match-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 8px;
+            padding: 2px;
+            background: linear-gradient(45deg, 
+                rgba(0, 113, 227, 0.8),  /* Blue */
+                rgba(255, 215, 0, 0.8),  /* Gold */
+                rgba(0, 113, 227, 0.8)   /* Blue */
+            );
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            animation: outlinePulse 3s ease-in-out infinite;
+        }
+
+        .next-match-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 8px;
+            background: linear-gradient(45deg, 
+                transparent,
+                rgba(0, 113, 227, 0.1),
+                rgba(255, 215, 0, 0.1),
+                transparent
+            );
+            pointer-events: none;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes outlinePulse {
             0% {
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                border-color: rgba(255, 255, 255, 0.1);
+                opacity: 0.5;
+                background: linear-gradient(45deg, 
+                    rgba(0, 113, 227, 0.8),
+                    rgba(255, 215, 0, 0.8),
+                    rgba(0, 113, 227, 0.8)
+                );
             }
             50% {
-                box-shadow: 
-                    0 0 20px rgba(var(--accent-color-rgb), 0.3),
-                    0 0 40px rgba(var(--accent-color-rgb), 0.1);
-                border-color: rgba(var(--accent-color-rgb), 0.3);
+                opacity: 1;
+                background: linear-gradient(45deg, 
+                    rgba(0, 113, 227, 1),
+                    rgba(255, 215, 0, 1),
+                    rgba(0, 113, 227, 1)
+                );
             }
             100% {
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                border-color: rgba(255, 255, 255, 0.1);
+                opacity: 0.5;
+                background: linear-gradient(45deg, 
+                    rgba(0, 113, 227, 0.8),
+                    rgba(255, 215, 0, 0.8),
+                    rgba(0, 113, 227, 0.8)
+                );
             }
+        }
+
+        @keyframes glowPulse {
+            0% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.4;
+            }
+            100% {
+                opacity: 0.2;
+            }
+        }
+
+        .competition-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 150px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .competition-logo img {
+            max-width: 100%;
+            height: auto;
+            max-height: 35px;
+            filter: brightness(1.1);
+            opacity: 0.9;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .match-content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .match-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             margin-bottom: 0.75rem;
             padding-bottom: 0.75rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
+            width: 100%;
+            max-width: 280px;
         }
 
         .match-header::after {
@@ -116,6 +212,7 @@
             font-weight: 600;
             letter-spacing: 0.5px;
             color: var(--accent-color);
+            text-align: center;
         }
 
         .match-competition {
@@ -130,6 +227,8 @@
         .match-details {
             text-align: center;
             margin-bottom: 1rem;
+            width: 100%;
+            max-width: 280px;
         }
 
         .kickoff {
@@ -149,8 +248,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 2rem;
+            gap: 1.5rem;
             padding: 0.5rem 0;
+            width: 100%;
+            max-width: 280px;
         }
 
         .team {
@@ -224,10 +325,15 @@
             .next-match-container {
                 max-width: 320px;
                 margin: 1rem auto;
+                animation: containerPulse 4s ease-in-out infinite;
             }
 
             .next-match-card {
                 padding: 1rem;
+            }
+
+            .next-match-card::before {
+                padding: 2.5px;
             }
 
             .match-date, .match-competition {
@@ -251,10 +357,34 @@
                     transform: scale(1);
                 }
                 50% {
-                    transform: scale(1.01);
+                    transform: scale(1.005);
                 }
                 100% {
                     transform: scale(1);
+                }
+            }
+
+            @keyframes nameGlow {
+                0% {
+                    text-shadow: 0 0 5px rgba(255, 215, 0, 0.2);
+                }
+                50% {
+                    text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+                }
+                100% {
+                    text-shadow: 0 0 5px rgba(255, 215, 0, 0.2);
+                }
+            }
+
+            @keyframes vsGlow {
+                0% {
+                    text-shadow: 0 0 3px rgba(var(--accent-color-rgb), 0.2);
+                }
+                50% {
+                    text-shadow: 0 0 6px rgba(var(--accent-color-rgb), 0.3);
+                }
+                100% {
+                    text-shadow: 0 0 3px rgba(var(--accent-color-rgb), 0.2);
                 }
             }
         }
@@ -321,25 +451,29 @@
 
     <div class="next-match-container">
         <div class="next-match-card">
-            <div class="match-header">
-                <div class="match-date">THU APR 17</div>
-                <div class="match-competition">VICTORY CUP</div>
+            <div class="competition-logo">
+                <img src="images/VC.jpg" alt="Victory Cup Logo">
             </div>
-            <div class="match-details">
-                <div class="kickoff">
-                    KICKOFF - 22:10
+            <div class="match-content">
+                <div class="match-header">
+                    <div class="match-date">THU APR 17</div>
                 </div>
-                <div class="venue">
-                    VICTORY CUP ARENA
+                <div class="match-details">
+                    <div class="kickoff">
+                        KICKOFF - 22:10
+                    </div>
+                    <div class="venue">
+                        VICTORY CUP ARENA
+                    </div>
                 </div>
-            </div>
-            <div class="teams-container">
-                <div class="team">
-                    <div class="team-name goats">GOATS FC</div>
-                </div>
-                <div class="vs">V</div>
-                <div class="team">
-                    <div class="team-name">BLACK EAGLES</div>
+                <div class="teams-container">
+                    <div class="team">
+                        <div class="team-name goats">GOATS FC</div>
+                    </div>
+                    <div class="vs">V</div>
+                    <div class="team">
+                        <div class="team-name">BLACK EAGLES</div>
+                    </div>
                 </div>
             </div>
         </div>
