@@ -220,13 +220,14 @@
         }
 
         .player-circle {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             position: relative;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
         }
 
         .player-circle[data-position="Goalkeeper"] {
@@ -256,7 +257,7 @@
             transform: translateX(-50%);
             white-space: pre-line;
             text-align: center;
-            font-size: 8px;
+            font-size: 7px;
             font-weight: 400;
             color: rgba(255, 255, 255, 0.95);
             line-height: 1.4;
@@ -266,7 +267,7 @@
 
         .player-circle .name::first-line {
             font-weight: 500;
-            font-size: 9px;
+            font-size: 8px;
             color: rgba(255, 255, 255, 0.95);
         }
 
@@ -621,6 +622,7 @@
             padding: 20px 0;
             width: 100%;
             overflow: visible;
+            gap: 10px;
         }
 
         .formation-row.drop-zone {
