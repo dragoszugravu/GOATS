@@ -277,7 +277,7 @@
             <h1 class="contact-title">Formular de contact</h1>
             <p class="contact-subtitle">Bulevardul Ghencea 31, Sector 6, Bucuresti, Romania</p>
             
-            <form class="contact-form" id="contactForm" onsubmit="sendEmail(event)">
+            <form class="contact-form" id="contactForm">
                 <div class="form-group">
                     <input type="text" class="form-input" id="lastName" name="lastName" placeholder="Nume de familie" required>
                 </div>
@@ -299,9 +299,13 @@
                 </div>
                 
                 <button type="submit" class="submit-btn">Trimite</button>
+                <div class="success-message">Mesajul a fost trimis.</div>
+                <div class="error-message"></div>
             </form>
         </div>
     </main>
+
+    <footer>Created by Dragos Zughy</footer>
 
     <script>
         // Mobile menu functionality
@@ -334,7 +338,7 @@
 
         // Initialize EmailJS
         (function() {
-            emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+            emailjs.init("8JYST7psiB3cYuAkS"); // Replace with your EmailJS public key
             
             const form = document.querySelector('.contact-form');
             const successMessage = document.querySelector('.success-message');
@@ -344,27 +348,34 @@
                 e.preventDefault();
                 
                 // Basic form validation
-                const name = form.querySelector('input[name="name"]').value;
+                const lastName = form.querySelector('input[name="lastName"]').value;
+                const firstName = form.querySelector('input[name="firstName"]').value;
+                const phone = form.querySelector('input[name="phone"]').value;
                 const email = form.querySelector('input[name="email"]').value;
                 const message = form.querySelector('textarea[name="message"]').value;
 
-                if (!name || !email || !message) {
-                    showError('Please fill in all fields');
+                if (!lastName || !firstName || !phone || !email || !message) {
+                    showError('Vă rugăm să completați toate câmpurile');
                     return;
                 }
 
                 if (!isValidEmail(email)) {
-                    showError('Please enter a valid email address');
+                    showError('Vă rugăm să introduceți o adresă de email validă');
+                    return;
+                }
+
+                if (!isValidPhone(phone)) {
+                    showError('Vă rugăm să introduceți un număr de telefon valid');
                     return;
                 }
 
                 // Send email using EmailJS
-                emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form)
+                emailjs.sendForm('service_410s1uu', 'template_d48of9j', form)
                     .then(function() {
-                        showSuccess('Message sent successfully!');
+                        showSuccess('Mesajul a fost trimis.');
                         form.reset();
                     }, function(error) {
-                        showError('Failed to send message. Please try again later.');
+                        showError('Mesajul nu a putut fi trimis. Vă rugăm să încercați din nou.');
                         console.error('EmailJS error:', error);
                     });
             });
@@ -372,6 +383,11 @@
             function isValidEmail(email) {
                 const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 return re.test(email);
+            }
+
+            function isValidPhone(phone) {
+                const re = /^[0-9]{10}$/;
+                return re.test(phone.replace(/\D/g, ''));
             }
 
             function showSuccess(message) {
@@ -394,4 +410,4 @@
         })();
     </script>
 </body>
-</html> 
+</html>
