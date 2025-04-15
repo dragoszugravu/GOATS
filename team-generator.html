@@ -619,6 +619,8 @@
             z-index: 1;
             min-height: 100px;
             padding: 20px 0;
+            width: 100%;
+            overflow: visible;
         }
 
         .formation-row.drop-zone {
@@ -984,6 +986,20 @@
                 `;
                 
                 row.appendChild(playerDiv);
+            });
+
+            // Calculate spacing to ensure all players fit
+            const circles = row.querySelectorAll('.player-circle');
+            const totalCircles = circles.length;
+            const availableWidth = row.offsetWidth * 0.95; // Use 95% of available width
+            const spacing = availableWidth / (totalCircles + 1);
+            
+            // Position each circle
+            circles.forEach((circle, index) => {
+                const x = (availableWidth - (totalCircles * spacing)) / 2 + (index + 0.5) * spacing;
+                circle.style.left = `${x}px`;
+                circle.style.position = 'absolute';
+                circle.style.transform = 'translateX(-50%)';
             });
 
             // Force a reflow to ensure all elements are properly rendered
