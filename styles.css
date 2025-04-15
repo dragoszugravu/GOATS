@@ -544,7 +544,7 @@ main {
     }
     
     .player-image {
-        height: 140px;
+        height: 250px;
     }
     
     .player-logo {
@@ -553,9 +553,43 @@ main {
     }
     
     .players-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 0.8rem;
+        display: flex;
+        overflow-x: auto;
         padding: 0.5rem;
+        gap: 0.8rem;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        margin: 0 1rem;
+    }
+
+    .players-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .player-card {
+        flex: 0 0 auto;
+        width: 260px;
+        height: 360px;
+        scroll-snap-align: start;
+        margin: 0;
+    }
+
+    .player-image {
+        height: 250px;
+    }
+
+    .player-info {
+        padding: 1rem;
+    }
+
+    .player-name {
+        font-size: 1.2rem;
+    }
+
+    .player-position {
+        font-size: 0.9rem;
     }
 
     /* Team Generator Mobile Styles */
@@ -668,26 +702,26 @@ main {
 
     .player-card {
         flex: 0 0 auto;
-        width: 140px;
-        height: 180px;
+        width: 260px;
+        height: 360px;
         scroll-snap-align: start;
         margin: 0;
     }
 
     .player-image {
-        height: 140px;
+        height: 250px;
     }
 
     .player-info {
-        padding: 0.5rem;
+        padding: 1rem;
     }
 
     .player-name {
-        font-size: 0.8rem;
+        font-size: 1.2rem;
     }
 
     .player-position {
-        font-size: 0.7rem;
+        font-size: 0.9rem;
     }
 
     /* Remove the old grid styles */
