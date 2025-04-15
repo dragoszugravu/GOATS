@@ -424,7 +424,7 @@ main {
     -webkit-backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
-    height: 350px;
+    height: 420px;
 }
 
 .player-card::before {
@@ -451,7 +451,7 @@ main {
 
 .player-image {
     position: relative;
-    height: 250px;
+    height: 320px;
     overflow: hidden;
     border-radius: 15px;
 }
@@ -540,12 +540,12 @@ main {
     }
     
     .player-card {
-        height: 180px;
+        height: 220px;
         aspect-ratio: 3/4;
     }
     
     .player-image {
-        height: 140px;
+        height: 180px;
     }
     
     .player-logo {
@@ -554,7 +554,7 @@ main {
     }
     
     .players-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: 0.8rem;
         padding: 0.5rem;
     }
@@ -669,14 +669,14 @@ main {
 
     .player-card {
         flex: 0 0 auto;
-        width: 140px;
-        height: 180px;
+        width: 160px;
+        height: 220px;
         scroll-snap-align: start;
         margin: 0;
     }
 
     .player-image {
-        height: 140px;
+        height: 180px;
     }
 
     .player-info {
