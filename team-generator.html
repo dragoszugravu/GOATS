@@ -1236,9 +1236,9 @@
                 const tempCanvas = document.createElement('canvas');
                 const isMobile = window.innerWidth <= 768;
                 
-                // Optimize dimensions for WhatsApp
-                const width = 800; // Increased from 500
-                const height = 1000; // Increased from 600
+                // Optimize dimensions for WhatsApp - more compact
+                const width = 600; // Reduced from 800 to make it more compact
+                const height = 800; // Reduced from 1000 to make it more compact
                 const scale = 2; // Higher scale for better quality
                 
                 tempCanvas.width = width * scale;
@@ -1280,7 +1280,7 @@
                 // Draw player circles and names
                 const rows = teamToCapture.querySelectorAll('.formation-row');
                 const rowHeight = height / (rows.length + 1);
-                const circleRadius = 35; // Increased from 20
+                const circleRadius = 40; // Increased from 35
                 
                 rows.forEach((row, rowIndex) => {
                     const circles = row.querySelectorAll('.player-circle');
@@ -1289,9 +1289,10 @@
                     circles.forEach((circle, circleIndex) => {
                         const position = circle.dataset.position;
                         const totalCircles = circles.length;
-                        // Calculate positions to ensure all players fit
-                        const availableWidth = width * 0.9;
-                        const spacing = availableWidth / (totalCircles + 1);
+                        // Calculate positions to ensure all players fit - use more of the width
+                        const availableWidth = width * 0.95; // Increased from 0.9
+                        const minSpacing = 70; // Minimum spacing between circles
+                        const spacing = Math.max(minSpacing, availableWidth / (totalCircles + 1));
                         const x = (width - availableWidth) / 2 + (circleIndex + 1) * spacing;
                         
                         // Draw circle
@@ -1326,11 +1327,11 @@
                         ctx.fillStyle = fillColor;
                         ctx.fill();
                         ctx.strokeStyle = borderColor;
-                        ctx.lineWidth = 3; // Increased from 2
+                        ctx.lineWidth = 4; // Increased from 3
                         ctx.stroke();
 
                         // Draw position abbreviation
-                        ctx.font = 'bold 16px Arial'; // Increased from 10px
+                        ctx.font = 'bold 18px Arial'; // Increased from 16px
                         ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'middle';
@@ -1343,15 +1344,15 @@
                             const [lastName, firstName] = name.split('\n').map(n => n.trim());
                             
                             // Draw last name in thin and larger
-                            ctx.font = '100 12px Arial'; // Increased from 7px
+                            ctx.font = '100 14px Arial'; // Increased from 12px
                             ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                             ctx.textAlign = 'center';
                             ctx.textBaseline = 'top';
-                            ctx.fillText(lastName.toUpperCase(), x, rowY + 45); // Increased from 35
+                            ctx.fillText(lastName.toUpperCase(), x, rowY + 50); // Increased from 45
                             
                             // Draw first name in thinner and smaller
-                            ctx.font = '100 10px Arial'; // Increased from 6px
-                            ctx.fillText(firstName, x, rowY + 60); // Increased from 45
+                            ctx.font = '100 12px Arial'; // Increased from 10px
+                            ctx.fillText(firstName, x, rowY + 65); // Increased from 60
                         }
                     });
                 });
