@@ -540,12 +540,12 @@ main {
     }
     
     .player-card {
-        height: 250px;  /* Increased height */
+        height: 300px;  /* Increased from 250px */
         aspect-ratio: 3/4;
     }
     
     .player-image {
-        height: 200px;  /* Increased height */
+        height: 240px;  /* Increased from 200px */
     }
     
     .player-logo {
@@ -577,11 +577,15 @@ main {
     }
 
     .player-card {
-        height: 250px;  /* Consistent height */
+        flex: 0 0 auto;
+        width: 140px;
+        height: 300px;  /* Increased from 250px */
+        scroll-snap-align: start;
+        margin: 0;
     }
 
     .player-image {
-        height: 200px;  /* Consistent height */
+        height: 240px;  /* Increased from 200px */
     }
 
     .player-info {
@@ -667,18 +671,6 @@ main {
         display: none;
     }
 
-    .player-card {
-        flex: 0 0 auto;
-        width: 140px;
-        height: 250px;  /* Consistent height */
-        scroll-snap-align: start;
-        margin: 0;
-    }
-
-    .player-image {
-        height: 200px;  /* Consistent height */
-    }
-
     .player-info {
         padding: 0.5rem;
     }
@@ -695,11 +687,11 @@ main {
 /* Landscape mode specific adjustments */
 @media (max-width: 768px) and (orientation: landscape) {
     .player-card {
-        height: 280px;  /* Even taller in landscape */
+        height: 320px;  /* Increased from 280px */
     }
     
     .player-image {
-        height: 220px;  /* Even taller in landscape */
+        height: 260px;  /* Increased from 220px */
     }
     
     .players-grid {
