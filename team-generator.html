@@ -1283,8 +1283,8 @@
                     circles.forEach((circle, circleIndex) => {
                         const position = circle.dataset.position;
                         const totalCircles = circles.length;
-                        const spacing = width * 0.9 / (totalCircles + 1); // Increased spacing
-                        const x = width * 0.05 + (circleIndex + 1) * spacing; // Reduced side margins
+                        const spacing = width * 0.8 / (totalCircles + 1); // Increased spacing between players
+                        const x = width * 0.1 + (circleIndex + 1) * spacing; // Increased side margins
                         
                         // Draw circle
                         ctx.beginPath();
@@ -1335,15 +1335,15 @@
                             const [lastName, firstName] = name.split('\n').map(n => n.trim());
                             
                             // Draw last name in thin and larger
-                            ctx.font = '100 14px Arial'; // Increased font size
+                            ctx.font = '100 9px Arial';
                             ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                             ctx.textAlign = 'center';
                             ctx.textBaseline = 'top';
-                            ctx.fillText(lastName.toUpperCase(), x, rowY + circleRadius * 1.5);
+                            ctx.fillText(lastName.toUpperCase(), x, rowY + 40); // Increased spacing from circle
                             
                             // Draw first name in thinner and smaller
-                            ctx.font = '100 12px Arial'; // Increased font size
-                            ctx.fillText(firstName, x, rowY + circleRadius * 2.2);
+                            ctx.font = '100 8px Arial';
+                            ctx.fillText(firstName, x, rowY + 55); // Increased spacing between names
                         }
                     });
                 });
