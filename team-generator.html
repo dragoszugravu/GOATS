@@ -220,14 +220,15 @@
         }
 
         .player-circle {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             position: relative;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             flex-shrink: 0;
+            margin: 0 10px;
         }
 
         .player-circle[data-position="Goalkeeper"] {
@@ -257,7 +258,7 @@
             transform: translateX(-50%);
             white-space: pre-line;
             text-align: center;
-            font-size: 6px;
+            font-size: 7px;
             font-weight: 400;
             color: rgba(255, 255, 255, 0.95);
             line-height: 1.2;
@@ -628,7 +629,7 @@
 
         .formation-row {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
             flex: 1;
             position: relative;
@@ -637,7 +638,6 @@
             padding: 20px 0;
             width: 100%;
             overflow: visible;
-            gap: 15px;
         }
 
         .formation-row.drop-zone {
@@ -991,21 +991,6 @@
                 `;
                 
                 row.appendChild(playerDiv);
-            });
-
-            // Calculate spacing to ensure all players fit
-            const circles = row.querySelectorAll('.player-circle');
-            const totalCircles = circles.length;
-            const availableWidth = row.offsetWidth * 0.9;
-            const minSpacing = 60;
-            const spacing = Math.max(minSpacing, availableWidth / (totalCircles + 1));
-            
-            // Position each circle
-            circles.forEach((circle, index) => {
-                const x = (availableWidth - (totalCircles * spacing)) / 2 + (index + 0.5) * spacing;
-                circle.style.left = `${x}px`;
-                circle.style.position = 'absolute';
-                circle.style.transform = 'translateX(-50%)';
             });
 
             // Force a reflow to ensure all elements are properly rendered
