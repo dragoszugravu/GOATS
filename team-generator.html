@@ -675,6 +675,24 @@
         .player-card:hover .player-position {
             color: var(--accent-color);
         }
+
+        .player-circle .circle-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .player-circle .circle-content {
+                font-size: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -739,18 +757,10 @@
 
             <div class="generated-team" id="generatedTeam" style="display: none;">
                 <div class="field-container">
-                    <div class="formation-row forwards">
-                        <!-- Forwards will be added here -->
-                    </div>
-                    <div class="formation-row midfielders">
-                        <!-- Midfielders will be added here -->
-                    </div>
-                    <div class="formation-row defenders">
-                        <!-- Defenders will be added here -->
-                    </div>
-                    <div class="formation-row goalkeeper">
-                        <!-- Goalkeeper will be added here -->
-                    </div>
+                    <div class="formation-row forwards"></div>
+                    <div class="formation-row midfielders"></div>
+                    <div class="formation-row defenders"></div>
+                    <div class="formation-row goalkeeper"></div>
                 </div>
                 <div class="team-logos">
                     <img src="images/GOATS.png" alt="Team Logo">
@@ -910,10 +920,10 @@
             tempTeam.className = 'generated-team';
             tempTeam.innerHTML = `
                 <div class="field-container">
-                    <div class="formation-row goalkeeper"></div>
-                    <div class="formation-row defenders"></div>
-                    <div class="formation-row midfielders"></div>
                     <div class="formation-row forwards"></div>
+                    <div class="formation-row midfielders"></div>
+                    <div class="formation-row defenders"></div>
+                    <div class="formation-row goalkeeper"></div>
                 </div>
                 <div class="team-logos">
                     <img src="images/GOATS.png" alt="Team Logo">
@@ -921,10 +931,10 @@
             `;
 
             // Display the selected team in the temporary container
-            displayPlayers(selectedGk, 'goalkeeper', tempTeam);
-            displayPlayers(selectedDef, 'defenders', tempTeam);
-            displayPlayers(selectedMid, 'midfielders', tempTeam);
             displayPlayers(selectedFwd, 'forwards', tempTeam);
+            displayPlayers(selectedMid, 'midfielders', tempTeam);
+            displayPlayers(selectedDef, 'defenders', tempTeam);
+            displayPlayers(selectedGk, 'goalkeeper', tempTeam);
 
             // Show preview modal with the temporary team
             await showPreview(tempTeam);
@@ -949,8 +959,25 @@
                 const lastName = nameParts[0];
                 const firstName = nameParts.slice(1).join(' ');
                 
+                // Get position abbreviation
+                let positionAbbr;
+                switch(player.position) {
+                    case 'Goalkeeper':
+                        positionAbbr = 'GK';
+                        break;
+                    case 'Defender':
+                        positionAbbr = 'DF';
+                        break;
+                    case 'Midfielder':
+                        positionAbbr = 'MF';
+                        break;
+                    case 'Forward':
+                        positionAbbr = 'FW';
+                        break;
+                }
+                
                 playerDiv.innerHTML = `
-                    <div class="circle-content"></div>
+                    <div class="circle-content">${positionAbbr}</div>
                     <div class="name">${lastName.toUpperCase()}\n${firstName}</div>
                 `;
                 
@@ -1075,23 +1102,27 @@
                         ctx.arc(x, rowY, 22.5, 0, Math.PI * 2);
                         
                         // Set circle colors based on position
-                        let borderColor, fillColor;
+                        let borderColor, fillColor, positionAbbr;
                         switch(position) {
                             case 'Goalkeeper':
                                 borderColor = '#FF0000';
                                 fillColor = 'rgba(255, 0, 0, 0.3)';
+                                positionAbbr = 'GK';
                                 break;
                             case 'Defender':
                                 borderColor = '#0000FF';
                                 fillColor = 'rgba(0, 0, 255, 0.3)';
+                                positionAbbr = 'DF';
                                 break;
                             case 'Midfielder':
                                 borderColor = '#FFA500';
                                 fillColor = 'rgba(255, 165, 0, 0.3)';
+                                positionAbbr = 'MF';
                                 break;
                             case 'Forward':
                                 borderColor = '#D2B48C';
                                 fillColor = 'rgba(210, 180, 140, 0.3)';
+                                positionAbbr = 'FW';
                                 break;
                         }
                         
@@ -1100,6 +1131,13 @@
                         ctx.strokeStyle = borderColor;
                         ctx.lineWidth = 2;
                         ctx.stroke();
+
+                        // Draw position abbreviation
+                        ctx.font = 'bold 10px Arial';
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(positionAbbr, x, rowY);
 
                         // Draw player name
                         const nameElement = circle.querySelector('.name');
@@ -1238,23 +1276,27 @@
                         ctx.arc(x, rowY, circleRadius, 0, Math.PI * 2);
                         
                         // Set circle colors based on position
-                        let borderColor, fillColor;
+                        let borderColor, fillColor, positionAbbr;
                         switch(position) {
                             case 'Goalkeeper':
                                 borderColor = '#FF0000';
                                 fillColor = 'rgba(255, 0, 0, 0.3)';
+                                positionAbbr = 'GK';
                                 break;
                             case 'Defender':
                                 borderColor = '#0000FF';
                                 fillColor = 'rgba(0, 0, 255, 0.3)';
+                                positionAbbr = 'DF';
                                 break;
                             case 'Midfielder':
                                 borderColor = '#FFA500';
                                 fillColor = 'rgba(255, 165, 0, 0.3)';
+                                positionAbbr = 'MF';
                                 break;
                             case 'Forward':
                                 borderColor = '#D2B48C';
                                 fillColor = 'rgba(210, 180, 140, 0.3)';
+                                positionAbbr = 'FW';
                                 break;
                         }
                         
@@ -1263,6 +1305,13 @@
                         ctx.strokeStyle = borderColor;
                         ctx.lineWidth = 2;
                         ctx.stroke();
+
+                        // Draw position abbreviation
+                        ctx.font = 'bold 12px Arial';
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(positionAbbr, x, rowY);
 
                         // Draw player name
                         const nameElement = circle.querySelector('.name');
