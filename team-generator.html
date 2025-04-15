@@ -286,41 +286,27 @@
         @media (max-width: 768px) {
             .generator-container {
                 padding: 1rem;
-                min-height: auto;
-                width: 100%;
-                overflow-x: hidden;
-                padding-bottom: 80px;
-                display: flex;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .generator-controls {
                 flex-direction: column;
-                align-items: center;
-                margin: 0 auto;
+                gap: 1rem;
+                margin-bottom: 2rem;
             }
 
             .player-selection {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
                 gap: 1rem;
-                padding: 0.5rem;
-                max-height: none;
-                height: auto;
-                margin-bottom: 80px;
-                justify-items: center;
-                width: 100%;
-                max-width: 360px;
-                overflow-y: auto;
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-            }
-
-            .player-selection::-webkit-scrollbar {
-                display: none;
+                padding: 0 0.5rem;
             }
 
             .player-card {
-                width: 100%;
-                max-width: 110px;
                 height: 240px;
-                aspect-ratio: 3/4;
-                margin: 0 auto;
             }
 
             .player-image {
@@ -339,55 +325,9 @@
                 font-size: 0.75rem;
             }
 
-            .generate-btn-container {
-                position: fixed;
-                bottom: 20px;
-                left: 0;
-                right: 0;
-                padding: 0;
-                z-index: 100;
-                display: flex;
-                justify-content: center;
-            }
-
             .generate-btn {
                 padding: 0.8rem 2rem;
                 font-size: 0.9rem;
-                border-radius: 8px;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            }
-
-            .section-title {
-                font-size: 2.5rem;
-            }
-
-            .generated-team {
-                width: 95%;
-                padding: 1.5rem;
-                height: auto;
-            }
-
-            .generated-team h2 {
-                font-size: 1.8rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .team-section {
-                margin-bottom: 1.5rem;
-            }
-
-            .team-section h3 {
-                font-size: 1.2rem;
-                margin-bottom: 0.8rem;
-            }
-
-            .team-section ul {
-                padding: 0;
-            }
-
-            .team-section li {
-                font-size: 0.9rem;
-                padding: 0.3rem 0;
             }
         }
 
