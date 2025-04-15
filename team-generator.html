@@ -1231,7 +1231,7 @@
                 const isMobile = window.innerWidth <= 768;
                 
                 // Force portrait mode dimensions for WhatsApp
-                const width = 400; // Fixed width for better WhatsApp display
+                const width = 500; // Increased from 400 to 500
                 const height = 600; // Fixed height for portrait mode
                 const scale = 2; // Higher scale for better quality
                 
@@ -1274,7 +1274,7 @@
                 // Draw player circles and names
                 const rows = teamToCapture.querySelectorAll('.formation-row');
                 const rowHeight = height / (rows.length + 1);
-                const circleRadius = 25; // Fixed larger radius for better visibility
+                const circleRadius = 20; // Reduced from 25 to 20
                 
                 rows.forEach((row, rowIndex) => {
                     const circles = row.querySelectorAll('.player-circle');
@@ -1283,14 +1283,10 @@
                     circles.forEach((circle, circleIndex) => {
                         const position = circle.dataset.position;
                         const totalCircles = circles.length;
-                        // Adjust spacing based on number of players
-                        let spacing;
-                        if (totalCircles <= 4) {
-                            spacing = width * 0.7 / (totalCircles + 1);
-                        } else {
-                            spacing = width * 0.6 / (totalCircles + 1); // More compact spacing for >4 players
-                        }
-                        const x = width * 0.2 + (circleIndex + 1) * spacing; // Increased side margin
+                        // Calculate positions to ensure all players fit
+                        const availableWidth = width * 0.8; // 80% of width for players
+                        const spacing = availableWidth / (totalCircles + 1);
+                        const x = (width - availableWidth) / 2 + (circleIndex + 1) * spacing;
                         
                         // Draw circle
                         ctx.beginPath();
@@ -1328,7 +1324,7 @@
                         ctx.stroke();
 
                         // Draw position abbreviation
-                        ctx.font = 'bold 12px Arial';
+                        ctx.font = 'bold 10px Arial'; // Reduced from 12px
                         ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'middle';
@@ -1341,15 +1337,15 @@
                             const [lastName, firstName] = name.split('\n').map(n => n.trim());
                             
                             // Draw last name in thin and larger
-                            ctx.font = '100 8px Arial';
+                            ctx.font = '100 7px Arial'; // Reduced from 8px
                             ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                             ctx.textAlign = 'center';
                             ctx.textBaseline = 'top';
-                            ctx.fillText(lastName.toUpperCase(), x, rowY + 45);
+                            ctx.fillText(lastName.toUpperCase(), x, rowY + 35); // Reduced from 45
                             
                             // Draw first name in thinner and smaller
-                            ctx.font = '100 7px Arial';
-                            ctx.fillText(firstName, x, rowY + 60);
+                            ctx.font = '100 6px Arial'; // Reduced from 7px
+                            ctx.fillText(firstName, x, rowY + 45); // Reduced from 60
                         }
                     });
                 });
