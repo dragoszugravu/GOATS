@@ -985,6 +985,9 @@
                 
                 row.appendChild(playerDiv);
             });
+
+            // Force a reflow to ensure all elements are properly rendered
+            row.offsetHeight;
         }
 
         async function showPreview(teamContainer) {
@@ -995,6 +998,9 @@
             // Clear and update preview with the provided team container
             previewTeam.innerHTML = '';
             previewTeam.appendChild(teamContainer);
+            
+            // Force a reflow to ensure all elements are properly rendered
+            teamContainer.offsetHeight;
             
             // Pre-load all images in the preview
             const images = Array.from(teamContainer.getElementsByTagName('img'));
@@ -1284,7 +1290,7 @@
                         const position = circle.dataset.position;
                         const totalCircles = circles.length;
                         // Calculate positions to ensure all players fit
-                        const availableWidth = width * 0.8; // 80% of width for players
+                        const availableWidth = width * 0.9; // Increased from 0.8 to 0.9
                         const spacing = availableWidth / (totalCircles + 1);
                         const x = (width - availableWidth) / 2 + (circleIndex + 1) * spacing;
                         
