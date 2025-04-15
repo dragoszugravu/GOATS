@@ -1283,8 +1283,8 @@
                     circles.forEach((circle, circleIndex) => {
                         const position = circle.dataset.position;
                         const totalCircles = circles.length;
-                        const spacing = width * 0.8 / (totalCircles + 1); // Increased spacing between players
-                        const x = width * 0.1 + (circleIndex + 1) * spacing; // Increased side margins
+                        const spacing = width * 0.7 / (totalCircles + 1); // Reduced from 0.8 to 0.7 for more space
+                        const x = width * 0.15 + (circleIndex + 1) * spacing; // Increased from 0.1 to 0.15 for more side margin
                         
                         // Draw circle
                         ctx.beginPath();
@@ -1335,15 +1335,15 @@
                             const [lastName, firstName] = name.split('\n').map(n => n.trim());
                             
                             // Draw last name in thin and larger
-                            ctx.font = '100 9px Arial';
+                            ctx.font = '100 8px Arial'; // Reduced from 9px to 8px
                             ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                             ctx.textAlign = 'center';
                             ctx.textBaseline = 'top';
-                            ctx.fillText(lastName.toUpperCase(), x, rowY + 40); // Increased spacing from circle
+                            ctx.fillText(lastName.toUpperCase(), x, rowY + 45); // Increased from 40 to 45
                             
                             // Draw first name in thinner and smaller
-                            ctx.font = '100 8px Arial';
-                            ctx.fillText(firstName, x, rowY + 55); // Increased spacing between names
+                            ctx.font = '100 7px Arial'; // Reduced from 8px to 7px
+                            ctx.fillText(firstName, x, rowY + 60); // Increased from 55 to 60
                         }
                     });
                 });
