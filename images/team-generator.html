@@ -296,9 +296,16 @@
                 margin: 0 auto;
             }
 
+            .section-title {
+                font-size: 2rem;
+                font-weight: 400;
+                margin-bottom: 1.5rem;
+                letter-spacing: -0.01em;
+            }
+
             .player-selection {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 1rem;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
                 padding: 0.5rem;
                 max-height: none;
                 height: auto;
@@ -318,25 +325,27 @@
             .player-card {
                 width: 100%;
                 max-width: 110px;
-                height: 240px;
+                height: 120px;
                 aspect-ratio: 3/4;
                 margin: 0 auto;
             }
 
             .player-image {
-                height: 180px;
+                height: 90px;
             }
 
             .player-info {
-                padding: 1rem;
+                padding: 0.2rem;
             }
 
             .player-name {
-                font-size: 1rem;
+                font-size: 0.6rem;
+                margin-bottom: 0.2rem;
+                line-height: 1.2;
             }
 
             .player-position {
-                font-size: 0.75rem;
+                font-size: 0.5rem;
             }
 
             .generate-btn-container {
@@ -355,39 +364,6 @@
                 font-size: 0.9rem;
                 border-radius: 8px;
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            }
-
-            .section-title {
-                font-size: 2.5rem;
-            }
-
-            .generated-team {
-                width: 95%;
-                padding: 1.5rem;
-                height: auto;
-            }
-
-            .generated-team h2 {
-                font-size: 1.8rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .team-section {
-                margin-bottom: 1.5rem;
-            }
-
-            .team-section h3 {
-                font-size: 1.2rem;
-                margin-bottom: 0.8rem;
-            }
-
-            .team-section ul {
-                padding: 0;
-            }
-
-            .team-section li {
-                font-size: 0.9rem;
-                padding: 0.3rem 0;
             }
         }
 
@@ -701,6 +677,34 @@
         .player-card:hover .player-position {
             color: var(--accent-color);
         }
+
+        .player-circle .circle-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .player-circle .circle-content {
+                font-size: 8px;
+            }
+        }
+
+        .player-card[data-name="BUSTEA Ionut"] .player-image {
+            object-position: center top;
+        }
+
+        @media (max-width: 768px) {
+            .player-card[data-name="BUSTEA Ionut"] .player-image {
+                object-position: center 20%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -765,18 +769,10 @@
 
             <div class="generated-team" id="generatedTeam" style="display: none;">
                 <div class="field-container">
-                    <div class="formation-row forwards">
-                        <!-- Forwards will be added here -->
-                    </div>
-                    <div class="formation-row midfielders">
-                        <!-- Midfielders will be added here -->
-                    </div>
-                    <div class="formation-row defenders">
-                        <!-- Defenders will be added here -->
-                    </div>
-                    <div class="formation-row goalkeeper">
-                        <!-- Goalkeeper will be added here -->
-                    </div>
+                    <div class="formation-row forwards"></div>
+                    <div class="formation-row midfielders"></div>
+                    <div class="formation-row defenders"></div>
+                    <div class="formation-row goalkeeper"></div>
                 </div>
                 <div class="team-logos">
                     <img src="images/GOATS.png" alt="Team Logo">
@@ -802,33 +798,35 @@
         </div>
     </main>
 
+    <footer>Created by Dragos Zughy</footer>
+
     <script>
         const players = {
             goalkeepers: [
-                { name: "CIULPAN Gabriel", position: "Goalkeeper", image: "images/CIULPAN_Gabriel.jpg", celebration: "images/CIULPAN_Gabriel_celebration.jpg" },
-                { name: "CRETU Stefan", position: "Goalkeeper", image: "images/CRETU_Stefan.jpg", celebration: "images/default_celebration.jpg" },
-                { name: "CALIN Theodor", position: "Goalkeeper", image: "images/CALIN_Theodor.jpg", celebration: "images/default_celebration.jpg" }
+                { name: "CIULPAN Gabriel", position: "Goalkeeper", image: "images/players/CIULPAN_Gabriel.jpg", celebration: "images/players/CIULPAN_Gabriel_celebration.jpg" },
+                { name: "CRETU Stefan", position: "Goalkeeper", image: "images/players/CRETU_Stefan.jpg", celebration: "images/players/CRETU_Stefan_celebration.jpg" },
+                { name: "CALIN Theodor", position: "Goalkeeper", image: "images/players/CALIN_Theodor.jpg", celebration: "images/players/CALIN_Theodor_celebration.jpg" }
             ],
             defenders: [
-                { name: "ZUGRAVU Dragos", position: "Defender", image: "images/ZUGRAVU_Dragos.jpg", celebration: "images/ZUGRAVU_Dragos_celebration.jpg" },
-                { name: "PLAIASU Sebastian", position: "Defender", image: "images/PLAIASU_Sebastian.jpg", celebration: "images/default_celebration.jpg" },
-                { name: "FITA Robert", position: "Defender", image: "images/FITA_Robert.jpg", celebration: "images/default_celebration.jpg" },
-                { name: "STANCIU Alex", position: "Defender", image: "images/STANCIU_Alex.jpg", celebration: "images/default_celebration.jpg" },
-                { name: "POPA Traian", position: "Defender", image: "images/POPA_Traian.jpg", celebration: "images/default_celebration.jpg" }
+                { name: "ZUGRAVU Dragos", position: "Defender", image: "images/players/ZUGRAVU_Dragos.jpg", celebration: "images/players/ZUGRAVU_Dragos_celebration.jpg" },
+                { name: "PLAIASU Sebastian", position: "Defender", image: "images/players/PLAIASU_Sebastian.jpg", celebration: "images/players/PLAIASU_Sebastian_celebration.jpg" },
+                { name: "FITA Robert", position: "Defender", image: "images/players/FITA_Robert.jpg", celebration: "images/players/FITA_Robert_celebration.jpg" },
+                { name: "STANCIU Alex", position: "Defender", image: "images/players/STANCIU_Alex.jpg", celebration: "images/players/STANCIU_Alex_celebration.jpg" },
+                { name: "POPA Traian", position: "Defender", image: "images/players/POPA_Traian.jpg", celebration: "images/players/POPA_Traian_celebration.jpg" }
             ],
             midfielders: [
-                { name: "PETRACHE Adrian", position: "Midfielder", image: "images/PETRACHE_Adrian.jpg", celebration: "images/default_celebration.jpg" },
-                { name: "SPIREA Luca", position: "Midfielder", image: "images/SPIREA_Luca.jpg", celebration: "images/default_celebration.jpg" },
-                { name: "GEMALESCU Romeo", position: "Midfielder", image: "images/GEMALESCU_Romeo.jpg", celebration: "images/default_celebration.jpg" },
-                { name: "BUDAN Sebi", position: "Midfielder", image: "images/BUDAN_Sebi.jpg", celebration: "images/default_celebration.jpg" },
-                { name: "ROSTOM Jawdat", position: "Midfielder", image: "images/ROSTOM_Jawdat.jpg", celebration: "images/default_celebration.jpg" },
-                { name: "FOTEA Alexandru", position: "Midfielder", image: "images/FOTEA_Alexandru.jpg", celebration: "images/default_celebration.jpg" },
-                { name: "DINU Alexandru", position: "Midfielder", image: "images/DINU_Alexandru.jpg", celebration: "images/default_celebration.jpg" },
-                { name: "NICOLAE Catalin", position: "Midfielder", image: "images/NICOLAE_Catalin.jpg", celebration: "images/default_celebration.jpg" }
+                { name: "PETRACHE Adrian", position: "Midfielder", image: "images/players/PETRACHE_Adrian.jpg", celebration: "images/players/PETRACHE_Adrian_celebration.jpg" },
+                { name: "SPIREA Luca", position: "Midfielder", image: "images/players/SPIREA_Luca.jpg", celebration: "images/players/SPIREA_Luca_celebration.jpg" },
+                { name: "GEMALESCU Romeo", position: "Midfielder", image: "images/players/GEMALESCU_Romeo.jpg", celebration: "images/players/GEMALESCU_Romeo_celebration.jpg" },
+                { name: "BUDAN Sebi", position: "Midfielder", image: "images/players/BUDAN_Sebi.jpg", celebration: "images/players/BUDAN_Sebi_celebration.jpg" },
+                { name: "ROSTOM Jawdat", position: "Midfielder", image: "images/players/ROSTOM_Jawdat.jpg", celebration: "images/players/ROSTOM_Jawdat_celebration.jpg" },
+                { name: "FOTEA Alexandru", position: "Midfielder", image: "images/players/FOTEA_Alexandru.jpg", celebration: "images/players/FOTEA_Alexandru_celebration.jpg" },
+                { name: "DINU Alexandru", position: "Midfielder", image: "images/players/DINU_Alexandru.jpg", celebration: "images/players/DINU_Alexandru_celebration.jpg" },
+                { name: "NICOLAE Catalin", position: "Midfielder", image: "images/players/NICOLAE_Catalin.jpg", celebration: "images/players/NICOLAE_Catalin_celebration.jpg" }
             ],
             forwards: [
-                { name: "MARCU Andrei", position: "Forward", image: "images/MARCU_Andrei.jpg", celebration: "images/default_celebration.jpg" },
-                { name: "BUSTEA Ionut", position: "Forward", image: "images/BUSTEA_Ionut.jpg", celebration: "images/default_celebration.jpg" }
+                { name: "MARCU Andrei", position: "Forward", image: "images/players/MARCU_Andrei.jpg", celebration: "images/players/MARCU_Andrei_celebration.jpg" },
+                { name: "BUSTEA Ionut", position: "Forward", image: "images/players/BUSTEA_Ionut.jpg", celebration: "images/players/BUSTEA_Ionut_celebration.jpg" }
             ]
         };
 
@@ -936,10 +934,10 @@
             tempTeam.className = 'generated-team';
             tempTeam.innerHTML = `
                 <div class="field-container">
-                    <div class="formation-row goalkeeper"></div>
-                    <div class="formation-row defenders"></div>
-                    <div class="formation-row midfielders"></div>
                     <div class="formation-row forwards"></div>
+                    <div class="formation-row midfielders"></div>
+                    <div class="formation-row defenders"></div>
+                    <div class="formation-row goalkeeper"></div>
                 </div>
                 <div class="team-logos">
                     <img src="images/GOATS.png" alt="Team Logo">
@@ -947,10 +945,10 @@
             `;
 
             // Display the selected team in the temporary container
-            displayPlayers(selectedGk, 'goalkeeper', tempTeam);
-            displayPlayers(selectedDef, 'defenders', tempTeam);
-            displayPlayers(selectedMid, 'midfielders', tempTeam);
             displayPlayers(selectedFwd, 'forwards', tempTeam);
+            displayPlayers(selectedMid, 'midfielders', tempTeam);
+            displayPlayers(selectedDef, 'defenders', tempTeam);
+            displayPlayers(selectedGk, 'goalkeeper', tempTeam);
 
             // Show preview modal with the temporary team
             await showPreview(tempTeam);
@@ -975,13 +973,33 @@
                 const lastName = nameParts[0];
                 const firstName = nameParts.slice(1).join(' ');
                 
+                // Get position abbreviation
+                let positionAbbr;
+                switch(player.position) {
+                    case 'Goalkeeper':
+                        positionAbbr = 'GK';
+                        break;
+                    case 'Defender':
+                        positionAbbr = 'DF';
+                        break;
+                    case 'Midfielder':
+                        positionAbbr = 'MF';
+                        break;
+                    case 'Forward':
+                        positionAbbr = 'FW';
+                        break;
+                }
+                
                 playerDiv.innerHTML = `
-                    <div class="circle-content"></div>
+                    <div class="circle-content">${positionAbbr}</div>
                     <div class="name">${lastName.toUpperCase()}\n${firstName}</div>
                 `;
                 
                 row.appendChild(playerDiv);
             });
+
+            // Force a reflow to ensure all elements are properly rendered
+            row.offsetHeight;
         }
 
         async function showPreview(teamContainer) {
@@ -992,6 +1010,9 @@
             // Clear and update preview with the provided team container
             previewTeam.innerHTML = '';
             previewTeam.appendChild(teamContainer);
+            
+            // Force a reflow to ensure all elements are properly rendered
+            teamContainer.offsetHeight;
             
             // Pre-load all images in the preview
             const images = Array.from(teamContainer.getElementsByTagName('img'));
@@ -1101,23 +1122,27 @@
                         ctx.arc(x, rowY, 22.5, 0, Math.PI * 2);
                         
                         // Set circle colors based on position
-                        let borderColor, fillColor;
+                        let borderColor, fillColor, positionAbbr;
                         switch(position) {
                             case 'Goalkeeper':
                                 borderColor = '#FF0000';
                                 fillColor = 'rgba(255, 0, 0, 0.3)';
+                                positionAbbr = 'GK';
                                 break;
                             case 'Defender':
                                 borderColor = '#0000FF';
                                 fillColor = 'rgba(0, 0, 255, 0.3)';
+                                positionAbbr = 'DF';
                                 break;
                             case 'Midfielder':
                                 borderColor = '#FFA500';
                                 fillColor = 'rgba(255, 165, 0, 0.3)';
+                                positionAbbr = 'MF';
                                 break;
                             case 'Forward':
                                 borderColor = '#D2B48C';
                                 fillColor = 'rgba(210, 180, 140, 0.3)';
+                                positionAbbr = 'FW';
                                 break;
                         }
                         
@@ -1126,6 +1151,13 @@
                         ctx.strokeStyle = borderColor;
                         ctx.lineWidth = 2;
                         ctx.stroke();
+
+                        // Draw position abbreviation
+                        ctx.font = 'bold 10px Arial';
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(positionAbbr, x, rowY);
 
                         // Draw player name
                         const nameElement = circle.querySelector('.name');
@@ -1163,28 +1195,41 @@
         // Initialize the page
         window.onload = initializePlayerSelection;
 
-        // Mobile Menu Functionality
+        // Mobile menu functionality
         function initMobileMenu() {
             const hamburger = document.querySelector('.hamburger-menu');
             const mobileNav = document.createElement('div');
             mobileNav.className = 'mobile-nav';
             
-            // Copy navigation links to mobile menu
             const navLinks = document.querySelector('.nav-links').cloneNode(true);
             mobileNav.appendChild(navLinks);
             document.body.appendChild(mobileNav);
+
+            // Create overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'mobile-nav-overlay';
+            document.body.appendChild(overlay);
             
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 mobileNav.classList.toggle('active');
+                overlay.classList.toggle('active');
                 document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
             });
             
-            // Close menu when clicking a link
+            // Close menu when clicking overlay
+            overlay.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
             mobileNav.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     hamburger.classList.remove('active');
                     mobileNav.classList.remove('active');
+                    overlay.classList.remove('active');
                     document.body.style.overflow = '';
                 });
             });
@@ -1203,9 +1248,9 @@
                 const tempCanvas = document.createElement('canvas');
                 const isMobile = window.innerWidth <= 768;
                 
-                // Force portrait mode dimensions for WhatsApp
-                const width = 400; // Fixed width for better WhatsApp display
-                const height = 600; // Fixed height for portrait mode
+                // Optimize dimensions for WhatsApp - more compact
+                const width = 600; // Reduced from 800 to make it more compact
+                const height = 800; // Reduced from 1000 to make it more compact
                 const scale = 2; // Higher scale for better quality
                 
                 tempCanvas.width = width * scale;
@@ -1247,7 +1292,7 @@
                 // Draw player circles and names
                 const rows = teamToCapture.querySelectorAll('.formation-row');
                 const rowHeight = height / (rows.length + 1);
-                const circleRadius = 25; // Fixed larger radius for better visibility
+                const circleRadius = 40; // Increased from 35
                 
                 rows.forEach((row, rowIndex) => {
                     const circles = row.querySelectorAll('.player-circle');
@@ -1256,39 +1301,53 @@
                     circles.forEach((circle, circleIndex) => {
                         const position = circle.dataset.position;
                         const totalCircles = circles.length;
-                        const spacing = width * 0.9 / (totalCircles + 1); // Increased spacing
-                        const x = width * 0.05 + (circleIndex + 1) * spacing; // Reduced side margins
+                        // Calculate positions to ensure all players fit - use more of the width
+                        const availableWidth = width * 0.95; // Increased from 0.9
+                        const minSpacing = 70; // Minimum spacing between circles
+                        const spacing = Math.max(minSpacing, availableWidth / (totalCircles + 1));
+                        const x = (width - availableWidth) / 2 + (circleIndex + 1) * spacing;
                         
                         // Draw circle
                         ctx.beginPath();
                         ctx.arc(x, rowY, circleRadius, 0, Math.PI * 2);
                         
                         // Set circle colors based on position
-                        let borderColor, fillColor;
+                        let borderColor, fillColor, positionAbbr;
                         switch(position) {
                             case 'Goalkeeper':
                                 borderColor = '#FF0000';
                                 fillColor = 'rgba(255, 0, 0, 0.3)';
+                                positionAbbr = 'GK';
                                 break;
                             case 'Defender':
                                 borderColor = '#0000FF';
                                 fillColor = 'rgba(0, 0, 255, 0.3)';
+                                positionAbbr = 'DF';
                                 break;
                             case 'Midfielder':
                                 borderColor = '#FFA500';
                                 fillColor = 'rgba(255, 165, 0, 0.3)';
+                                positionAbbr = 'MF';
                                 break;
                             case 'Forward':
                                 borderColor = '#D2B48C';
                                 fillColor = 'rgba(210, 180, 140, 0.3)';
+                                positionAbbr = 'FW';
                                 break;
                         }
                         
                         ctx.fillStyle = fillColor;
                         ctx.fill();
                         ctx.strokeStyle = borderColor;
-                        ctx.lineWidth = 2;
+                        ctx.lineWidth = 4; // Increased from 3
                         ctx.stroke();
+
+                        // Draw position abbreviation
+                        ctx.font = 'bold 18px Arial'; // Increased from 16px
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(positionAbbr, x, rowY);
 
                         // Draw player name
                         const nameElement = circle.querySelector('.name');
@@ -1297,15 +1356,15 @@
                             const [lastName, firstName] = name.split('\n').map(n => n.trim());
                             
                             // Draw last name in thin and larger
-                            ctx.font = '100 14px Arial'; // Increased font size
+                            ctx.font = '100 14px Arial'; // Increased from 12px
                             ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                             ctx.textAlign = 'center';
                             ctx.textBaseline = 'top';
-                            ctx.fillText(lastName.toUpperCase(), x, rowY + circleRadius * 1.5);
+                            ctx.fillText(lastName.toUpperCase(), x, rowY + 50); // Increased from 45
                             
                             // Draw first name in thinner and smaller
-                            ctx.font = '100 12px Arial'; // Increased font size
-                            ctx.fillText(firstName, x, rowY + circleRadius * 2.2);
+                            ctx.font = '100 12px Arial'; // Increased from 10px
+                            ctx.fillText(firstName, x, rowY + 65); // Increased from 60
                         }
                     });
                 });
@@ -1337,4 +1396,4 @@
 
     <script src="script.js"></script>
 </body>
-</html> 
+</html>
