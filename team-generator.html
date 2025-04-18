@@ -706,6 +706,32 @@
                 object-position: center 20%;
             }
         }
+
+        .player-card::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .player-card.selected::after {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .player-card::after {
+                width: 6px;
+                height: 6px;
+                top: 3px;
+                right: 3px;
+            }
+        }
     </style>
 </head>
 <body>
