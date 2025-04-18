@@ -81,7 +81,7 @@ const players = {
             name: "Jawdat Rostom",
             position: "Midfielder",
             number: 14,
-            image: "images/players/ROSTOM_Jawdat.jpg"
+            image: "images/players/JAWDAT_Rostom.jpg"
         },
         {
             name: "Alexandru Fotea",
