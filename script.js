@@ -50,6 +50,18 @@ const players = {
             position: "Defender",
             number: 6,
             image: "images/players/POPA_Traian.jpg"
+        },
+        {
+            name: "Mihai Paun",
+            position: "Defender",
+            number: 18,
+            image: "images/players/PAUN_Mihai.jpg"
+        },
+        {
+            name: "Cristi Sapunaru",
+            position: "Defender",
+            number: 20,
+            image: "images/players/SAPUNARU_Cristi.jpg"
         }
     ],
     midfielders: [
