@@ -8,12 +8,6 @@ const players = {
             image: "images/players/CIULPAN_Gabriel.jpg"
         },
         {
-            name: "Stefan Cretu",
-            position: "Goalkeeper",
-            number: 13,
-            image: "images/players/CRETU_Stefan.jpg"
-        },
-        {
             name: "Theodor Calin",
             position: "Goalkeeper",
             number: 25,
@@ -46,23 +40,12 @@ const players = {
             image: "images/players/STANCIU_Alex.jpg"
         },
         {
-            name: "Traian Popa",
-            position: "Defender",
-            number: 6,
-            image: "images/players/POPA_Traian.jpg"
-        },
-        {
             name: "Mihai Paun",
             position: "Defender",
             number: 18,
             image: "images/players/PAUN_Mihai.jpg"
         },
-        {
-            name: "Cristi Sapunaru",
-            position: "Defender",
-            number: 20,
-            image: "images/players/SAPUNARU_Cristi.jpg"
-        }
+        // Cristi Sapunaru removed
     ],
     midfielders: [
         {
@@ -90,18 +73,6 @@ const players = {
             image: "images/players/BUDAN_Sebi.jpg"
         },
         {
-            name: "Jawdat Rostom",
-            position: "Midfielder",
-            number: 14,
-            image: "images/players/JAWDAT_Rostom.jpg"
-        },
-        {
-            name: "Alexandru Fotea",
-            position: "Midfielder",
-            number: 16,
-            image: "images/players/FOTEA_Alexandru.jpg"
-        },
-        {
             name: "Alexandru Dinu",
             position: "Midfielder",
             number: 17,
@@ -112,6 +83,12 @@ const players = {
             position: "Midfielder",
             number: 19,
             image: "images/players/NICOLAE_Catalin.jpg"
+        },
+        {
+            name: "Rober Duna",
+            position: "Midfielder",
+            number: 21,
+            image: "images/players/DUNA_Rober.jpg"
         }
     ],
     forwards: [
@@ -133,6 +110,12 @@ const players = {
 function createPlayerCard(player) {
     const card = document.createElement('div');
     card.className = 'player-card';
+    
+    // Special card for new player (visible for 1 day)
+    if (player.newPlayer && isNewPlayerActive(player.joinedDate)) {
+        card.classList.add('special-new-player');
+        card.innerHTML += `<div class="new-player-badge">NEW!</div>`;
+    }
     
     // Check if player image exists, otherwise use default
     const seriousImage = player.image || 'images/default.jpg';
@@ -272,6 +255,14 @@ function initScrollAnimation() {
             ticking = true;
         }
     });
+}
+
+// Helper to check if new player badge should be shown (1 day)
+function isNewPlayerActive(joinedDate) {
+    const now = new Date();
+    const joined = new Date(joinedDate);
+    const diff = (now - joined) / (1000 * 60 * 60 * 24);
+    return diff < 1;
 }
 
 // Initialize the page
