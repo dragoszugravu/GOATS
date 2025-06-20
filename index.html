@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="profile-card.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -154,6 +155,32 @@
             }
         }
 
+        /* Hero Subtitle Styling */
+        .hero-subtitle {
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 200;
+            font-size: 1.2rem;
+            color: #ffffff;
+            text-align: center;
+            margin: 1rem 0 0 0;
+            padding: 0;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .hero-subtitle {
+                font-size: 1rem;
+                margin: 0.8rem 0 0 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-subtitle {
+                font-size: 0.9rem;
+                margin: 0.6rem 0 0 0;
+            }
+        }
+
         /* Comprehensive Mobile Styles for Main Page */
         @media (max-width: 768px) {
             /* Body and general layout */
@@ -215,62 +242,75 @@
                 padding: 0 1rem;
             }
 
-            /* Players grid */
-            .players-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 1.5rem;
-                justify-items: center;
-                padding: 0 1rem;
-                max-width: 100%;
-                width: 100%;
-                box-sizing: border-box;
+            /* Players grid - Mobile Carousel */
+            body:not(.team-generator-page) .players-grid,
+            body:not(.team-generator-page) .players-row {
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+                gap: 1rem;
+                padding: 0 1rem 1rem 1rem;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
             }
 
-            /* Player cards */
-            .player-card {
-                width: 100%;
-                max-width: 300px;
+            body:not(.team-generator-page) .players-grid::-webkit-scrollbar,
+            body:not(.team-generator-page) .players-row::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* Player cards - Mobile Carousel */
+            body:not(.team-generator-page) .player-card {
+                flex: 0 0 280px;
+                width: 280px;
+                min-width: 280px;
+                max-width: 280px;
+                scroll-snap-align: start;
+                margin: 0;
                 height: auto;
                 min-height: 400px;
-                margin: 0 auto;
             }
 
-            .player-image {
+            body:not(.team-generator-page) .player-image {
                 height: 300px;
                 width: 100%;
             }
 
-            .player-image img {
+            body:not(.team-generator-page) .player-image img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
                 object-position: center top;
             }
 
-            .player-info {
+            body:not(.team-generator-page) .player-info {
                 padding: 1rem;
                 text-align: center;
             }
 
-            .player-name {
+            body:not(.team-generator-page) .player-name {
                 font-size: 1.1rem;
                 margin-bottom: 0.5rem;
                 line-height: 1.3;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
-            .player-position {
+            body:not(.team-generator-page) .player-position {
                 font-size: 0.9rem;
             }
 
-            .player-logo {
+            body:not(.team-generator-page) .player-logo {
                 bottom: 10px;
                 right: 10px;
                 width: 35px;
                 height: 35px;
             }
 
-            .player-logo img {
+            body:not(.team-generator-page) .player-logo img {
                 width: 100%;
                 height: 100%;
             }
@@ -324,26 +364,29 @@
                 font-size: 1.8rem;
             }
 
-            .players-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                padding: 0 0.5rem;
+            body:not(.team-generator-page) .players-grid,
+            body:not(.team-generator-page) .players-row {
+                padding: 0 0.5rem 1rem 0.5rem;
+                gap: 0.8rem;
             }
 
-            .player-card {
-                max-width: 280px;
+            body:not(.team-generator-page) .player-card {
+                flex: 0 0 260px;
+                width: 260px;
+                min-width: 260px;
+                max-width: 260px;
                 min-height: 380px;
             }
 
-            .player-image {
+            body:not(.team-generator-page) .player-image {
                 height: 280px;
             }
 
-            .player-name {
+            body:not(.team-generator-page) .player-name {
                 font-size: 1rem;
             }
 
-            .player-position {
+            body:not(.team-generator-page) .player-position {
                 font-size: 0.85rem;
             }
 
@@ -366,12 +409,15 @@
                 font-size: 1.6rem;
             }
 
-            .player-card {
-                max-width: 260px;
+            body:not(.team-generator-page) .player-card {
+                flex: 0 0 240px;
+                width: 240px;
+                min-width: 240px;
+                max-width: 240px;
                 min-height: 360px;
             }
 
-            .player-image {
+            body:not(.team-generator-page) .player-image {
                 height: 260px;
             }
         }
@@ -762,6 +808,7 @@
 
             <div class="hero-title-container">
             <h1 class="hero-title" data-text="GOATS FC">GOATS FC</h1>
+            <p class="hero-subtitle">// one team, one legacy //</p>
         </div>
 
     <main>
