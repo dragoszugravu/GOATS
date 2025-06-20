@@ -1083,25 +1083,50 @@ footer {
         box-sizing: border-box !important;
     }
 
-    /* Players grid override */
+    /* Players grid override - Horizontal carousel on mobile */
     .players-grid {
-        display: grid !important;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+        display: flex !important;
+        flex-direction: row !important;
         gap: 1.5rem !important;
-        justify-items: center !important;
         padding: 0 1rem !important;
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
-        overflow: visible !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        scroll-snap-type: x mandatory !important;
+        scroll-behavior: smooth !important;
     }
 
-    /* Player cards override */
+    /* Player cards override - Fixed width for carousel */
     .player-card {
-        width: 100% !important;
-        max-width: 300px !important;
-        margin: 0 auto !important;
+        flex: 0 0 280px !important;
+        width: 280px !important;
+        max-width: 280px !important;
+        min-width: 280px !important;
+        margin: 0 !important;
         box-sizing: border-box !important;
+        scroll-snap-align: center !important;
+    }
+
+    /* Hide scrollbar but keep functionality */
+    .players-grid::-webkit-scrollbar {
+        height: 4px !important;
+    }
+
+    .players-grid::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-radius: 2px !important;
+    }
+
+    .players-grid::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border-radius: 2px !important;
+    }
+
+    .players-grid::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5) !important;
     }
 
     /* Section titles */
@@ -1132,13 +1157,15 @@ footer {
 @media (max-width: 480px) {
     /* Extra small screens */
     .players-grid {
-        grid-template-columns: 1fr !important;
         gap: 1rem !important;
         padding: 0 0.5rem !important;
     }
 
     .player-card {
-        max-width: 280px !important;
+        flex: 0 0 260px !important;
+        width: 260px !important;
+        max-width: 260px !important;
+        min-width: 260px !important;
     }
 
     .section-title {
@@ -1153,7 +1180,10 @@ footer {
 @media (max-width: 360px) {
     /* Very small screens */
     .player-card {
-        max-width: 260px !important;
+        flex: 0 0 240px !important;
+        width: 240px !important;
+        max-width: 240px !important;
+        min-width: 240px !important;
     }
 
     .section-title {
