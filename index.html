@@ -193,20 +193,7 @@
                 line-height: 1.1;
             }
 
-            /* CircularText mobile adjustments */
-            .circular-text-container {
-                padding-top: 0.5rem;
-                margin-top: 0.5rem;
-            }
 
-            .circular-text {
-                width: 100px;
-                height: 100px;
-            }
-
-            .circular-text span {
-                font-size: 10px;
-            }
 
             /* Main content */
             main {
@@ -331,14 +318,7 @@
                 min-height: 100px;
             }
 
-            .circular-text {
-                width: 80px;
-                height: 80px;
-            }
 
-            .circular-text span {
-                font-size: 8px;
-            }
 
             .section-title {
                 font-size: 1.8rem;
@@ -396,43 +376,7 @@
             }
         }
 
-        /* CircularText Effect Styles */
-        .circular-text-container {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            text-align: center;
-            padding-top: 1rem;
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-        }
 
-        .circular-text {
-            margin: 0 auto;
-            border-radius: 50%;
-            width: 120px;
-            position: relative;
-            height: 120px;
-            font-weight: bold;
-            color: #fff;
-            font-weight: 900;
-            text-align: center;
-            cursor: pointer;
-            transform-origin: 50% 50%;
-            -webkit-transform-origin: 50% 50%;
-        }
-
-        .circular-text span {
-            position: absolute;
-            display: inline-block;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            font-size: 14px;
-            transition: all 0.5s cubic-bezier(0, 0, 0, 1);
-        }
 
         .next-match-container {
             width: 100%;
@@ -818,10 +762,6 @@
 
             <div class="hero-title-container">
             <h1 class="hero-title" data-text="GOATS FC">GOATS FC</h1>
-            <div class="circular-text-container">
-                <div class="circular-text" id="circular-text">
-                </div>
-            </div>
         </div>
 
     <main>
@@ -849,67 +789,7 @@
     <script src="silk-background.js"></script>
     <script src="profile-card.js"></script>
     
-    <script>
-        // CircularText Effect Implementation
-        document.addEventListener('DOMContentLoaded', function() {
-            const circularTextElement = document.getElementById('circular-text');
-            if (!circularTextElement) return;
-            
-            const text = "**FC**GOATS";
-            const letters = Array.from(text);
-            let rotation = 0;
-            let animationId;
-            let spinDuration = 20; // seconds for full rotation
-            let isHovering = false;
-            
-            // Create letter spans
-            letters.forEach((letter, i) => {
-                const span = document.createElement('span');
-                const rotationDeg = (360 / letters.length) * i;
-                const radius = 45; // Distance from center (smaller for smaller circle)
-                const x = Math.cos((rotationDeg * Math.PI) / 180) * radius;
-                const y = Math.sin((rotationDeg * Math.PI) / 180) * radius;
-                
-                span.textContent = letter;
-                span.style.transform = `rotateZ(${rotationDeg}deg) translate3d(${x}px, ${y}px, 0)`;
-                span.style.webkitTransform = `rotateZ(${rotationDeg}deg) translate3d(${x}px, ${y}px, 0)`;
-                
-                circularTextElement.appendChild(span);
-            });
-            
-            // Animation function
-            function animate() {
-                const speed = isHovering ? spinDuration / 4 : spinDuration; // Speed up on hover
-                rotation += 360 / (speed * 60); // 60fps
-                circularTextElement.style.transform = `rotate(${rotation}deg)`;
-                circularTextElement.style.webkitTransform = `rotate(${rotation}deg)`;
-                animationId = requestAnimationFrame(animate);
-            }
-            
-            // Start animation
-            animate();
-            
-            // Hover effects
-            circularTextElement.addEventListener('mouseenter', function() {
-                isHovering = true;
-                circularTextElement.style.transform += ' scale(1.1)';
-                circularTextElement.style.webkitTransform += ' scale(1.1)';
-            });
-            
-            circularTextElement.addEventListener('mouseleave', function() {
-                isHovering = false;
-                circularTextElement.style.transform = circularTextElement.style.transform.replace(' scale(1.1)', '');
-                circularTextElement.style.webkitTransform = circularTextElement.style.webkitTransform.replace(' scale(1.1)', '');
-            });
-            
-            // Cleanup
-            window.addEventListener('beforeunload', function() {
-                if (animationId) {
-                    cancelAnimationFrame(animationId);
-                }
-            });
-        });
-    </script>
+
     <script src="script.js"></script>
     
     <script>

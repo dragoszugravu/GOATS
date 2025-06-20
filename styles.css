@@ -1083,8 +1083,8 @@ footer {
         box-sizing: border-box !important;
     }
 
-    /* Players grid override - Horizontal carousel on mobile per section */
-    .players-grid {
+    /* Players grid override - Horizontal carousel on mobile per section (MAIN PAGE ONLY) */
+    body:not(.team-generator-page) .players-grid {
         display: flex !important;
         flex-direction: row !important;
         gap: 1.5rem !important;
@@ -1099,8 +1099,8 @@ footer {
         scroll-behavior: smooth !important;
     }
 
-    /* Ensure each section has its own carousel */
-    .section .players-grid {
+    /* Ensure each section has its own carousel (MAIN PAGE ONLY) */
+    body:not(.team-generator-page) .section .players-grid {
         display: flex !important;
         flex-direction: row !important;
         flex-wrap: nowrap !important;
@@ -1108,8 +1108,8 @@ footer {
         align-items: stretch !important;
     }
 
-    /* Player cards override - Fixed width for carousel */
-    .player-card {
+    /* Player cards override - Fixed width for carousel (MAIN PAGE ONLY) */
+    body:not(.team-generator-page) .player-card {
         flex: 0 0 280px !important;
         width: 280px !important;
         max-width: 280px !important;
@@ -1119,28 +1119,28 @@ footer {
         scroll-snap-align: center !important;
     }
 
-    /* Scrollbar styling for each section carousel */
-    .players-grid::-webkit-scrollbar {
+    /* Scrollbar styling for each section carousel (MAIN PAGE ONLY) */
+    body:not(.team-generator-page) .players-grid::-webkit-scrollbar {
         height: 6px !important;
     }
 
-    .players-grid::-webkit-scrollbar-track {
+    body:not(.team-generator-page) .players-grid::-webkit-scrollbar-track {
         background: rgba(255, 255, 255, 0.1) !important;
         border-radius: 3px !important;
         margin: 0 1rem !important;
     }
 
-    .players-grid::-webkit-scrollbar-thumb {
+    body:not(.team-generator-page) .players-grid::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.4) !important;
         border-radius: 3px !important;
     }
 
-    .players-grid::-webkit-scrollbar-thumb:hover {
+    body:not(.team-generator-page) .players-grid::-webkit-scrollbar-thumb:hover {
         background: rgba(255, 255, 255, 0.6) !important;
     }
 
-    /* Add padding to sections for better carousel experience */
-    .section {
+    /* Add padding to sections for better carousel experience (MAIN PAGE ONLY) */
+    body:not(.team-generator-page) .section {
         padding-bottom: 1rem !important;
     }
 
@@ -1152,8 +1152,8 @@ footer {
         margin-bottom: 1.5rem !important;
     }
 
-    /* Section container for mobile */
-    .section {
+    /* Section container for mobile (MAIN PAGE ONLY) */
+    body:not(.team-generator-page) .section {
         margin: 3rem 0 !important;
         width: 100% !important;
         overflow: hidden !important;
@@ -1177,13 +1177,13 @@ footer {
 }
 
 @media (max-width: 480px) {
-    /* Extra small screens */
-    .players-grid {
+    /* Extra small screens (MAIN PAGE ONLY) */
+    body:not(.team-generator-page) .players-grid {
         gap: 1rem !important;
         padding: 0 0.5rem !important;
     }
 
-    .player-card {
+    body:not(.team-generator-page) .player-card {
         flex: 0 0 260px !important;
         width: 260px !important;
         max-width: 260px !important;
@@ -1200,8 +1200,8 @@ footer {
 }
 
 @media (max-width: 360px) {
-    /* Very small screens */
-    .player-card {
+    /* Very small screens (MAIN PAGE ONLY) */
+    body:not(.team-generator-page) .player-card {
         flex: 0 0 240px !important;
         width: 240px !important;
         max-width: 240px !important;
