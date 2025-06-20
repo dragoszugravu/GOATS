@@ -6,6 +6,9 @@
     <title>GOATS FC - Team Generator</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    
+    <!-- OGL library for particles background -->
+    <script src="https://unpkg.com/ogl@0.0.82/dist/ogl.umd.js"></script>
     <style>
         :root {
             --primary-bg: #000000;
@@ -24,6 +27,23 @@
             line-height: 1.5;
             margin: 0;
             padding: 0;
+        }
+
+        /* Particles Background */
+        #particles-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        #particles-background canvas {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover;
         }
 
         .generator-container {
@@ -124,6 +144,7 @@
             padding: 0 1rem;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            perspective: 800px;
         }
 
         .player-selection::-webkit-scrollbar {
@@ -131,23 +152,44 @@
         }
 
         .player-card {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            perspective: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: transparent;
+        }
+
+
+
+        .player-card-inner {
+            position: relative;
+            width: 200px;
+            height: 280px;
+            transform-style: preserve-3d;
             background: var(--secondary-bg);
             border-radius: 20px;
             overflow: hidden;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            position: relative;
             border: 1px solid var(--border-color);
-            height: 280px;
-            transform-style: preserve-3d;
-            perspective: 1000px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            will-change: transform;
+            transform: translateZ(0);
         }
 
-        .player-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            border-color: var(--accent-color);
+        .player-card-inner::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: var(--primary-bg);
+            border-radius: 25px;
+            z-index: -1;
         }
 
         .player-card.selected {
@@ -165,15 +207,15 @@
         }
 
         .player-image {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 220px;
             object-fit: cover;
             border-radius: 20px 20px 0 0;
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .player-card:hover .player-image {
-            transform: scale(1.05);
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         .player-info {
@@ -187,14 +229,21 @@
             left: 0;
             right: 0;
             border-top: 1px solid var(--border-color);
+            z-index: 2;
+            will-change: transform;
+            transform: translateZ(30px);
         }
 
         .player-name {
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-bottom: 0.4rem;
             color: var(--text-color);
             font-weight: 500;
             letter-spacing: -0.01em;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .player-position {
@@ -329,6 +378,12 @@
                 aspect-ratio: 3/4;
                 margin: 0 auto;
             }
+            
+            .player-card-inner {
+                width: 100%;
+                max-width: 100px;
+                height: 160px;
+            }
 
             .player-image {
                 height: 130px;
@@ -343,6 +398,9 @@
                 font-size: 0.525rem;
                 margin-bottom: 0.1rem;
                 line-height: 1.1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .player-position {
@@ -675,9 +733,7 @@
             transform: scale(1.05);
         }
 
-        .player-card:hover .player-position {
-            color: var(--accent-color);
-        }
+
 
         .player-circle .circle-content {
             position: absolute;
@@ -737,38 +793,17 @@
     </style>
 </head>
 <body>
-    <section class="wave-section">
-        <div class="wave">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </section>
+    <!-- Silk Background Container -->
+    <div id="silk-background"></div>
 
-    <div class="scroll-lines">
-        <div class="scroll-line scroll-line-1"></div>
-        <div class="scroll-line scroll-line-2"></div>
-        <div class="scroll-line scroll-line-3"></div>
-        <div class="scroll-line scroll-line-4"></div>
-        <div class="scroll-line scroll-line-5"></div>
-        <div class="scroll-line scroll-line-6"></div>
-        <div class="scroll-line scroll-line-7"></div>
-        <div class="scroll-line scroll-line-8"></div>
-        <div class="scroll-line scroll-line-9"></div>
-        <div class="scroll-line scroll-line-10"></div>
-        <div class="scroll-line scroll-line-11"></div>
-        <div class="scroll-line scroll-line-12"></div>
-        <div class="scroll-line scroll-line-13"></div>
-        <div class="scroll-line scroll-line-14"></div>
-        <div class="scroll-line scroll-line-15"></div>
-    </div>
+
 
     <header>
         <nav>
             <div class="logo-container">
                 <a href="index.html" class="logo-link">
                     <img src="images/GOATS.png" alt="GOATS FC Logo" class="logo-image">
-                    <div class="logo-text">GOATS FC</div>
+                    <div class="logo-text" data-text="GOATS FC">GOATS FC</div>
                 </a>
             </div>
             <div class="nav-links">
@@ -784,6 +819,9 @@
             </button>
         </nav>
     </header>
+
+    <!-- Particles Background -->
+    <div id="particles-background"></div>
 
     <main>
         <div class="generator-container">
@@ -911,16 +949,82 @@
             const nameParts = player.name.split(' ');
             const lastName = nameParts[0];
             const firstName = nameParts.slice(1).join(' ');
+            const fullName = `${lastName} ${firstName}`;
             
             card.innerHTML = `
-                <img src="${player.image}" alt="${player.name}" class="player-image" onerror="this.src='images/default.jpg'">
-                <div class="player-info">
-                    <div class="player-name">${lastName}<br>${firstName}</div>
-                    <div class="player-position" data-position="${player.position}">${player.position}</div>
+                <div class="player-card-inner">
+                    <img src="${player.image}" alt="${player.name}" class="player-image" onerror="this.src='images/default.jpg'">
+                    <div class="player-info">
+                        <div class="player-name" title="${fullName}">${fullName}</div>
+                        <div class="player-position" data-position="${player.position}">${player.position}</div>
+                    </div>
                 </div>
             `;
             
+            // Add tilt effect
+            initializeTiltEffect(card);
+            
             return card;
+        }
+
+        function initializeTiltEffect(card) {
+            const inner = card.querySelector('.player-card-inner');
+            
+            let rotateX = 0;
+            let rotateY = 0;
+            
+            function lerp(start, end, factor) {
+                return start + (end - start) * factor;
+            }
+            
+            function updateTransform() {
+                inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            }
+            
+            function handleMouseMove(e) {
+                if (!inner) return;
+                
+                const rect = inner.getBoundingClientRect();
+                const offsetX = e.clientX - rect.left - rect.width / 2;
+                const offsetY = e.clientY - rect.top - rect.height / 2;
+                
+                const rotateAmplitude = 14;
+                const targetRotationX = (offsetY / (rect.height / 2)) * -rotateAmplitude;
+                const targetRotationY = (offsetX / (rect.width / 2)) * rotateAmplitude;
+                
+                rotateX = targetRotationX;
+                rotateY = targetRotationY;
+                
+                updateTransform();
+            }
+            
+            function handleMouseLeave() {
+                inner.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
+                
+                // Animate back to center
+                const animate = () => {
+                    rotateX = lerp(rotateX, 0, 0.1);
+                    rotateY = lerp(rotateY, 0, 0.1);
+                    
+                    updateTransform();
+                    
+                    if (Math.abs(rotateX) > 0.1 || Math.abs(rotateY) > 0.1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        rotateX = 0;
+                        rotateY = 0;
+                        updateTransform();
+                    }
+                };
+                
+                animate();
+            }
+            
+            card.addEventListener('mousemove', handleMouseMove);
+            card.addEventListener('mouseleave', handleMouseLeave);
+            
+            // Initial transform
+            updateTransform();
         }
 
         // Generate team based on selected players
@@ -1220,7 +1324,10 @@
         }
 
         // Initialize the page
-        window.onload = initializePlayerSelection;
+        window.onload = () => {
+            initializePlayerSelection();
+            initializeParticles();
+        };
 
         // Mobile menu functionality
         function initMobileMenu() {
@@ -1417,6 +1524,83 @@
             } catch (error) {
                 console.error('Share error:', error);
                 alert('Error sharing team image: ' + error.message);
+            }
+        }
+
+        // Particles Background Implementation
+        function initializeParticles() {
+            const container = document.getElementById('particles-background');
+            if (!container) return;
+
+            try {
+                // Simple canvas-based particles
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                container.appendChild(canvas);
+                
+                const particles = [];
+                const particleCount = 200;
+                
+                // Initialize particles
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push({
+                        x: Math.random() * window.innerWidth,
+                        y: Math.random() * window.innerHeight,
+                        z: Math.random() * 1000,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        vz: (Math.random() - 0.5) * 2,
+                        size: Math.random() * 2 + 1
+                    });
+                }
+                
+                function resize() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    canvas.style.width = '100%';
+                    canvas.style.height = '100%';
+                }
+                
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    particles.forEach(particle => {
+                        // Update position
+                        particle.x += particle.vx;
+                        particle.y += particle.vy;
+                        particle.z += particle.vz;
+                        
+                        // Wrap around screen
+                        if (particle.x < 0) particle.x = canvas.width;
+                        if (particle.x > canvas.width) particle.x = 0;
+                        if (particle.y < 0) particle.y = canvas.height;
+                        if (particle.y > canvas.height) particle.y = 0;
+                        if (particle.z < 0) particle.z = 1000;
+                        if (particle.z > 1000) particle.z = 0;
+                        
+                        // Calculate 3D projection
+                        const scale = 500 / (500 + particle.z);
+                        const x2d = particle.x * scale;
+                        const y2d = particle.y * scale;
+                        const size = particle.size * scale;
+                        const alpha = 1 - (particle.z / 1000) * 0.8;
+                        
+                        // Draw particle
+                        ctx.beginPath();
+                        ctx.arc(x2d, y2d, size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                        ctx.fill();
+                    });
+                    
+                    requestAnimationFrame(animate);
+                }
+                
+                window.addEventListener('resize', resize);
+                resize();
+                animate();
+                
+            } catch (error) {
+                console.error('Particles error:', error);
             }
         }
     </script>

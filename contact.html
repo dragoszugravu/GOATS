@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="images/GOATS.png">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Three.js dependency for Silk background -->
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
     <style>
         .contact-container {
             max-width: 600px;
@@ -224,38 +227,17 @@
     </style>
 </head>
 <body>
-    <section class="wave-section">
-        <div class="wave">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </section>
+    <!-- Silk Background Container -->
+    <div id="silk-background"></div>
 
-    <div class="scroll-lines">
-        <div class="scroll-line scroll-line-1"></div>
-        <div class="scroll-line scroll-line-2"></div>
-        <div class="scroll-line scroll-line-3"></div>
-        <div class="scroll-line scroll-line-4"></div>
-        <div class="scroll-line scroll-line-5"></div>
-        <div class="scroll-line scroll-line-6"></div>
-        <div class="scroll-line scroll-line-7"></div>
-        <div class="scroll-line scroll-line-8"></div>
-        <div class="scroll-line scroll-line-9"></div>
-        <div class="scroll-line scroll-line-10"></div>
-        <div class="scroll-line scroll-line-11"></div>
-        <div class="scroll-line scroll-line-12"></div>
-        <div class="scroll-line scroll-line-13"></div>
-        <div class="scroll-line scroll-line-14"></div>
-        <div class="scroll-line scroll-line-15"></div>
-    </div>
+
 
     <header>
         <nav>
             <div class="logo-container">
                 <a href="index.html" class="logo-link">
                     <img src="images/GOATS.png" alt="GOATS FC Logo" class="logo-image">
-                    <div class="logo-text">GOATS FC</div>
+                    <div class="logo-text" data-text="GOATS FC">GOATS FC</div>
                 </a>
             </div>
             <div class="nav-links">
@@ -307,6 +289,7 @@
 
     <footer>Created by Dragos Zughy</footer>
 
+    <script src="silk-background.js"></script>
     <script>
         // Mobile menu functionality
         function initMobileMenu() {

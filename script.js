@@ -44,8 +44,7 @@ const players = {
             position: "Defender",
             number: 18,
             image: "images/players/PAUN_Mihai.jpg"
-        },
-        // Cristi Sapunaru removed
+        }
     ],
     midfielders: [
         {
@@ -143,7 +142,7 @@ function createSection(title, players) {
     section.className = 'section';
     
     const titleElement = document.createElement('h2');
-    titleElement.className = 'section-title';
+    titleElement.className = 'section-title shiny-text';
     titleElement.textContent = title;
     
     const grid = document.createElement('div');

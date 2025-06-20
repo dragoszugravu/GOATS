@@ -27,69 +27,21 @@ body {
     position: relative;
 }
 
-/* Wave Animation */
-.wave-section {
+/* Silk Background */
+#silk-background {
     position: fixed;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: -1;
-}
-
-.wave {
-    position: absolute;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 1); /* Dark background */
-    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
-    transition: 0.5s;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
 }
 
-.wave span {
-    position: absolute;
-    width: 200vh;
-    height: 200vh;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 75%);
-}
-
-.wave span:nth-child(1) {
-    border-radius: 45%;
-    background: rgba(0, 0, 0, 0.9); /* Most dominant dark layer */
-    animation: animate 5s linear infinite;
-}
-
-.wave span:nth-child(2) {
-    border-radius: 40%;
-    background: rgba(139, 0, 0, 0.8); /* Semi-transparent dark red */
-    animation: animate 10s linear infinite;
-}
-
-.wave span:nth-child(3) {
-    border-radius: 42.5%;
-    background: rgba(139, 119, 0, 0.6); /* Dark faded yellow */
-    animation: animate 15s linear infinite;
-}
-
-@keyframes animate {
-    0% {
-        transform: translate(-50%, 75%) rotate(0deg);
-    }
-    100% {
-        transform: translate(-50%, 75%) rotate(360deg);
-    }
-}
-
-/* Remove old background styles */
-.motion-graphics,
-.abstract-lines,
-body::before {
-    display: none;
+#silk-background canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
 }
 
 /* Abstract Lines */
@@ -221,13 +173,63 @@ body::before {
 
 .logo-text {
     font-size: 2rem;
-    font-weight: 300;
-    background: linear-gradient(45deg, var(--accent-color), var(--highlight-color));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(255, 75, 43, 0.3);
-    animation: pulse 2s ease-in-out infinite;
+    font-weight: 900;
+    color: #fff;
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+    white-space: nowrap;
+    --after-duration: 3s;
+    --before-duration: 2s;
+    --after-shadow: -5px 0 red;
+    --before-shadow: 5px 0 cyan;
+}
+
+.logo-text::after,
+.logo-text::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    color: #fff;
+    background-color: transparent;
+    overflow: hidden;
+    clip-path: inset(0 0 0 0);
+}
+
+.logo-text::after {
+    left: 2px;
+    text-shadow: var(--after-shadow);
+    animation: animate-glitch var(--after-duration) infinite linear alternate-reverse;
+}
+
+.logo-text::before {
+    left: -2px;
+    text-shadow: var(--before-shadow);
+    animation: animate-glitch var(--before-duration) infinite linear alternate-reverse;
+}
+
+@keyframes animate-glitch {
+    0%   { clip-path: inset(20% 0 50% 0); }
+    5%   { clip-path: inset(10% 0 60% 0); }
+    10%  { clip-path: inset(15% 0 55% 0); }
+    15%  { clip-path: inset(25% 0 35% 0); }
+    20%  { clip-path: inset(30% 0 40% 0); }
+    25%  { clip-path: inset(40% 0 20% 0); }
+    30%  { clip-path: inset(10% 0 60% 0); }
+    35%  { clip-path: inset(15% 0 55% 0); }
+    40%  { clip-path: inset(25% 0 35% 0); }
+    45%  { clip-path: inset(30% 0 40% 0); }
+    50%  { clip-path: inset(20% 0 50% 0); }
+    55%  { clip-path: inset(10% 0 60% 0); }
+    60%  { clip-path: inset(15% 0 55% 0); }
+    65%  { clip-path: inset(25% 0 35% 0); }
+    70%  { clip-path: inset(30% 0 40% 0); }
+    75%  { clip-path: inset(40% 0 20% 0); }
+    80%  { clip-path: inset(20% 0 50% 0); }
+    85%  { clip-path: inset(10% 0 60% 0); }
+    90%  { clip-path: inset(15% 0 55% 0); }
+    95%  { clip-path: inset(25% 0 35% 0); }
+    100% { clip-path: inset(30% 0 40% 0); }
 }
 
 @keyframes pulse {
@@ -273,16 +275,15 @@ body::before {
     transform: rotate(360deg) scale(1.1);
 }
 
-/* Enhanced header with glow */
+/* Enhanced header with transparent background */
 header {
-    background: rgba(0, 0, 0, 0.9);
+    background: transparent;
     padding: 1.5rem 2rem;
     position: sticky;
     top: 0;
     z-index: 100;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 4px 30px rgba(255, 75, 43, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 nav {
@@ -330,13 +331,36 @@ main {
     margin-bottom: 3rem;
     text-align: center;
     letter-spacing: -1px;
-    background: linear-gradient(45deg, var(--accent-color), var(--highlight-color));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     position: relative;
-    text-shadow: 0 0 30px rgba(255, 75, 43, 0.3);
     overflow: hidden;
+}
+
+.shiny-text {
+    color: #ffffff;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.9) 50%,
+        rgba(255, 255, 255, 0) 60%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    display: inline-block;
+    animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+    0% {
+        background-position: 100%;
+    }
+    100% {
+        background-position: -100%;
+    }
+}
+
+.shiny-text.disabled {
+    animation: none;
 }
 
 .section-title::before {
@@ -980,57 +1004,9 @@ main {
 }
 
 /* Scroll-triggered Lines */
-.scroll-lines {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    overflow: hidden;
-}
 
-.scroll-line {
-    position: absolute;
-    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-    height: 3px;  /* Increased from 1px */
-    opacity: 0.4; /* Increased from 0.2 */
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-    filter: blur(0.5px); /* Added subtle blur for better visibility */
-}
 
-.scroll-line-1 { width: 200px; top: 15%; left: 5%; animation: slideIn 6s ease-out infinite; }
-.scroll-line-2 { width: 250px; top: 25%; right: 8%; animation: slideIn 8s ease-out 1s infinite; }
-.scroll-line-3 { width: 220px; top: 35%; left: 12%; animation: slideIn 7s ease-out 2s infinite; }
-.scroll-line-4 { width: 270px; top: 45%; right: 15%; animation: slideIn 9s ease-out 3s infinite; }
-.scroll-line-5 { width: 230px; top: 55%; left: 8%; animation: slideIn 6.5s ease-out 4s infinite; }
-.scroll-line-6 { width: 240px; top: 65%; right: 10%; animation: slideIn 7.5s ease-out 5s infinite; }
-.scroll-line-7 { width: 210px; top: 75%; left: 15%; animation: slideIn 8.5s ease-out 6s infinite; }
-.scroll-line-8 { width: 260px; top: 85%; right: 5%; animation: slideIn 9.5s ease-out 7s infinite; }
-.scroll-line-9 { width: 220px; top: 20%; right: 20%; animation: slideIn 7s ease-out 8s infinite; }
-.scroll-line-10 { width: 250px; top: 30%; left: 25%; animation: slideIn 8s ease-out 9s infinite; }
-.scroll-line-11 { width: 230px; top: 40%; right: 30%; animation: slideIn 6.5s ease-out 10s infinite; }
-.scroll-line-12 { width: 240px; top: 50%; left: 35%; animation: slideIn 7.5s ease-out 11s infinite; }
-.scroll-line-13 { width: 210px; top: 60%; right: 40%; animation: slideIn 8.5s ease-out 12s infinite; }
-.scroll-line-14 { width: 260px; top: 70%; left: 45%; animation: slideIn 9.5s ease-out 13s infinite; }
-.scroll-line-15 { width: 220px; top: 80%; right: 50%; animation: slideIn 7s ease-out 14s infinite; }
 
-@keyframes slideIn {
-    0% {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    50% {
-        transform: translateX(0);
-        opacity: 0.4; /* Increased from 0.2 */
-    }
-    100% {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-}
 
 /* Footer Styles */
 footer {

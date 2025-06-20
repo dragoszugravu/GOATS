@@ -8,8 +8,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="profile-card.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="images/GOATS.png">
+    
+    <!-- Three.js and React dependencies for Silk background -->
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@react-three/fiber@8.15.11/dist/react-three-fiber.umd.js"></script>
+    
+    <!-- GSAP for SplitText effect -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    
     <style>
         .logo-link {
             display: flex;
@@ -22,6 +35,121 @@
 
         .logo-link:hover {
             transform: scale(1.05);
+        }
+
+        /* Hero Title with Glitch Effect */
+        .hero-title-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            min-height: 200px;
+        }
+
+        .hero-title {
+            font-size: 6rem;
+            font-weight: 800;
+            text-align: center;
+            color: #ffffff;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            animation: glitch 2s infinite;
+        }
+
+        .hero-title::before,
+        .hero-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-title::before {
+            animation: glitch-1 0.5s infinite;
+            color: #ff0000;
+            z-index: -1;
+        }
+
+        .hero-title::after {
+            animation: glitch-2 0.5s infinite;
+            color: #00ffff;
+            z-index: -2;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-2px, 2px);
+            }
+            40% {
+                transform: translate(-2px, -2px);
+            }
+            60% {
+                transform: translate(2px, 2px);
+            }
+            80% {
+                transform: translate(2px, -2px);
+            }
+        }
+
+        @keyframes glitch-1 {
+            0%, 100% {
+                transform: translate(0);
+                clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            }
+            25% {
+                transform: translate(-2px, -2px);
+                clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+            }
+            50% {
+                transform: translate(-2px, 2px);
+                clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+            }
+            75% {
+                transform: translate(2px, -2px);
+                clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%);
+            }
+        }
+
+        @keyframes glitch-2 {
+            0%, 100% {
+                transform: translate(0);
+                clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%);
+            }
+            25% {
+                transform: translate(2px, 2px);
+                clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+            }
+            50% {
+                transform: translate(2px, -2px);
+                clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+            }
+            75% {
+                transform: translate(-2px, 2px);
+                clip-path: polygon(0 0, 100% 0, 100% 25%, 0 25%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .hero-title-container {
+                padding: 2rem 1rem;
+                min-height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
         }
 
         .next-match-container {
@@ -379,38 +507,17 @@
     </style>
 </head>
 <body>
-    <section class="wave-section">
-        <div class="wave">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </section>
+    <!-- Silk Background Container -->
+    <div id="silk-background"></div>
 
-    <div class="scroll-lines">
-        <div class="scroll-line scroll-line-1"></div>
-        <div class="scroll-line scroll-line-2"></div>
-        <div class="scroll-line scroll-line-3"></div>
-        <div class="scroll-line scroll-line-4"></div>
-        <div class="scroll-line scroll-line-5"></div>
-        <div class="scroll-line scroll-line-6"></div>
-        <div class="scroll-line scroll-line-7"></div>
-        <div class="scroll-line scroll-line-8"></div>
-        <div class="scroll-line scroll-line-9"></div>
-        <div class="scroll-line scroll-line-10"></div>
-        <div class="scroll-line scroll-line-11"></div>
-        <div class="scroll-line scroll-line-12"></div>
-        <div class="scroll-line scroll-line-13"></div>
-        <div class="scroll-line scroll-line-14"></div>
-        <div class="scroll-line scroll-line-15"></div>
-    </div>
+
 
     <header>
         <nav>
             <div class="logo-container">
                 <a href="index.html" class="logo-link">
                     <img src="images/GOATS.png" alt="GOATS FC Logo" class="logo-image">
-                    <div class="logo-text">GOATS FC</div>
+                    <div class="logo-text" data-text="GOATS FC">GOATS FC</div>
                 </a>
             </div>
             <div class="nav-links">
@@ -427,34 +534,8 @@
         </nav>
     </header>
 
-    <div class="next-match-container">
-        <div class="next-match-card" onclick="window.open('https://youtu.be/-y2zFz8szxk', '_blank')" style="cursor: pointer;">
-            <div class="competition-logo">
-                <img src="./images/vc.jpg" alt="Victory Cup Logo" onerror="this.src='./images/default.jpg'">
-            </div>
-            <div class="match-content">
-                <div class="match-header">
-                    <div class="match-date">12 June 2025</div>
-                </div>
-                <div class="match-details">
-                    <div class="kickoff">
-                        KICKOFF - 21:20
-                    </div>
-                    <div class="venue">
-                        Liga 3 C
-                    </div>
-                </div>
-                <div class="teams-container">
-                    <div class="team">
-                        <div class="team-name goats">GOATS FC</div>
-                    </div>
-                    <div class="vs">V</div>
-                    <div class="team">
-                        <div class="team-name">NORDIX Zen</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="hero-title-container">
+        <h1 class="hero-title" data-text="GOATS FC">GOATS FC</h1>
     </div>
 
     <main>
@@ -479,7 +560,379 @@
 
     <footer>Created by Dragos Zughy</footer>
 
+    <script src="silk-background.js"></script>
+    <script src="profile-card.js"></script>
     <script src="script.js"></script>
+    
+    <script>
+        // FuzzyText Effect for Section Titles
+        class FuzzyText {
+            constructor(element, options = {}) {
+                this.element = element;
+                this.originalText = element.textContent;
+                this.options = {
+                    fontSize: '3rem',
+                    fontWeight: 900,
+                    fontFamily: 'Poppins, -apple-system, BlinkMacSystemFont, sans-serif',
+                    color: '#fff',
+                    enableHover: true,
+                    baseIntensity: 0.18,
+                    hoverIntensity: 0.5,
+                    ...options
+                };
+                
+                this.canvas = null;
+                this.ctx = null;
+                this.animationFrameId = null;
+                this.isCancelled = false;
+                this.isHovering = false;
+                
+                this.init();
+            }
+            
+            async init() {
+                // Wait for fonts to load
+                if (document.fonts?.ready) {
+                    await document.fonts.ready;
+                }
+                if (this.isCancelled) return;
+                
+                // Create canvas
+                this.canvas = document.createElement('canvas');
+                this.canvas.style.display = 'block';
+                this.canvas.style.margin = '0 auto';
+                this.canvas.style.cursor = this.options.enableHover ? 'pointer' : 'default';
+                
+                // Replace the original element with canvas
+                this.element.style.display = 'none';
+                this.element.parentNode.insertBefore(this.canvas, this.element.nextSibling);
+                
+                this.ctx = this.canvas.getContext('2d');
+                if (!this.ctx) return;
+                
+                const computedFontFamily = this.options.fontFamily === 'inherit'
+                    ? window.getComputedStyle(this.canvas).fontFamily || 'sans-serif'
+                    : this.options.fontFamily;
+                
+                const fontSizeStr = typeof this.options.fontSize === 'number' 
+                    ? `${this.options.fontSize}px` 
+                    : this.options.fontSize;
+                    
+                let numericFontSize;
+                if (typeof this.options.fontSize === 'number') {
+                    numericFontSize = this.options.fontSize;
+                } else {
+                    const temp = document.createElement('span');
+                    temp.style.fontSize = this.options.fontSize;
+                    document.body.appendChild(temp);
+                    const computedSize = window.getComputedStyle(temp).fontSize;
+                    numericFontSize = parseFloat(computedSize);
+                    document.body.removeChild(temp);
+                }
+                
+                // Create offscreen canvas for text rendering
+                this.offscreen = document.createElement('canvas');
+                const offCtx = this.offscreen.getContext('2d');
+                if (!offCtx) return;
+                
+                offCtx.font = `${this.options.fontWeight} ${fontSizeStr} ${computedFontFamily}`;
+                offCtx.textBaseline = 'alphabetic';
+                const metrics = offCtx.measureText(this.originalText);
+                
+                const actualLeft = metrics.actualBoundingBoxLeft ?? 0;
+                const actualRight = metrics.actualBoundingBoxRight ?? metrics.width;
+                const actualAscent = metrics.actualBoundingBoxAscent ?? numericFontSize;
+                const actualDescent = metrics.actualBoundingBoxDescent ?? numericFontSize * 0.2;
+                
+                const textBoundingWidth = Math.ceil(actualLeft + actualRight);
+                const tightHeight = Math.ceil(actualAscent + actualDescent);
+                
+                const extraWidthBuffer = 10;
+                const offscreenWidth = textBoundingWidth + extraWidthBuffer;
+                
+                this.offscreen.width = offscreenWidth;
+                this.offscreen.height = tightHeight;
+                
+                const xOffset = extraWidthBuffer / 2;
+                offCtx.font = `${this.options.fontWeight} ${fontSizeStr} ${computedFontFamily}`;
+                offCtx.textBaseline = 'alphabetic';
+                offCtx.fillStyle = this.options.color;
+                offCtx.fillText(this.originalText, xOffset - actualLeft, actualAscent);
+                
+                // Setup main canvas
+                const horizontalMargin = 50;
+                const verticalMargin = 0;
+                this.canvas.width = offscreenWidth + horizontalMargin * 2;
+                this.canvas.height = tightHeight + verticalMargin * 2;
+                this.ctx.translate(horizontalMargin, verticalMargin);
+                
+                // Interactive area
+                this.interactiveLeft = horizontalMargin + xOffset;
+                this.interactiveTop = verticalMargin;
+                this.interactiveRight = this.interactiveLeft + textBoundingWidth;
+                this.interactiveBottom = this.interactiveTop + tightHeight;
+                
+                this.offscreenWidth = offscreenWidth;
+                this.tightHeight = tightHeight;
+                this.fuzzRange = 30;
+                
+                this.setupEventListeners();
+                this.run();
+            }
+            
+            setupEventListeners() {
+                if (!this.options.enableHover) return;
+                
+                const handleMouseMove = (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    this.isHovering = this.isInsideTextArea(x, y);
+                };
+                
+                const handleMouseLeave = () => {
+                    this.isHovering = false;
+                };
+                
+                const handleTouchMove = (e) => {
+                    e.preventDefault();
+                    const rect = this.canvas.getBoundingClientRect();
+                    const touch = e.touches[0];
+                    const x = touch.clientX - rect.left;
+                    const y = touch.clientY - rect.top;
+                    this.isHovering = this.isInsideTextArea(x, y);
+                };
+                
+                const handleTouchEnd = () => {
+                    this.isHovering = false;
+                };
+                
+                this.canvas.addEventListener('mousemove', handleMouseMove);
+                this.canvas.addEventListener('mouseleave', handleMouseLeave);
+                this.canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+                this.canvas.addEventListener('touchend', handleTouchEnd);
+                
+                // Store for cleanup
+                this.handleMouseMove = handleMouseMove;
+                this.handleMouseLeave = handleMouseLeave;
+                this.handleTouchMove = handleTouchMove;
+                this.handleTouchEnd = handleTouchEnd;
+            }
+            
+            isInsideTextArea(x, y) {
+                return (
+                    x >= this.interactiveLeft &&
+                    x <= this.interactiveRight &&
+                    y >= this.interactiveTop &&
+                    y <= this.interactiveBottom
+                );
+            }
+            
+            run() {
+                if (this.isCancelled) return;
+                
+                this.ctx.clearRect(
+                    -this.fuzzRange,
+                    -this.fuzzRange,
+                    this.offscreenWidth + 2 * this.fuzzRange,
+                    this.tightHeight + 2 * this.fuzzRange
+                );
+                
+                const intensity = this.isHovering ? this.options.hoverIntensity : this.options.baseIntensity;
+                
+                for (let j = 0; j < this.tightHeight; j++) {
+                    const dx = Math.floor(intensity * (Math.random() - 0.5) * this.fuzzRange);
+                    this.ctx.drawImage(
+                        this.offscreen,
+                        0, j, this.offscreenWidth, 1,
+                        dx, j, this.offscreenWidth, 1
+                    );
+                }
+                
+                this.animationFrameId = requestAnimationFrame(() => this.run());
+            }
+            
+            destroy() {
+                this.isCancelled = true;
+                if (this.animationFrameId) {
+                    cancelAnimationFrame(this.animationFrameId);
+                }
+                
+                if (this.canvas && this.options.enableHover) {
+                    this.canvas.removeEventListener('mousemove', this.handleMouseMove);
+                    this.canvas.removeEventListener('mouseleave', this.handleMouseLeave);
+                    this.canvas.removeEventListener('touchmove', this.handleTouchMove);
+                    this.canvas.removeEventListener('touchend', this.handleTouchEnd);
+                }
+                
+                if (this.canvas && this.canvas.parentNode) {
+                    this.canvas.parentNode.removeChild(this.canvas);
+                }
+                
+                if (this.element) {
+                    this.element.style.display = '';
+                }
+            }
+        }
+        
+        // Initialize FuzzyText effect on section titles
+        function initFuzzyTextEffects() {
+            // Wait for DOM to be ready and sections to be created
+            setTimeout(() => {
+                const sectionTitles = document.querySelectorAll('.section-title');
+                sectionTitles.forEach(title => {
+                    new FuzzyText(title, {
+                        fontSize: '3rem',
+                        fontWeight: 900,
+                        fontFamily: 'Poppins, -apple-system, BlinkMacSystemFont, sans-serif',
+                        color: '#ffffff',
+                        enableHover: true,
+                        baseIntensity: 0.15,
+                        hoverIntensity: 0.6
+                    });
+                });
+            }, 100);
+        }
+        
+        // Initialize when DOM is loaded
+        // document.addEventListener('DOMContentLoaded', initFuzzyTextEffects); // Removed FuzzyText effect
+        
+        // SplitText Effect for Header GOATS FC only
+        class HeaderSplitText {
+            constructor(element, options = {}) {
+                this.element = element;
+                this.originalText = element.textContent;
+                this.options = {
+                    delay: 100,
+                    duration: 0.6,
+                    ease: "power3.out",
+                    splitType: "chars",
+                    from: { opacity: 0, y: 40 },
+                    to: { opacity: 1, y: 0 },
+                    threshold: 0.1,
+                    rootMargin: "-100px",
+                    ...options
+                };
+                
+                this.animationCompleted = false;
+                this.chars = [];
+                
+                this.init();
+            }
+            
+            init() {
+                // Register GSAP plugins
+                if (typeof gsap !== 'undefined' && gsap.registerPlugin) {
+                    gsap.registerPlugin(ScrollTrigger);
+                }
+                
+                // Set up element styles
+                this.element.style.overflow = 'hidden';
+                this.element.style.display = 'inline-block';
+                this.element.style.whiteSpace = 'normal';
+                this.element.style.wordWrap = 'break-word';
+                
+                // Split text into characters
+                this.splitText();
+                this.setupAnimation();
+            }
+            
+            splitText() {
+                const text = this.originalText;
+                this.element.innerHTML = '';
+                
+                // Create spans for each character
+                text.split('').forEach((char, index) => {
+                    const span = document.createElement('span');
+                    span.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space
+                    span.style.display = 'inline-block';
+                    span.style.willChange = 'transform, opacity';
+                    
+                    // Set initial state
+                    gsap.set(span, {
+                        ...this.options.from,
+                        force3D: true
+                    });
+                    
+                    this.chars.push(span);
+                    this.element.appendChild(span);
+                });
+            }
+            
+            setupAnimation() {
+                if (this.animationCompleted) return;
+                
+                const startPct = (1 - this.options.threshold) * 100;
+                const rootMarginMatch = /^(-?\d+)px$/.exec(this.options.rootMargin);
+                const rootMarginValue = rootMarginMatch ? parseInt(rootMarginMatch[1], 10) : 0;
+                const sign = rootMarginValue < 0 ? `-=${Math.abs(rootMarginValue)}px` : `+=${rootMarginValue}px`;
+                const start = `top ${startPct}%${sign}`;
+                
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: this.element,
+                        start: start,
+                        toggleActions: "play none none none",
+                        once: true,
+                    },
+                    smoothChildTiming: true,
+                    onComplete: () => {
+                        this.animationCompleted = true;
+                        gsap.set(this.chars, {
+                            ...this.options.to,
+                            clearProps: "willChange",
+                            immediateRender: true,
+                        });
+                    }
+                });
+                
+                // Animate characters with stagger
+                tl.to(this.chars, {
+                    ...this.options.to,
+                    duration: this.options.duration,
+                    ease: this.options.ease,
+                    stagger: this.options.delay / 1000,
+                    force3D: true,
+                });
+                
+                this.timeline = tl;
+            }
+            
+            destroy() {
+                if (this.timeline) {
+                    this.timeline.kill();
+                }
+                ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+                gsap.killTweensOf(this.chars);
+                
+                // Restore original text
+                this.element.innerHTML = this.originalText;
+            }
+        }
+        
+        // Initialize SplitText effect for header GOATS FC only
+        function initHeaderSplitText() {
+            // Wait for GSAP to load and DOM to be ready
+            setTimeout(() => {
+                const headerLogoText = document.querySelector('.logo-text');
+                if (headerLogoText && typeof gsap !== 'undefined') {
+                    new HeaderSplitText(headerLogoText, {
+                        delay: 80,
+                        duration: 0.8,
+                        ease: "power3.out",
+                        splitType: "chars",
+                        from: { opacity: 0, y: 30, rotationX: -90 },
+                        to: { opacity: 1, y: 0, rotationX: 0 },
+                        threshold: 0.8,
+                        rootMargin: "0px"
+                    });
+                }
+            }, 200);
+        }
+        
+        // Initialize header SplitText when DOM is loaded
+        // document.addEventListener('DOMContentLoaded', initHeaderSplitText); // Removed SplitText effect
+    </script>
     <script>
         // Mobile menu functionality
         function initMobileMenu() {
