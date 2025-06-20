@@ -1083,8 +1083,9 @@ footer {
         box-sizing: border-box !important;
     }
 
-    /* Players grid override - Horizontal carousel on mobile per section (MAIN PAGE ONLY) */
-    body:not(.team-generator-page) .players-grid {
+    /* Players section override - Horizontal carousel on mobile per section (MAIN PAGE ONLY) */
+    body:not(.team-generator-page) .section .players-grid,
+    body:not(.team-generator-page) .players-row {
         display: flex !important;
         flex-direction: row !important;
         gap: 1.5rem !important;
@@ -1097,12 +1098,6 @@ footer {
         -webkit-overflow-scrolling: touch !important;
         scroll-snap-type: x mandatory !important;
         scroll-behavior: smooth !important;
-    }
-
-    /* Ensure each section has its own carousel (MAIN PAGE ONLY) */
-    body:not(.team-generator-page) .section .players-grid {
-        display: flex !important;
-        flex-direction: row !important;
         flex-wrap: nowrap !important;
         justify-content: flex-start !important;
         align-items: stretch !important;
@@ -1120,22 +1115,26 @@ footer {
     }
 
     /* Scrollbar styling for each section carousel (MAIN PAGE ONLY) */
-    body:not(.team-generator-page) .players-grid::-webkit-scrollbar {
+    body:not(.team-generator-page) .section .players-grid::-webkit-scrollbar,
+    body:not(.team-generator-page) .players-row::-webkit-scrollbar {
         height: 6px !important;
     }
 
-    body:not(.team-generator-page) .players-grid::-webkit-scrollbar-track {
+    body:not(.team-generator-page) .section .players-grid::-webkit-scrollbar-track,
+    body:not(.team-generator-page) .players-row::-webkit-scrollbar-track {
         background: rgba(255, 255, 255, 0.1) !important;
         border-radius: 3px !important;
         margin: 0 1rem !important;
     }
 
-    body:not(.team-generator-page) .players-grid::-webkit-scrollbar-thumb {
+    body:not(.team-generator-page) .section .players-grid::-webkit-scrollbar-thumb,
+    body:not(.team-generator-page) .players-row::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.4) !important;
         border-radius: 3px !important;
     }
 
-    body:not(.team-generator-page) .players-grid::-webkit-scrollbar-thumb:hover {
+    body:not(.team-generator-page) .section .players-grid::-webkit-scrollbar-thumb:hover,
+    body:not(.team-generator-page) .players-row::-webkit-scrollbar-thumb:hover {
         background: rgba(255, 255, 255, 0.6) !important;
     }
 
@@ -1178,7 +1177,8 @@ footer {
 
 @media (max-width: 480px) {
     /* Extra small screens (MAIN PAGE ONLY) */
-    body:not(.team-generator-page) .players-grid {
+    body:not(.team-generator-page) .section .players-grid,
+    body:not(.team-generator-page) .players-row {
         gap: 1rem !important;
         padding: 0 0.5rem !important;
     }
