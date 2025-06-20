@@ -242,75 +242,63 @@
                 padding: 0 1rem;
             }
 
-            /* Players grid - Mobile Carousel */
-            body:not(.team-generator-page) .players-grid,
-            body:not(.team-generator-page) .players-row {
-                display: flex;
-                overflow-x: auto;
-                overflow-y: hidden;
-                gap: 1rem;
-                padding: 0 1rem 1rem 1rem;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                -ms-overflow-style: none;
+            /* Players grid - Same as team generator */
+            .players-grid,
+            .players-row {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1.5rem;
+                justify-items: center;
+                padding: 0 1rem;
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
             }
 
-            body:not(.team-generator-page) .players-grid::-webkit-scrollbar,
-            body:not(.team-generator-page) .players-row::-webkit-scrollbar {
-                display: none;
-            }
-
-            /* Player cards - Mobile Carousel */
-            body:not(.team-generator-page) .player-card {
-                flex: 0 0 280px;
-                width: 280px;
-                min-width: 280px;
-                max-width: 280px;
-                scroll-snap-align: start;
-                margin: 0;
+            /* Player cards - Same as team generator */
+            .player-card {
+                width: 100%;
+                max-width: 300px;
                 height: auto;
                 min-height: 400px;
+                margin: 0 auto;
             }
 
-            body:not(.team-generator-page) .player-image {
+            .player-image {
                 height: 300px;
                 width: 100%;
             }
 
-            body:not(.team-generator-page) .player-image img {
+            .player-image img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
                 object-position: center top;
             }
 
-            body:not(.team-generator-page) .player-info {
+            .player-info {
                 padding: 1rem;
                 text-align: center;
             }
 
-            body:not(.team-generator-page) .player-name {
+            .player-name {
                 font-size: 1.1rem;
                 margin-bottom: 0.5rem;
                 line-height: 1.3;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
             }
 
-            body:not(.team-generator-page) .player-position {
+            .player-position {
                 font-size: 0.9rem;
             }
 
-            body:not(.team-generator-page) .player-logo {
+            .player-logo {
                 bottom: 10px;
                 right: 10px;
                 width: 35px;
                 height: 35px;
             }
 
-            body:not(.team-generator-page) .player-logo img {
+            .player-logo img {
                 width: 100%;
                 height: 100%;
             }
@@ -364,29 +352,27 @@
                 font-size: 1.8rem;
             }
 
-            body:not(.team-generator-page) .players-grid,
-            body:not(.team-generator-page) .players-row {
-                padding: 0 0.5rem 1rem 0.5rem;
-                gap: 0.8rem;
+            .players-grid,
+            .players-row {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 1rem;
+                padding: 0 0.5rem;
             }
 
-            body:not(.team-generator-page) .player-card {
-                flex: 0 0 260px;
-                width: 260px;
-                min-width: 260px;
-                max-width: 260px;
+            .player-card {
+                max-width: 280px;
                 min-height: 380px;
             }
 
-            body:not(.team-generator-page) .player-image {
+            .player-image {
                 height: 280px;
             }
 
-            body:not(.team-generator-page) .player-name {
+            .player-name {
                 font-size: 1rem;
             }
 
-            body:not(.team-generator-page) .player-position {
+            .player-position {
                 font-size: 0.85rem;
             }
 
@@ -409,15 +395,17 @@
                 font-size: 1.6rem;
             }
 
-            body:not(.team-generator-page) .player-card {
-                flex: 0 0 240px;
-                width: 240px;
-                min-width: 240px;
-                max-width: 240px;
+            .players-grid,
+            .players-row {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            }
+
+            .player-card {
+                max-width: 260px;
                 min-height: 360px;
             }
 
-            body:not(.team-generator-page) .player-image {
+            .player-image {
                 height: 260px;
             }
         }
