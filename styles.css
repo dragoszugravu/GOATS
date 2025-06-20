@@ -1064,4 +1064,99 @@ footer {
     0% { transform: scale(0.5); opacity: 0; }
     80% { transform: scale(1.1); opacity: 1; }
     100% { transform: scale(1); opacity: 1; }
+}
+
+/* MOBILE RESPONSIVE OVERRIDES - HIGHEST PRIORITY */
+@media (max-width: 768px) {
+    /* Ensure no horizontal overflow */
+    html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Main container */
+    main {
+        padding: 1rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Players grid override */
+    .players-grid {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+        gap: 1.5rem !important;
+        justify-items: center !important;
+        padding: 0 1rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+    }
+
+    /* Player cards override */
+    .player-card {
+        width: 100% !important;
+        max-width: 300px !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Section titles */
+    .section-title {
+        font-size: 2rem !important;
+        text-align: center !important;
+        padding: 0 1rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    /* Header adjustments */
+    header {
+        padding: 0.5rem 1rem !important;
+        height: auto !important;
+        min-height: 60px !important;
+    }
+
+    .logo-image {
+        width: 35px !important;
+        height: 35px !important;
+    }
+
+    .logo-text {
+        font-size: 1.2rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra small screens */
+    .players-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+        padding: 0 0.5rem !important;
+    }
+
+    .player-card {
+        max-width: 280px !important;
+    }
+
+    .section-title {
+        font-size: 1.8rem !important;
+    }
+
+    main {
+        padding: 0.5rem !important;
+    }
+}
+
+@media (max-width: 360px) {
+    /* Very small screens */
+    .player-card {
+        max-width: 260px !important;
+    }
+
+    .section-title {
+        font-size: 1.6rem !important;
+    }
 } 
