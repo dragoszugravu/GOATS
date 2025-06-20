@@ -170,40 +170,19 @@ function handleScroll() {
 }
 
 function displayPlayers() {
-    // Populate existing HTML structure instead of creating new sections
-    const goalkeepersContainer = document.querySelector('.players-row.goalkeepers');
-    const defendersContainer = document.querySelector('.players-row.defenders');
-    const midfieldersContainer = document.querySelector('.players-row.midfielders');
-    const forwardsContainer = document.querySelector('.players-row.forwards');
+    const main = document.querySelector('main');
     
-    // Clear existing content and add section titles + players
-    if (goalkeepersContainer) {
-        goalkeepersContainer.innerHTML = '<h2 class="section-title shiny-text">Goalkeepers</h2>';
-        players.goalkeepers.forEach(player => {
-            goalkeepersContainer.appendChild(createPlayerCard(player));
-        });
-    }
+    // Add Goalkeepers section
+    main.appendChild(createSection('Goalkeepers', players.goalkeepers));
     
-    if (defendersContainer) {
-        defendersContainer.innerHTML = '<h2 class="section-title shiny-text">Defenders</h2>';
-        players.defenders.forEach(player => {
-            defendersContainer.appendChild(createPlayerCard(player));
-        });
-    }
+    // Add Defenders section
+    main.appendChild(createSection('Defenders', players.defenders));
     
-    if (midfieldersContainer) {
-        midfieldersContainer.innerHTML = '<h2 class="section-title shiny-text">Midfielders</h2>';
-        players.midfielders.forEach(player => {
-            midfieldersContainer.appendChild(createPlayerCard(player));
-        });
-    }
+    // Add Midfielders section
+    main.appendChild(createSection('Midfielders', players.midfielders));
     
-    if (forwardsContainer) {
-        forwardsContainer.innerHTML = '<h2 class="section-title shiny-text">Forwards</h2>';
-        players.forwards.forEach(player => {
-            forwardsContainer.appendChild(createPlayerCard(player));
-        });
-    }
+    // Add Forwards section
+    main.appendChild(createSection('Forwards', players.forwards));
 }
 
 // Mobile Menu Functionality
