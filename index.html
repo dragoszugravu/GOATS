@@ -18,9 +18,6 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@react-three/fiber@8.15.11/dist/react-three-fiber.umd.js"></script>
     
-    <!-- Matter.js for falling text physics -->
-    <script src="https://unpkg.com/matter-js@0.19.0/build/matter.min.js"></script>
-    
     <!-- GSAP for SplitText effect -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -196,14 +193,19 @@
                 line-height: 1.1;
             }
 
-            /* Falling text mobile adjustments */
-            .falling-text-container {
+            /* CircularText mobile adjustments */
+            .circular-text-container {
                 padding-top: 0.5rem;
                 margin-top: 0.5rem;
             }
 
-            .word {
-                font-size: 0.8rem;
+            .circular-text {
+                width: 100px;
+                height: 100px;
+            }
+
+            .circular-text span {
+                font-size: 10px;
             }
 
             /* Main content */
@@ -329,8 +331,13 @@
                 min-height: 100px;
             }
 
-            .word {
-                font-size: 0.7rem;
+            .circular-text {
+                width: 80px;
+                height: 80px;
+            }
+
+            .circular-text span {
+                font-size: 8px;
             }
 
             .section-title {
@@ -389,39 +396,42 @@
             }
         }
 
-        /* Falling Text Effect Styles */
-        .falling-text-container {
+        /* CircularText Effect Styles */
+        .circular-text-container {
             position: relative;
             z-index: 1;
             width: 100%;
-            cursor: pointer;
             text-align: center;
             padding-top: 1rem;
             margin-top: 1rem;
+            display: flex;
+            justify-content: center;
         }
 
-        .falling-text-target {
-            display: inline-block;
-        }
-
-        .word {
-            display: inline-block;
-            margin: 0 2px;
-            user-select: none;
-            font-weight: 300;
-            font-size: 0.9rem;
-        }
-
-        .highlighted {
-            color: cyan;
+        .circular-text {
+            margin: 0 auto;
+            border-radius: 50%;
+            width: 120px;
+            position: relative;
+            height: 120px;
             font-weight: bold;
+            color: #fff;
+            font-weight: 900;
+            text-align: center;
+            cursor: pointer;
+            transform-origin: 50% 50%;
+            -webkit-transform-origin: 50% 50%;
         }
 
-        .falling-text-canvas {
+        .circular-text span {
             position: absolute;
-            top: 0;
+            display: inline-block;
             left: 0;
-            z-index: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            font-size: 14px;
+            transition: all 0.5s cubic-bezier(0, 0, 0, 1);
         }
 
         .next-match-container {
@@ -808,10 +818,9 @@
 
             <div class="hero-title-container">
             <h1 class="hero-title" data-text="GOATS FC">GOATS FC</h1>
-            <div class="scroll-float-container">
-                <h2 class="scroll-float">
-                    <span class="scroll-float-text">Every match is a statement. Every player, a beast.</span>
-                </h2>
+            <div class="circular-text-container">
+                <div class="circular-text" id="circular-text">
+                </div>
             </div>
         </div>
 
@@ -841,152 +850,62 @@
     <script src="profile-card.js"></script>
     
     <script>
-        // Falling Text Effect Implementation
+        // CircularText Effect Implementation
         document.addEventListener('DOMContentLoaded', function() {
-            const fallingTextContainer = document.querySelector('.falling-text-container');
-            const textTarget = document.querySelector('.falling-text-target');
-            const canvas = document.querySelector('.falling-text-canvas');
+            const circularTextElement = document.getElementById('circular-text');
+            if (!circularTextElement) return;
             
-            if (!fallingTextContainer || !textTarget || !canvas || !window.Matter) return;
+            const text = "**FC**GOATS";
+            const letters = Array.from(text);
+            let rotation = 0;
+            let animationId;
+            let spinDuration = 20; // seconds for full rotation
+            let isHovering = false;
             
-            let effectStarted = false;
-            let engine, render, runner, wordBodies = [];
+            // Create letter spans
+            letters.forEach((letter, i) => {
+                const span = document.createElement('span');
+                const rotationDeg = (360 / letters.length) * i;
+                const radius = 45; // Distance from center (smaller for smaller circle)
+                const x = Math.cos((rotationDeg * Math.PI) / 180) * radius;
+                const y = Math.sin((rotationDeg * Math.PI) / 180) * radius;
+                
+                span.textContent = letter;
+                span.style.transform = `rotateZ(${rotationDeg}deg) translate3d(${x}px, ${y}px, 0)`;
+                span.style.webkitTransform = `rotateZ(${rotationDeg}deg) translate3d(${x}px, ${y}px, 0)`;
+                
+                circularTextElement.appendChild(span);
+            });
             
-            function initializeFallingText() {
-                if (effectStarted) return;
-                effectStarted = true;
-                
-                const {
-                    Engine,
-                    Render,
-                    World,
-                    Bodies,
-                    Runner,
-                    Mouse,
-                    MouseConstraint,
-                } = Matter;
-                
-                const containerRect = fallingTextContainer.getBoundingClientRect();
-                const width = containerRect.width;
-                const height = containerRect.height;
-                
-                if (width <= 0 || height <= 0) return;
-                
-                // Create engine
-                engine = Engine.create();
-                engine.world.gravity.y = 0.56;
-                
-                // Create renderer
-                render = Render.create({
-                    element: fallingTextContainer,
-                    canvas: canvas,
-                    engine: engine,
-                    options: {
-                        width: width,
-                        height: height,
-                        background: 'transparent',
-                        wireframes: false,
-                        showVelocity: false,
-                        showAngleIndicator: false,
-                        showDebug: false
-                    }
-                });
-                
-                // Create boundaries
-                const boundaryOptions = {
-                    isStatic: true,
-                    render: { fillStyle: 'transparent' }
-                };
-                
-                const floor = Bodies.rectangle(width / 2, height + 25, width, 50, boundaryOptions);
-                const leftWall = Bodies.rectangle(-25, height / 2, 50, height, boundaryOptions);
-                const rightWall = Bodies.rectangle(width + 25, height / 2, 50, height, boundaryOptions);
-                const ceiling = Bodies.rectangle(width / 2, -25, width, 50, boundaryOptions);
-                
-                // Get word elements and create physics bodies
-                const wordSpans = textTarget.querySelectorAll('.word');
-                wordBodies = Array.from(wordSpans).map((elem) => {
-                    const rect = elem.getBoundingClientRect();
-                    const containerRect = fallingTextContainer.getBoundingClientRect();
-                    
-                    const x = rect.left - containerRect.left + rect.width / 2;
-                    const y = rect.top - containerRect.top + rect.height / 2;
-                    
-                    const body = Bodies.rectangle(x, y, rect.width, rect.height, {
-                        render: { fillStyle: 'transparent' },
-                        restitution: 0.8,
-                        frictionAir: 0.01,
-                        friction: 0.2
-                    });
-                    
-                    // Add some initial velocity for more dynamic effect
-                    Matter.Body.setVelocity(body, {
-                        x: (Math.random() - 0.5) * 5,
-                        y: 0
-                    });
-                    Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.05);
-                    
-                    // Position element absolutely
-                    elem.style.position = 'absolute';
-                    elem.style.left = body.position.x - rect.width / 2 + 'px';
-                    elem.style.top = body.position.y - rect.height / 2 + 'px';
-                    elem.style.transform = 'none';
-                    
-                    return { elem, body };
-                });
-                
-                // Create mouse constraint for interaction
-                const mouse = Mouse.create(fallingTextContainer);
-                const mouseConstraint = MouseConstraint.create(engine, {
-                    mouse: mouse,
-                    constraint: {
-                        stiffness: 0.9,
-                        render: { visible: false }
-                    }
-                });
-                
-                // Add all bodies to world
-                World.add(engine.world, [
-                    floor,
-                    leftWall,
-                    rightWall,
-                    ceiling,
-                    mouseConstraint,
-                    ...wordBodies.map(wb => wb.body)
-                ]);
-                
-                // Start engine and renderer
-                runner = Runner.create();
-                Runner.run(runner, engine);
-                Render.run(render);
-                
-                // Update loop to sync DOM elements with physics bodies
-                function updateLoop() {
-                    wordBodies.forEach(({ body, elem }) => {
-                        const { x, y } = body.position;
-                        elem.style.left = x + 'px';
-                        elem.style.top = y + 'px';
-                        elem.style.transform = `translate(-50%, -50%) rotate(${body.angle}rad)`;
-                    });
-                    requestAnimationFrame(updateLoop);
-                }
-                updateLoop();
+            // Animation function
+            function animate() {
+                const speed = isHovering ? spinDuration / 4 : spinDuration; // Speed up on hover
+                rotation += 360 / (speed * 60); // 60fps
+                circularTextElement.style.transform = `rotate(${rotation}deg)`;
+                circularTextElement.style.webkitTransform = `rotate(${rotation}deg)`;
+                animationId = requestAnimationFrame(animate);
             }
             
-            // Trigger effect on hover
-            fallingTextContainer.addEventListener('mouseenter', initializeFallingText);
+            // Start animation
+            animate();
             
-            // Clean up on page unload
+            // Hover effects
+            circularTextElement.addEventListener('mouseenter', function() {
+                isHovering = true;
+                circularTextElement.style.transform += ' scale(1.1)';
+                circularTextElement.style.webkitTransform += ' scale(1.1)';
+            });
+            
+            circularTextElement.addEventListener('mouseleave', function() {
+                isHovering = false;
+                circularTextElement.style.transform = circularTextElement.style.transform.replace(' scale(1.1)', '');
+                circularTextElement.style.webkitTransform = circularTextElement.style.webkitTransform.replace(' scale(1.1)', '');
+            });
+            
+            // Cleanup
             window.addEventListener('beforeunload', function() {
-                if (render) {
-                    Render.stop(render);
-                }
-                if (runner) {
-                    Runner.stop(runner);
-                }
-                if (engine) {
-                    World.clear(engine.world);
-                    Engine.clear(engine);
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
                 }
             });
         });

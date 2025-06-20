@@ -1083,7 +1083,7 @@ footer {
         box-sizing: border-box !important;
     }
 
-    /* Players grid override - Horizontal carousel on mobile */
+    /* Players grid override - Horizontal carousel on mobile per section */
     .players-grid {
         display: flex !important;
         flex-direction: row !important;
@@ -1099,6 +1099,15 @@ footer {
         scroll-behavior: smooth !important;
     }
 
+    /* Ensure each section has its own carousel */
+    .section .players-grid {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        align-items: stretch !important;
+    }
+
     /* Player cards override - Fixed width for carousel */
     .player-card {
         flex: 0 0 280px !important;
@@ -1110,23 +1119,29 @@ footer {
         scroll-snap-align: center !important;
     }
 
-    /* Hide scrollbar but keep functionality */
+    /* Scrollbar styling for each section carousel */
     .players-grid::-webkit-scrollbar {
-        height: 4px !important;
+        height: 6px !important;
     }
 
     .players-grid::-webkit-scrollbar-track {
         background: rgba(255, 255, 255, 0.1) !important;
-        border-radius: 2px !important;
+        border-radius: 3px !important;
+        margin: 0 1rem !important;
     }
 
     .players-grid::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.3) !important;
-        border-radius: 2px !important;
+        background: rgba(255, 255, 255, 0.4) !important;
+        border-radius: 3px !important;
     }
 
     .players-grid::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 0.5) !important;
+        background: rgba(255, 255, 255, 0.6) !important;
+    }
+
+    /* Add padding to sections for better carousel experience */
+    .section {
+        padding-bottom: 1rem !important;
     }
 
     /* Section titles */
@@ -1135,6 +1150,13 @@ footer {
         text-align: center !important;
         padding: 0 1rem !important;
         margin-bottom: 1.5rem !important;
+    }
+
+    /* Section container for mobile */
+    .section {
+        margin: 3rem 0 !important;
+        width: 100% !important;
+        overflow: hidden !important;
     }
 
     /* Header adjustments */
