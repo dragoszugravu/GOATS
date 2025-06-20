@@ -243,7 +243,6 @@
             }
 
             /* Players grid - Same as team generator */
-            .players-grid,
             .players-row {
                 display: grid;
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -253,6 +252,13 @@
                 max-width: 100%;
                 width: 100%;
                 box-sizing: border-box;
+                margin: 3rem 0;
+            }
+            
+            .players-row .section-title {
+                grid-column: 1 / -1;
+                text-align: center;
+                margin-bottom: 1rem;
             }
 
             /* Player cards - Same as team generator */
@@ -352,7 +358,6 @@
                 font-size: 1.8rem;
             }
 
-            .players-grid,
             .players-row {
                 grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
                 gap: 1rem;
@@ -395,7 +400,6 @@
                 font-size: 1.6rem;
             }
 
-            .players-grid,
             .players-row {
                 grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             }
