@@ -180,21 +180,9 @@
             transform: translateZ(0);
         }
 
-        .player-card-inner::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: var(--primary-bg);
-            border-radius: 25px;
-            z-index: -1;
-        }
+
 
         .player-card.selected {
-            border-color: #4CAF50;
-            background: rgba(76, 175, 80, 0.1);
             animation: wobble 0.5s ease-in-out;
         }
 
