@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="profile-card.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="images/GOATS.png">
     
@@ -23,414 +22,87 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+
+</head>
+
+<body>
+    <div id="silk-background"></div>
     
-    <style>
-        .logo-link {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.3s ease;
-        }
+    <!-- Abstract background lines -->
+    <div class="abstract-lines">
+        <div class="line line-1"></div>
+        <div class="line line-2"></div>
+        <div class="line line-3"></div>
+    </div>
 
-        .logo-link:hover {
-            transform: scale(1.05);
-        }
+    <!-- Motion graphics -->
+    <div class="motion-graphics">
+        <div class="motion-circle circle-1"></div>
+        <div class="motion-circle circle-2"></div>
+    </div>
 
-        /* Hero Title with Glitch Effect */
-        .hero-title-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 4rem 2rem;
-            min-height: 200px;
-            text-align: center;
-        }
+    <header>
+        <nav>
+            <div class="logo-container">
+                <a href="index.html" class="logo-link">
+                    <img src="images/GOATS.png" alt="GOATS FC Logo" class="logo-image">
+                    <div class="logo-text">GOATS FC</div>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Players</a>
+                <a href="team-generator.html">Team Generator</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
 
-        .hero-title {
-            font-size: 6rem;
-            font-weight: 800;
-            text-align: center;
-            color: #ffffff;
-            position: relative;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            animation: glitch 2s infinite;
-        }
+    <div class="hero-title-container">
+        <h1 class="hero-title" data-text="GOATS FC">GOATS FC</h1>
+        <p class="hero-subtitle">Elite Football Club</p>
+    </div>
 
-        .hero-title::before,
-        .hero-title::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+    <main>
+        <section class="section">
+            <h2 class="section-title">Goalkeepers</h2>
+            <div class="players-row goalkeepers players-grid">
+                <!-- Goalkeeper cards will be added here -->
+            </div>
+        </section>
 
-        .hero-title::before {
-            animation: glitch-1 0.5s infinite;
-            color: #ff0000;
-            z-index: -1;
-        }
+        <section class="section">
+            <h2 class="section-title">Defenders</h2>
+            <div class="players-row defenders players-grid">
+                <!-- Defender cards will be added here -->
+            </div>
+        </section>
 
-        .hero-title::after {
-            animation: glitch-2 0.5s infinite;
-            color: #00ffff;
-            z-index: -2;
-        }
+        <section class="section">
+            <h2 class="section-title">Midfielders</h2>
+            <div class="players-row midfielders players-grid">
+                <!-- Midfielder cards will be added here -->
+            </div>
+        </section>
 
-        @keyframes glitch {
-            0%, 100% {
-                transform: translate(0);
-            }
-            20% {
-                transform: translate(-2px, 2px);
-            }
-            40% {
-                transform: translate(-2px, -2px);
-            }
-            60% {
-                transform: translate(2px, 2px);
-            }
-            80% {
-                transform: translate(2px, -2px);
-            }
-        }
+        <section class="section">
+            <h2 class="section-title">Forwards</h2>
+            <div class="players-row forwards players-grid">
+                <!-- Forward cards will be added here -->
+            </div>
+        </section>
+    </main>
 
-        @keyframes glitch-1 {
-            0%, 100% {
-                transform: translate(0);
-                clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-            }
-            25% {
-                transform: translate(-2px, -2px);
-                clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
-            }
-            50% {
-                transform: translate(-2px, 2px);
-                clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
-            }
-            75% {
-                transform: translate(2px, -2px);
-                clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%);
-            }
-        }
+    <footer>Created by Dragos Zughy</footer>
 
-        @keyframes glitch-2 {
-            0%, 100% {
-                transform: translate(0);
-                clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%);
-            }
-            25% {
-                transform: translate(2px, 2px);
-                clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-            }
-            50% {
-                transform: translate(2px, -2px);
-                clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
-            }
-            75% {
-                transform: translate(-2px, 2px);
-                clip-path: polygon(0 0, 100% 0, 100% 25%, 0 25%);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 3.5rem;
-            }
-            
-            .hero-title-container {
-                padding: 2rem 1rem;
-                min-height: 150px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-        }
-
-        /* Hero Subtitle Styling */
-        .hero-subtitle {
-            font-family: 'Exo 2', sans-serif;
-            font-weight: 200;
-            font-size: 1.2rem;
-            color: #ffffff;
-            text-align: center;
-            margin: 1rem 0 0 0;
-            padding: 0;
-            opacity: 0.8;
-        }
-
-        @media (max-width: 768px) {
-            .hero-subtitle {
-                font-size: 1rem;
-                margin: 0.8rem 0 0 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-subtitle {
-                font-size: 0.9rem;
-                margin: 0.6rem 0 0 0;
-            }
-        }
-
-        /* Comprehensive Mobile Styles for Main Page */
-        @media (max-width: 768px) {
-            /* Body and general layout */
-            body {
-                overflow-x: hidden;
-                font-size: 14px;
-            }
-
-            /* Header adjustments */
-            header {
-                padding: 0.5rem 1rem;
-                height: auto;
-                min-height: 60px;
-            }
-
-            .logo-container {
-                gap: 0.5rem;
-            }
-
-            .logo-image {
-                width: 35px;
-                height: 35px;
-            }
-
-            .logo-text {
-                font-size: 1.2rem;
-            }
-
-            /* Hero title container */
-            .hero-title-container {
-                padding: 2rem 1rem;
-                min-height: 120px;
-            }
-
-            .hero-title {
-                font-size: 2.8rem;
-                line-height: 1.1;
-            }
-
-
-
-            /* Main content */
-            main {
-                padding: 1rem;
-                width: 100%;
-                box-sizing: border-box;
-            }
-
-            /* Section spacing */
-            .section {
-                margin: 3rem 0;
-            }
-
-            /* Section titles */
-            .section-title {
-                font-size: 2rem;
-                margin-bottom: 1.5rem;
-                text-align: center;
-                padding: 0 1rem;
-            }
-
-            /* Mobile carousel styles only for main page */
-            body:not(.team-generator-page) .section {
-                margin: 2rem 0;
-            }
-
-            body:not(.team-generator-page) .section-title {
-                text-align: center;
-                margin-bottom: 1rem;
-                padding: 0 1rem;
-            }
-
-            body:not(.team-generator-page) .players-grid {
-                display: flex;
-                overflow-x: auto;
-                overflow-y: hidden;
-                gap: 1rem;
-                padding: 0 1rem 1rem 1rem;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-            }
-
-            body:not(.team-generator-page) .players-grid::-webkit-scrollbar {
-                display: none;
-            }
-
-            body:not(.team-generator-page) .player-card {
-                flex: 0 0 280px;
-                width: 280px;
-                min-width: 280px;
-                max-width: 280px;
-                scroll-snap-align: start;
-                margin: 0;
-                height: auto;
-                min-height: 400px;
-            }
-
-            body:not(.team-generator-page) .player-image {
-                height: 300px;
-                width: 100%;
-            }
-
-            body:not(.team-generator-page) .player-image img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                object-position: center top;
-            }
-
-            body:not(.team-generator-page) .player-info {
-                padding: 1rem;
-                text-align: center;
-            }
-
-            body:not(.team-generator-page) .player-name {
-                font-size: 1.1rem;
-                margin-bottom: 0.5rem;
-                line-height: 1.3;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            body:not(.team-generator-page) .player-position {
-                font-size: 0.9rem;
-            }
-
-            body:not(.team-generator-page) .player-logo {
-                bottom: 10px;
-                right: 10px;
-                width: 35px;
-                height: 35px;
-            }
-
-            body:not(.team-generator-page) .player-logo img {
-                width: 100%;
-                height: 100%;
-            }
-
-            /* Footer */
-            footer {
-                padding: 2rem 1rem;
-                text-align: center;
-                font-size: 0.9rem;
-            }
-
-            /* Navigation adjustments */
-            .nav-links {
-                display: none;
-            }
-
-            .hamburger-menu {
-                display: block;
-            }
-
-            /* Motion graphics adjustments */
-            .motion-circle {
-                display: none;
-            }
-
-            .abstract-lines {
-                display: none;
-            }
-
-            /* Ensure proper scrolling */
-            html, body {
-                width: 100%;
-                overflow-x: hidden;
-            }
-        }
-
-        @media (max-width: 480px) {
-            /* Extra small phones */
-            .hero-title {
-                font-size: 2.2rem;
-            }
-
-            .hero-title-container {
-                padding: 1.5rem 0.5rem;
-                min-height: 100px;
-            }
-
-
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            body:not(.team-generator-page) .players-grid {
-                padding: 0 0.5rem 1rem 0.5rem;
-                gap: 0.8rem;
-            }
-
-            body:not(.team-generator-page) .player-card {
-                flex: 0 0 260px;
-                width: 260px;
-                min-width: 260px;
-                max-width: 260px;
-                min-height: 380px;
-            }
-
-            body:not(.team-generator-page) .player-image {
-                height: 280px;
-            }
-
-            body:not(.team-generator-page) .player-name {
-                font-size: 1rem;
-            }
-
-            body:not(.team-generator-page) .player-position {
-                font-size: 0.85rem;
-            }
-
-            main {
-                padding: 0.5rem;
-            }
-
-            .section {
-                margin: 2rem 0;
-            }
-        }
-
-        @media (max-width: 360px) {
-            /* Very small phones */
-            .hero-title {
-                font-size: 1.8rem;
-            }
-
-            .section-title {
-                font-size: 1.6rem;
-            }
-
-            body:not(.team-generator-page) .player-card {
-                flex: 0 0 240px;
-                width: 240px;
-                min-width: 240px;
-                max-width: 240px;
-                min-height: 360px;
-            }
-
-            body:not(.team-generator-page) .player-image {
-                height: 260px;
-            }
-        }
-
-
-
-        .next-match-container {
+    <script src="silk-background.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
             width: 100%;
             max-width: 350px;
             margin: 1.5rem auto;
@@ -818,20 +490,30 @@
         </div>
 
     <main>
-        <section class="players-grid">
-            <div class="players-row goalkeepers">
+        <section class="section">
+            <h2 class="section-title">Goalkeepers</h2>
+            <div class="players-row goalkeepers players-grid">
                 <!-- Goalkeeper cards will be added here -->
             </div>
+        </section>
 
-            <div class="players-row defenders">
+        <section class="section">
+            <h2 class="section-title">Defenders</h2>
+            <div class="players-row defenders players-grid">
                 <!-- Defender cards will be added here -->
             </div>
+        </section>
 
-            <div class="players-row midfielders">
+        <section class="section">
+            <h2 class="section-title">Midfielders</h2>
+            <div class="players-row midfielders players-grid">
                 <!-- Midfielder cards will be added here -->
             </div>
+        </section>
 
-            <div class="players-row forwards">
+        <section class="section">
+            <h2 class="section-title">Forwards</h2>
+            <div class="players-row forwards players-grid">
                 <!-- Forward cards will be added here -->
             </div>
         </section>
@@ -840,439 +522,6 @@
     <footer>Created by Dragos Zughy</footer>
 
     <script src="silk-background.js"></script>
-    <script src="profile-card.js"></script>
-    
-
     <script src="script.js"></script>
-    
-    <script>
-        // FuzzyText Effect for Section Titles
-        class FuzzyText {
-            constructor(element, options = {}) {
-                this.element = element;
-                this.originalText = element.textContent;
-                this.options = {
-                    fontSize: '3rem',
-                    fontWeight: 900,
-                    fontFamily: 'Poppins, -apple-system, BlinkMacSystemFont, sans-serif',
-                    color: '#fff',
-                    enableHover: true,
-                    baseIntensity: 0.18,
-                    hoverIntensity: 0.5,
-                    ...options
-                };
-                
-                this.canvas = null;
-                this.ctx = null;
-                this.animationFrameId = null;
-                this.isCancelled = false;
-                this.isHovering = false;
-                
-                this.init();
-            }
-            
-            async init() {
-                // Wait for fonts to load
-                if (document.fonts?.ready) {
-                    await document.fonts.ready;
-                }
-                if (this.isCancelled) return;
-                
-                // Create canvas
-                this.canvas = document.createElement('canvas');
-                this.canvas.style.display = 'block';
-                this.canvas.style.margin = '0 auto';
-                this.canvas.style.cursor = this.options.enableHover ? 'pointer' : 'default';
-                
-                // Replace the original element with canvas
-                this.element.style.display = 'none';
-                this.element.parentNode.insertBefore(this.canvas, this.element.nextSibling);
-                
-                this.ctx = this.canvas.getContext('2d');
-                if (!this.ctx) return;
-                
-                const computedFontFamily = this.options.fontFamily === 'inherit'
-                    ? window.getComputedStyle(this.canvas).fontFamily || 'sans-serif'
-                    : this.options.fontFamily;
-                
-                const fontSizeStr = typeof this.options.fontSize === 'number' 
-                    ? `${this.options.fontSize}px` 
-                    : this.options.fontSize;
-                    
-                let numericFontSize;
-                if (typeof this.options.fontSize === 'number') {
-                    numericFontSize = this.options.fontSize;
-                } else {
-                    const temp = document.createElement('span');
-                    temp.style.fontSize = this.options.fontSize;
-                    document.body.appendChild(temp);
-                    const computedSize = window.getComputedStyle(temp).fontSize;
-                    numericFontSize = parseFloat(computedSize);
-                    document.body.removeChild(temp);
-                }
-                
-                // Create offscreen canvas for text rendering
-                this.offscreen = document.createElement('canvas');
-                const offCtx = this.offscreen.getContext('2d');
-                if (!offCtx) return;
-                
-                offCtx.font = `${this.options.fontWeight} ${fontSizeStr} ${computedFontFamily}`;
-                offCtx.textBaseline = 'alphabetic';
-                const metrics = offCtx.measureText(this.originalText);
-                
-                const actualLeft = metrics.actualBoundingBoxLeft ?? 0;
-                const actualRight = metrics.actualBoundingBoxRight ?? metrics.width;
-                const actualAscent = metrics.actualBoundingBoxAscent ?? numericFontSize;
-                const actualDescent = metrics.actualBoundingBoxDescent ?? numericFontSize * 0.2;
-                
-                const textBoundingWidth = Math.ceil(actualLeft + actualRight);
-                const tightHeight = Math.ceil(actualAscent + actualDescent);
-                
-                const extraWidthBuffer = 10;
-                const offscreenWidth = textBoundingWidth + extraWidthBuffer;
-                
-                this.offscreen.width = offscreenWidth;
-                this.offscreen.height = tightHeight;
-                
-                const xOffset = extraWidthBuffer / 2;
-                offCtx.font = `${this.options.fontWeight} ${fontSizeStr} ${computedFontFamily}`;
-                offCtx.textBaseline = 'alphabetic';
-                offCtx.fillStyle = this.options.color;
-                offCtx.fillText(this.originalText, xOffset - actualLeft, actualAscent);
-                
-                // Setup main canvas
-                const horizontalMargin = 50;
-                const verticalMargin = 0;
-                this.canvas.width = offscreenWidth + horizontalMargin * 2;
-                this.canvas.height = tightHeight + verticalMargin * 2;
-                this.ctx.translate(horizontalMargin, verticalMargin);
-                
-                // Interactive area
-                this.interactiveLeft = horizontalMargin + xOffset;
-                this.interactiveTop = verticalMargin;
-                this.interactiveRight = this.interactiveLeft + textBoundingWidth;
-                this.interactiveBottom = this.interactiveTop + tightHeight;
-                
-                this.offscreenWidth = offscreenWidth;
-                this.tightHeight = tightHeight;
-                this.fuzzRange = 30;
-                
-                this.setupEventListeners();
-                this.run();
-            }
-            
-            setupEventListeners() {
-                if (!this.options.enableHover) return;
-                
-                const handleMouseMove = (e) => {
-                    const rect = this.canvas.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    this.isHovering = this.isInsideTextArea(x, y);
-                };
-                
-                const handleMouseLeave = () => {
-                    this.isHovering = false;
-                };
-                
-                const handleTouchMove = (e) => {
-                    e.preventDefault();
-                    const rect = this.canvas.getBoundingClientRect();
-                    const touch = e.touches[0];
-                    const x = touch.clientX - rect.left;
-                    const y = touch.clientY - rect.top;
-                    this.isHovering = this.isInsideTextArea(x, y);
-                };
-                
-                const handleTouchEnd = () => {
-                    this.isHovering = false;
-                };
-                
-                this.canvas.addEventListener('mousemove', handleMouseMove);
-                this.canvas.addEventListener('mouseleave', handleMouseLeave);
-                this.canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
-                this.canvas.addEventListener('touchend', handleTouchEnd);
-                
-                // Store for cleanup
-                this.handleMouseMove = handleMouseMove;
-                this.handleMouseLeave = handleMouseLeave;
-                this.handleTouchMove = handleTouchMove;
-                this.handleTouchEnd = handleTouchEnd;
-            }
-            
-            isInsideTextArea(x, y) {
-                return (
-                    x >= this.interactiveLeft &&
-                    x <= this.interactiveRight &&
-                    y >= this.interactiveTop &&
-                    y <= this.interactiveBottom
-                );
-            }
-            
-            run() {
-                if (this.isCancelled) return;
-                
-                this.ctx.clearRect(
-                    -this.fuzzRange,
-                    -this.fuzzRange,
-                    this.offscreenWidth + 2 * this.fuzzRange,
-                    this.tightHeight + 2 * this.fuzzRange
-                );
-                
-                const intensity = this.isHovering ? this.options.hoverIntensity : this.options.baseIntensity;
-                
-                for (let j = 0; j < this.tightHeight; j++) {
-                    const dx = Math.floor(intensity * (Math.random() - 0.5) * this.fuzzRange);
-                    this.ctx.drawImage(
-                        this.offscreen,
-                        0, j, this.offscreenWidth, 1,
-                        dx, j, this.offscreenWidth, 1
-                    );
-                }
-                
-                this.animationFrameId = requestAnimationFrame(() => this.run());
-            }
-            
-            destroy() {
-                this.isCancelled = true;
-                if (this.animationFrameId) {
-                    cancelAnimationFrame(this.animationFrameId);
-                }
-                
-                if (this.canvas && this.options.enableHover) {
-                    this.canvas.removeEventListener('mousemove', this.handleMouseMove);
-                    this.canvas.removeEventListener('mouseleave', this.handleMouseLeave);
-                    this.canvas.removeEventListener('touchmove', this.handleTouchMove);
-                    this.canvas.removeEventListener('touchend', this.handleTouchEnd);
-                }
-                
-                if (this.canvas && this.canvas.parentNode) {
-                    this.canvas.parentNode.removeChild(this.canvas);
-                }
-                
-                if (this.element) {
-                    this.element.style.display = '';
-                }
-            }
-        }
-        
-        // Initialize FuzzyText effect on section titles
-        function initFuzzyTextEffects() {
-            // Wait for DOM to be ready and sections to be created
-            setTimeout(() => {
-                const sectionTitles = document.querySelectorAll('.section-title');
-                sectionTitles.forEach(title => {
-                    new FuzzyText(title, {
-                        fontSize: '3rem',
-                        fontWeight: 900,
-                        fontFamily: 'Poppins, -apple-system, BlinkMacSystemFont, sans-serif',
-                        color: '#ffffff',
-                        enableHover: true,
-                        baseIntensity: 0.15,
-                        hoverIntensity: 0.6
-                    });
-                });
-            }, 100);
-        }
-        
-        // Initialize when DOM is loaded
-        // document.addEventListener('DOMContentLoaded', initFuzzyTextEffects); // Removed FuzzyText effect
-        
-        // SplitText Effect for Header GOATS FC only
-        class HeaderSplitText {
-            constructor(element, options = {}) {
-                this.element = element;
-                this.originalText = element.textContent;
-                this.options = {
-                    delay: 100,
-                    duration: 0.6,
-                    ease: "power3.out",
-                    splitType: "chars",
-                    from: { opacity: 0, y: 40 },
-                    to: { opacity: 1, y: 0 },
-                    threshold: 0.1,
-                    rootMargin: "-100px",
-                    ...options
-                };
-                
-                this.animationCompleted = false;
-                this.chars = [];
-                
-                this.init();
-            }
-            
-            init() {
-                // Register GSAP plugins
-                if (typeof gsap !== 'undefined' && gsap.registerPlugin) {
-                    gsap.registerPlugin(ScrollTrigger);
-                }
-                
-                // Set up element styles
-                this.element.style.overflow = 'hidden';
-                this.element.style.display = 'inline-block';
-                this.element.style.whiteSpace = 'normal';
-                this.element.style.wordWrap = 'break-word';
-                
-                // Split text into characters
-                this.splitText();
-                this.setupAnimation();
-            }
-            
-            splitText() {
-                const text = this.originalText;
-                this.element.innerHTML = '';
-                
-                // Create spans for each character
-                text.split('').forEach((char, index) => {
-                    const span = document.createElement('span');
-                    span.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space
-                    span.style.display = 'inline-block';
-                    span.style.willChange = 'transform, opacity';
-                    
-                    // Set initial state
-                    gsap.set(span, {
-                        ...this.options.from,
-                        force3D: true
-                    });
-                    
-                    this.chars.push(span);
-                    this.element.appendChild(span);
-                });
-            }
-            
-            setupAnimation() {
-                if (this.animationCompleted) return;
-                
-                const startPct = (1 - this.options.threshold) * 100;
-                const rootMarginMatch = /^(-?\d+)px$/.exec(this.options.rootMargin);
-                const rootMarginValue = rootMarginMatch ? parseInt(rootMarginMatch[1], 10) : 0;
-                const sign = rootMarginValue < 0 ? `-=${Math.abs(rootMarginValue)}px` : `+=${rootMarginValue}px`;
-                const start = `top ${startPct}%${sign}`;
-                
-                const tl = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: this.element,
-                        start: start,
-                        toggleActions: "play none none none",
-                        once: true,
-                    },
-                    smoothChildTiming: true,
-                    onComplete: () => {
-                        this.animationCompleted = true;
-                        gsap.set(this.chars, {
-                            ...this.options.to,
-                            clearProps: "willChange",
-                            immediateRender: true,
-                        });
-                    }
-                });
-                
-                // Animate characters with stagger
-                tl.to(this.chars, {
-                    ...this.options.to,
-                    duration: this.options.duration,
-                    ease: this.options.ease,
-                    stagger: this.options.delay / 1000,
-                    force3D: true,
-                });
-                
-                this.timeline = tl;
-            }
-            
-            destroy() {
-                if (this.timeline) {
-                    this.timeline.kill();
-                }
-                ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-                gsap.killTweensOf(this.chars);
-                
-                // Restore original text
-                this.element.innerHTML = this.originalText;
-            }
-        }
-        
-        // Initialize SplitText effect for header GOATS FC only
-        function initHeaderSplitText() {
-            // Wait for GSAP to load and DOM to be ready
-            setTimeout(() => {
-                const headerLogoText = document.querySelector('.logo-text');
-                if (headerLogoText && typeof gsap !== 'undefined') {
-                    new HeaderSplitText(headerLogoText, {
-                        delay: 80,
-                        duration: 0.8,
-                        ease: "power3.out",
-                        splitType: "chars",
-                        from: { opacity: 0, y: 30, rotationX: -90 },
-                        to: { opacity: 1, y: 0, rotationX: 0 },
-                        threshold: 0.8,
-                        rootMargin: "0px"
-                    });
-                }
-            }, 200);
-        }
-        
-        // Initialize header SplitText when DOM is loaded
-        // document.addEventListener('DOMContentLoaded', initHeaderSplitText); // Removed SplitText effect
-    </script>
-    <script>
-        // Mobile menu functionality
-        function initMobileMenu() {
-            const hamburger = document.querySelector('.hamburger-menu');
-            const mobileNav = document.createElement('div');
-            mobileNav.className = 'mobile-nav';
-            
-            const navLinks = document.querySelector('.nav-links').cloneNode(true);
-            mobileNav.appendChild(navLinks);
-            document.body.appendChild(mobileNav);
-
-            // Create overlay
-            const overlay = document.createElement('div');
-            overlay.className = 'mobile-nav-overlay';
-            document.body.appendChild(overlay);
-            
-            let isMenuOpen = false;
-            
-            const openMenu = () => {
-                hamburger.classList.add('active');
-                mobileNav.classList.add('active');
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                isMenuOpen = true;
-            };
-            
-            const closeMenu = () => {
-                hamburger.classList.remove('active');
-                mobileNav.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-                isMenuOpen = false;
-            };
-            
-            hamburger.addEventListener('click', () => {
-                if (isMenuOpen) {
-                    closeMenu();
-                } else {
-                    openMenu();
-                }
-            });
-            
-            overlay.addEventListener('click', closeMenu);
-            
-            document.addEventListener('click', (e) => {
-                if (isMenuOpen && 
-                    !mobileNav.contains(e.target) && 
-                    !hamburger.contains(e.target)) {
-                    closeMenu();
-                }
-            });
-            
-            mobileNav.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', closeMenu);
-            });
-        }
-
-        // Initialize mobile menu
-        initMobileMenu();
-    </script>
 </body>
 </html>

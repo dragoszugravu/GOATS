@@ -464,9 +464,15 @@ main {
     z-index: 1;
 }
 
-.player-card:hover {
+.player-card:hover:not(.pc-card-wrapper) {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(255, 75, 43, 0.2);
+}
+
+/* Disable original transforms for 3D tilt cards */
+.pc-card-wrapper.player-card:hover {
+    transform: none;
+    box-shadow: none;
 }
 
 .player-card:hover::before {
@@ -557,7 +563,408 @@ main {
     z-index: 3;
 }
 
+/* Logo Link Styles */
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
+}
+
+.logo-link:hover {
+    transform: scale(1.05);
+}
+
+/* Hero Title with Glitch Effect */
+.hero-title-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 2rem;
+    min-height: 200px;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 6rem;
+    font-weight: 800;
+    text-align: center;
+    color: #ffffff;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    animation: glitch 2s infinite;
+}
+
+.hero-title::before,
+.hero-title::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-title::before {
+    animation: glitch-1 0.5s infinite;
+    color: #ff0000;
+    z-index: -1;
+}
+
+.hero-title::after {
+    animation: glitch-2 0.5s infinite;
+    color: #00ffff;
+    z-index: -2;
+}
+
+@keyframes glitch {
+    0%, 100% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+}
+
+@keyframes glitch-1 {
+    0%, 100% {
+        transform: translate(0);
+        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    }
+    25% {
+        transform: translate(-2px, -2px);
+        clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+    }
+    50% {
+        transform: translate(-2px, 2px);
+        clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+    }
+    75% {
+        transform: translate(2px, -2px);
+        clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%);
+    }
+}
+
+@keyframes glitch-2 {
+    0%, 100% {
+        transform: translate(0);
+        clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%);
+    }
+    25% {
+        transform: translate(2px, 2px);
+        clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+    }
+    50% {
+        transform: translate(2px, -2px);
+        clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+    }
+    75% {
+        transform: translate(-2px, 2px);
+        clip-path: polygon(0 0, 100% 0, 100% 25%, 0 25%);
+    }
+}
+
+/* Hero Subtitle Styling */
+.hero-subtitle {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 200;
+    font-size: 1.2rem;
+    color: #ffffff;
+    text-align: center;
+    margin: 1rem 0 0 0;
+    padding: 0;
+    opacity: 0.8;
+}
+
+/* 3D Tilt Effect for Player Cards */
+:root {
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --pointer-from-center: 0;
+  --pointer-from-top: 0.5;
+  --pointer-from-left: 0.5;
+  --card-opacity: 0;
+  --rotate-x: 0deg;
+  --rotate-y: 0deg;
+  --background-x: 50%;
+  --background-y: 50%;
+  --card-radius: 15px;
+}
+
+.pc-card-wrapper {
+  perspective: 500px;
+  transform: translate3d(0, 0, 0.1px);
+  position: relative;
+  touch-action: none;
+  width: 100%;
+  height: 100%;
+}
+
+.pc-card-wrapper:hover,
+.pc-card-wrapper.active {
+  --card-opacity: 1;
+}
+
+.pc-card {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  aspect-ratio: 0.718;
+  border-radius: var(--card-radius);
+  position: relative;
+  background-blend-mode: color-dodge, normal, normal, normal;
+  box-shadow: rgba(0, 0, 0, 0.8) calc((var(--pointer-from-left) * 10px) - 3px) calc((var(--pointer-from-top) * 20px) - 6px) 20px -5px;
+  transition: transform 1s ease;
+  transform: translate3d(0, 0, 0.1px) rotateX(0deg) rotateY(0deg);
+  background-size: 100% 100%;
+  background-position: 0 0, 0 0, 50% 50%, 0 0;
+  background-image: radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 90%, var(--card-opacity)) 4%, hsla(0, 0%, 80%, calc(var(--card-opacity) * 0.75)) 10%, hsla(0, 0%, 70%, calc(var(--card-opacity) * 0.5)) 50%, hsla(0, 0%, 60%, 0) 100%), radial-gradient(35% 52% at 55% 20%, #ffffff44 0%, #ffffff00 100%), radial-gradient(100% 100% at 50% 50%, #ffffff66 1%, #ffffff00 76%), conic-gradient(from 124deg at 50% 50%, #ffffff44 0%, #ffffff66 40%, #ffffff66 60%, #ffffff44 100%);
+  overflow: hidden;
+}
+
+.pc-card:hover,
+.pc-card.active {
+  transition: none;
+  transform: translate3d(0, 0, 0.1px) rotateX(var(--rotate-y)) rotateY(var(--rotate-x));
+}
+
+.pc-card * {
+  display: grid;
+  grid-area: 1/-1;
+  border-radius: var(--card-radius);
+  transform: translate3d(0, 0, 0.1px);
+  pointer-events: none;
+}
+
+.pc-inside {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  background: rgba(128, 128, 128, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1;
+}
+
+.pc-shine {
+  position: absolute;
+  inset: 0;
+  transition: filter 0.6s ease;
+  filter: brightness(0.66) contrast(1.33) saturate(0.33) opacity(0.5);
+  mix-blend-mode: color-dodge;
+  --space: 5%;
+  --angle: -45deg;
+  transform: translate3d(0, 0, 1px);
+  overflow: hidden;
+  z-index: 3;
+  background: transparent;
+  background-size: cover;
+  background-position: center;
+  background-image: repeating-linear-gradient(0deg, #666666 calc(var(--space) * 1), #555555 calc(var(--space) * 2), #444444 calc(var(--space) * 3), #333333 calc(var(--space) * 4), #222222 calc(var(--space) * 5), #111111 calc(var(--space) * 6), #666666 calc(var(--space) * 7)), repeating-linear-gradient(var(--angle), #2E2E2E 0%, #606060 3.8%, #707070 4.5%, #606060 5.2%, #2E2E2E 10%, #2E2E2E 12%), radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 0%, 0.1) 12%, hsla(0, 0%, 0%, 0.15) 20%, hsla(0, 0%, 0%, 0.25) 120%);
+  background-position: 0 var(--background-y), var(--background-x) var(--background-y), center;
+  background-blend-mode: color, hard-light;
+  background-size: 500% 500%, 300% 300%, 200% 200%;
+  background-repeat: repeat;
+  border-radius: var(--card-radius);
+}
+
+.pc-card:hover .pc-shine,
+.pc-card.active .pc-shine {
+  filter: brightness(0.85) contrast(1.5) saturate(0.5);
+}
+
+.pc-glare {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(0, 0, 1.1px);
+  overflow: hidden;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 80%) 12%, hsla(0, 0%, 30%, 0.8) 90%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.2);
+  z-index: 4;
+  border-radius: var(--card-radius);
+}
+
+.pc-content {
+  position: absolute;
+  inset: 0;
+  max-height: 100%;
+  overflow: hidden;
+  text-align: center;
+  transform: translate3d(calc(var(--pointer-from-left) * -6px + 3px), calc(var(--pointer-from-top) * -6px + 3px), 0.1px) !important;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  box-sizing: border-box;
+  border-radius: var(--card-radius);
+  pointer-events: auto;
+}
+
+/* Ensure content inside 3D cards looks correct */
+.pc-content .player-image {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 15px;
+  margin-bottom: 0;
+}
+
+.pc-content .player-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.pc-content .player-info {
+  padding: 1rem;
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.pc-content .player-name {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+  color: var(--primary-color);
+  letter-spacing: -0.5px;
+}
+
+.pc-content .player-position {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  font-weight: 300;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.pc-content .player-logo {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 3;
+}
+
+.pc-content .player-logo img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* Profile Card specific styles */
+.pc-player-image {
+  width: 100%;
+  height: 60%;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  opacity: calc(1.75 - var(--pointer-from-center));
+  transition: opacity 0.3s ease;
+}
+
+.pc-player-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.pc-player-name {
+  font-weight: 700;
+  margin: 0;
+  font-size: 1.4rem;
+  color: #333333;
+  text-align: center;
+}
+
+.pc-player-position {
+  font-weight: 400;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* 3D Card hover effects */
+.pc-content .serious-photo {
+  opacity: 1;
+  z-index: 1;
+  transform: scale(1);
+}
+
+.pc-content .celebration-photo {
+  opacity: 0;
+  z-index: 2;
+  transform: scale(1.1);
+}
+
+.pc-card-wrapper:hover .pc-content .serious-photo {
+  opacity: 0;
+  transform: scale(1.1);
+}
+
+.pc-card-wrapper:hover .pc-content .celebration-photo {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.pc-card-wrapper:hover .pc-content .player-logo {
+  transform: scale(1.1);
+}
+
 @media (max-width: 768px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+    
+    .hero-title-container {
+        padding: 2rem 1rem;
+        min-height: 150px;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        margin: 0.8rem 0 0 0;
+    }
     .nav-links {
         display: none;
     }
@@ -1134,6 +1541,15 @@ footer {
 }
 
 @media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem;
+        margin: 0.6rem 0 0 0;
+    }
+    
     .section-title {
         font-size: 1.6rem;
     }
