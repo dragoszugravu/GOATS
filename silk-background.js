@@ -178,23 +178,26 @@ class SilkBackground {
     }
 }
 
-// Initialize Silk Background when DOM is loaded
+// Initialize Silk Background when DOM is loaded (only on main page)
 document.addEventListener('DOMContentLoaded', function() {
-    // Wait a bit for Three.js to be available
-    setTimeout(() => {
-        if (typeof THREE !== 'undefined') {
-            const silkBg = new SilkBackground('silk-background', {
-                speed: 3,
-                scale: 2,
-                color: '#7B7481',
-                noiseIntensity: 1.2,
-                rotation: 0.1
-            });
-            
-            // Store reference globally if needed
-            window.silkBackground = silkBg;
-        } else {
-            console.error('Three.js not loaded');
-        }
-    }, 100);
+    // Only initialize on main page (not team-generator)
+    if (!document.body.classList.contains('team-generator-page')) {
+        // Wait a bit for Three.js to be available
+        setTimeout(() => {
+            if (typeof THREE !== 'undefined') {
+                const silkBg = new SilkBackground('silk-background', {
+                    speed: 3,
+                    scale: 2,
+                    color: '#7B7481',
+                    noiseIntensity: 1.2,
+                    rotation: 0.1
+                });
+                
+                // Store reference globally if needed
+                window.silkBackground = silkBg;
+            } else {
+                console.error('Three.js not loaded');
+            }
+        }, 100);
+    }
 }); 

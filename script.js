@@ -172,6 +172,9 @@ function handleScroll() {
 function displayPlayers() {
     const main = document.querySelector('main');
     
+    // Clear any existing content
+    main.innerHTML = '';
+    
     // Add Goalkeepers section
     main.appendChild(createSection('Goalkeepers', players.goalkeepers));
     

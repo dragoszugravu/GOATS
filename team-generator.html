@@ -985,10 +985,10 @@
             
             card.innerHTML = `
                 <div class="player-card-inner">
-                    <img src="${player.image}" alt="${player.name}" class="player-image" onerror="this.src='images/default.jpg'">
-                    <div class="player-info">
+                <img src="${player.image}" alt="${player.name}" class="player-image" onerror="this.src='images/default.jpg'">
+                <div class="player-info">
                         <div class="player-name" title="${fullName}">${fullName}</div>
-                        <div class="player-position" data-position="${player.position}">${player.position}</div>
+                    <div class="player-position" data-position="${player.position}">${player.position}</div>
                     </div>
                 </div>
             `;
@@ -1692,6 +1692,7 @@
         }
     </script>
 
+    <script src="silk-background.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

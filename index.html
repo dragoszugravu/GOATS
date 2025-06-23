@@ -140,18 +140,24 @@
 
         @media (max-width: 768px) {
             .hero-title {
-                font-size: 3.5rem;
+                font-size: 2.8rem;
             }
             
             .hero-title-container {
-                padding: 2rem 1rem;
-                min-height: 150px;
+                padding: 1rem 0.5rem;
+                min-height: 120px;
+                margin-top: 0;
             }
         }
 
         @media (max-width: 480px) {
             .hero-title {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
+            }
+            
+            .hero-title-container {
+                padding: 0.8rem 0.5rem;
+                min-height: 100px;
             }
         }
 
@@ -187,13 +193,21 @@
             body {
                 overflow-x: hidden;
                 font-size: 14px;
+                padding-top: 70px; /* Space for fixed header */
             }
 
             /* Header adjustments */
             header {
                 padding: 0.5rem 1rem;
                 height: auto;
-                min-height: 60px;
+                min-height: 70px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                background: rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(10px);
             }
 
             .logo-container {
@@ -815,7 +829,7 @@
             <div class="hero-title-container">
             <h1 class="hero-title" data-text="GOATS FC">GOATS FC</h1>
             <p class="hero-subtitle">// one team, one legacy //</p>
-        </div>
+    </div>
 
     <main>
         <!-- Players will be dynamically added here by JavaScript -->
