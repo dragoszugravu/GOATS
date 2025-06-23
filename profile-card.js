@@ -16,6 +16,7 @@ class ProfileCardManager {
     initializeCards() {
         const playerCards = document.querySelectorAll('.player-card');
         console.log(`Found ${playerCards.length} player cards to enhance`);
+        console.log('Player cards found:', playerCards);
         playerCards.forEach((card, index) => {
             console.log(`Adding tilt effect to card ${index + 1}:`, card);
             this.initializeTiltEffect(card);
@@ -26,12 +27,17 @@ class ProfileCardManager {
         let rotateX = 0;
         let rotateY = 0;
         
+        // Add tilt-active class
+        card.classList.add('tilt-active');
+        
         function lerp(start, end, factor) {
             return start + (end - start) * factor;
         }
         
         function updateTransform() {
-            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            const transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            console.log('Setting transform:', transform);
+            card.style.setProperty('transform', transform, 'important');
         }
         
         function handleMouseMove(e) {
@@ -46,6 +52,7 @@ class ProfileCardManager {
             rotateX = targetRotationX;
             rotateY = targetRotationY;
             
+            console.log('Mouse move - rotateX:', rotateX, 'rotateY:', rotateY);
             updateTransform();
         }
         

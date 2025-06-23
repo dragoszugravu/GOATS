@@ -39,60 +39,75 @@ body:not(.team-generator-page) .pc-card-wrapper {
     opacity: 1 !important;
 }
 
-/* Simple 3D Tilt Effect for Player Cards - MAIN PAGE ONLY */
+/* Simple 3D Tilt Effect for Player Cards - MAIN PAGE ONLY - HIGHEST PRIORITY */
 body:not(.team-generator-page) .player-card {
-    transform-style: preserve-3d;
-    transition: none;
-    will-change: transform;
-    perspective: 1000px;
+    transform-style: preserve-3d !important;
+    transition: transform 0s !important;
+    will-change: transform !important;
+    perspective: 1000px !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    -webkit-transform-style: preserve-3d !important;
 }
 
-/* Mobile responsive sizes for player cards */
+body:not(.team-generator-page) .player-card:hover {
+    transition: transform 0s !important;
+}
+
+/* Override any other transform rules */
+body:not(.team-generator-page) .player-card.tilt-active {
+    transform: rotateX(0deg) rotateY(0deg) !important;
+    transition: none !important;
+}
+
+/* Mobile responsive sizes for player cards - 30% SMALLER */
 @media (max-width: 768px) {
     body:not(.team-generator-page) .player-card {
-        width: 130px !important;
-        height: 180px !important;
-        margin: 4px !important;
+        width: 63px !important;
+        height: 91px !important;
+        margin: 1px !important;
     }
     
     body:not(.team-generator-page) .player-image {
-        height: 110px !important;
+        height: 53px !important;
     }
     
     body:not(.team-generator-page) .player-name {
-        font-size: 0.8rem !important;
+        font-size: 0.42rem !important;
+        line-height: 1.1 !important;
     }
     
     body:not(.team-generator-page) .player-position {
-        font-size: 0.65rem !important;
+        font-size: 0.35rem !important;
     }
     
     body:not(.team-generator-page) .player-info {
-        padding: 0.8rem !important;
+        padding: 0.28rem !important;
     }
 }
 
 @media (max-width: 480px) {
     body:not(.team-generator-page) .player-card {
-        width: 110px !important;
-        height: 160px !important;
-        margin: 3px !important;
+        width: 56px !important;
+        height: 81px !important;
+        margin: 1px !important;
     }
     
     body:not(.team-generator-page) .player-image {
-        height: 90px !important;
+        height: 46px !important;
     }
     
     body:not(.team-generator-page) .player-name {
-        font-size: 0.7rem !important;
+        font-size: 0.39rem !important;
+        line-height: 1.1 !important;
     }
     
     body:not(.team-generator-page) .player-position {
-        font-size: 0.55rem !important;
+        font-size: 0.32rem !important;
     }
     
     body:not(.team-generator-page) .player-info {
-        padding: 0.6rem !important;
+        padding: 0.21rem !important;
     }
 }
 
@@ -539,7 +554,6 @@ body:not(.team-generator-page) .player-card {
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     width: 100% !important;
     max-width: 300px !important;
-    min-width: 280px !important;
     min-height: 400px !important;
     height: auto !important;
     display: flex !important;
@@ -555,7 +569,6 @@ body:not(.team-generator-page) .player-card {
     border-radius: 20px !important; /* Never circular */
     width: auto !important; /* Never fixed small width like 60px */
     height: auto !important; /* Never fixed small height like 60px */
-    min-width: 280px !important; /* Always full-size */
     min-height: 400px !important; /* Always full-size */
 }
 
@@ -1275,7 +1288,6 @@ footer {
         flex: 0 0 280px !important;
         width: 280px !important;
         max-width: 280px !important;
-        min-width: 280px !important;
         min-height: 400px !important;
         height: auto !important;
         margin: 0 !important;
@@ -1377,7 +1389,6 @@ footer {
         flex: 0 0 260px !important;
         width: 260px !important;
         max-width: 260px !important;
-        min-width: 260px !important;
     }
 
     .section-title {
@@ -1395,7 +1406,6 @@ footer {
         flex: 0 0 240px !important;
         width: 240px !important;
         max-width: 240px !important;
-        min-width: 240px !important;
     }
 
     .section-title {
