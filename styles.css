@@ -27,12 +27,6 @@ body {
     position: relative;
 }
 
-/* Hide original player cards to prevent flash - MAIN PAGE ONLY */
-body:not(.team-generator-page) .player-card {
-    visibility: hidden;
-    opacity: 0;
-}
-
 /* Show enhanced cards - MAIN PAGE ONLY */
 body:not(.team-generator-page) .pc-card-wrapper {
     visibility: visible !important;
@@ -63,43 +57,21 @@ body:not(.team-generator-page) .player-card.tilt-active {
 /* Mobile responsive sizes for player cards - 30% SMALLER */
 @media (max-width: 768px) {
     body:not(.team-generator-page) .player-card {
-        width: 63px !important;
-        height: 91px !important;
+        width: 83px !important;
+        height: 107px !important;
         margin: 1px !important;
+        padding: 0.4rem !important;
     }
     
     body:not(.team-generator-page) .player-image {
-        height: 53px !important;
+        height: 60px !important;
+        margin-bottom: 0.3rem !important;
     }
     
     body:not(.team-generator-page) .player-name {
-        font-size: 0.42rem !important;
+        font-size: 0.4rem !important;
         line-height: 1.1 !important;
-    }
-    
-    body:not(.team-generator-page) .player-position {
-        font-size: 0.35rem !important;
-    }
-    
-    body:not(.team-generator-page) .player-info {
-        padding: 0.28rem !important;
-    }
-}
-
-@media (max-width: 480px) {
-    body:not(.team-generator-page) .player-card {
-        width: 56px !important;
-        height: 81px !important;
-        margin: 1px !important;
-    }
-    
-    body:not(.team-generator-page) .player-image {
-        height: 46px !important;
-    }
-    
-    body:not(.team-generator-page) .player-name {
-        font-size: 0.39rem !important;
-        line-height: 1.1 !important;
+        margin-bottom: 0.1rem !important;
     }
     
     body:not(.team-generator-page) .player-position {
@@ -107,7 +79,31 @@ body:not(.team-generator-page) .player-card.tilt-active {
     }
     
     body:not(.team-generator-page) .player-info {
-        padding: 0.21rem !important;
+        padding: 0.2rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    body:not(.team-generator-page) .player-card {
+        width: 75px !important;
+        height: 95px !important;
+        margin: 1px !important;
+        padding: 0.3rem !important;
+    }
+    body:not(.team-generator-page) .player-image {
+        height: 50px !important;
+        margin-bottom: 0.2rem !important;
+    }
+    body:not(.team-generator-page) .player-name {
+        font-size: 0.35rem !important;
+        line-height: 1.1 !important;
+        margin-bottom: 0.1rem !important;
+    }
+    body:not(.team-generator-page) .player-position {
+        font-size: 0.28rem !important;
+    }
+    body:not(.team-generator-page) .player-info {
+        padding: 0.15rem !important;
     }
 }
 
@@ -545,7 +541,7 @@ body:not(.team-generator-page) .players-grid {
 body:not(.team-generator-page) .player-card {
     background: rgba(255, 255, 255, 0.05) !important;
     border-radius: 20px !important;
-    padding: 1.5rem !important;
+    padding: 1.2rem !important;
     text-align: center !important;
     position: relative !important;
     overflow: hidden !important;
@@ -553,8 +549,8 @@ body:not(.team-generator-page) .player-card {
     backdrop-filter: blur(10px) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     width: 100% !important;
-    max-width: 300px !important;
-    min-height: 400px !important;
+    max-width: 250px !important;
+    min-height: 320px !important;
     height: auto !important;
     display: flex !important;
     flex-direction: column !important;
@@ -564,22 +560,13 @@ body:not(.team-generator-page) .player-card {
     visibility: visible !important;
 }
 
-/* Prevent any small avatar-style cards from EVER appearing */
-body:not(.team-generator-page) .player-card {
-    border-radius: 20px !important; /* Never circular */
-    width: auto !important; /* Never fixed small width like 60px */
-    height: auto !important; /* Never fixed small height like 60px */
-    min-height: 400px !important; /* Always full-size */
-}
-
-/* FORCE ALL PLAYER IMAGES TO BE IDENTICAL */
 body:not(.team-generator-page) .player-image {
     width: 100% !important;
-    height: 280px !important;
+    height: 220px !important;
     border-radius: 15px !important;
     overflow: hidden !important;
     position: relative !important;
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.8rem !important;
     background: rgba(0, 0, 0, 0.3) !important;
     display: block !important;
 }
@@ -596,29 +583,6 @@ body:not(.team-generator-page) .player-image img {
     left: 0 !important;
 }
 
-body:not(.team-generator-page) .serious-photo {
-    opacity: 1;
-    z-index: 1;
-    transform: scale(1);
-}
-
-body:not(.team-generator-page) .celebration-photo {
-    opacity: 0;
-    z-index: 2;
-    transform: scale(1.1);
-}
-
-body:not(.team-generator-page) .player-card:hover .serious-photo {
-    opacity: 0;
-    transform: scale(1.1);
-}
-
-body:not(.team-generator-page) .player-card:hover .celebration-photo {
-    opacity: 1;
-    transform: scale(1);
-}
-
-/* FORCE ALL PLAYER INFO TO BE IDENTICAL */
 body:not(.team-generator-page) .player-info {
     padding: 1rem 0 !important;
     flex-grow: 1 !important;
@@ -649,6 +613,28 @@ body:not(.team-generator-page) .player-position {
     letter-spacing: 1px !important;
     font-weight: 500 !important;
     display: block !important;
+}
+
+body:not(.team-generator-page) .serious-photo {
+    opacity: 1;
+    z-index: 1;
+    transform: scale(1);
+}
+
+body:not(.team-generator-page) .celebration-photo {
+    opacity: 0;
+    z-index: 2;
+    transform: scale(1.1);
+}
+
+body:not(.team-generator-page) .player-card:hover .serious-photo {
+    opacity: 0;
+    transform: scale(1.1);
+}
+
+body:not(.team-generator-page) .player-card:hover .celebration-photo {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .player-number {
@@ -1207,34 +1193,28 @@ footer {
 
     /* Player cards override - Consistent sizing for ALL sections (MAIN PAGE ONLY) */
     body:not(.team-generator-page) .player-card {
-        flex: 0 0 280px !important;
-        width: 280px !important;
-        max-width: 280px !important;
-        min-width: 280px !important;
-        min-height: 400px !important;
-        margin: 0 !important;
-        box-sizing: border-box !important;
-        scroll-snap-align: center !important;
-        background: rgba(255, 255, 255, 0.05) !important;
-        border-radius: 20px !important;
-        padding: 1.5rem !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: space-between !important;
+        flex: 0 0 160px !important;
+        width: 160px !important;
+        max-width: 160px !important;
+        min-width: 160px !important;
+        min-height: 300px !important;
+        height: 300px !important;
+        padding: 0.5rem !important;
+        border-radius: 12px !important;
     }
 
     /* Ensure consistent image sizing across ALL sections */
     body:not(.team-generator-page) .player-image {
         width: 100% !important;
-        height: 280px !important;
-        border-radius: 15px !important;
-        margin-bottom: 1rem !important;
+        height: 180px !important;
+        border-radius: 7px !important;
+        margin-bottom: 0.3rem !important;
         background: rgba(0, 0, 0, 0.3) !important;
     }
 
     /* Consistent player info styling */
     body:not(.team-generator-page) .player-info {
-        padding: 1rem 0 !important;
+        padding: 0.2rem 0 !important;
         text-align: center !important;
         flex-grow: 1 !important;
         display: flex !important;
@@ -1244,28 +1224,28 @@ footer {
 
     /* Consistent text styling */
     body:not(.team-generator-page) .player-name {
-        font-size: 1.1rem !important;
+        font-size: 0.55rem !important;
         font-weight: 600 !important;
         color: var(--text-color) !important;
-        margin-bottom: 0.5rem !important;
-        line-height: 1.2 !important;
+        margin-bottom: 0.1rem !important;
+        line-height: 1.1 !important;
     }
 
     body:not(.team-generator-page) .player-position {
-        font-size: 0.85rem !important;
+        font-size: 0.42rem !important;
         color: var(--secondary-color) !important;
         text-transform: uppercase !important;
-        letter-spacing: 1px !important;
+        letter-spacing: 0.5px !important;
         font-weight: 500 !important;
     }
 
     /* Consistent logo positioning for mobile */
     body:not(.team-generator-page) .player-logo {
         position: absolute !important;
-        top: 15px !important;
-        right: 15px !important;
-        width: 40px !important;
-        height: 40px !important;
+        top: 8px !important;
+        right: 8px !important;
+        width: 20px !important;
+        height: 20px !important;
         background: rgba(0, 0, 0, 0.7) !important;
         border-radius: 50% !important;
         display: flex !important;
@@ -1275,27 +1255,27 @@ footer {
     }
 
     body:not(.team-generator-page) .player-logo img {
-        width: 24px !important;
-        height: 24px !important;
+        width: 12px !important;
+        height: 12px !important;
         object-fit: contain !important;
         filter: brightness(1.2) !important;
     }
 
-    /* FORCE UNIFORM CARD LAYOUT ON MOBILE - OVERRIDE ANY LEGACY STYLES */
+    /* FORCE UNIFORM CARD LAYOUT ON MOBILE - 3X SMALLER CARDS */
     body:not(.team-generator-page) .section .players-grid .player-card,
     body:not(.team-generator-page) .section .player-card,
     body:not(.team-generator-page) .players-grid .player-card {
-        flex: 0 0 280px !important;
-        width: 280px !important;
-        max-width: 280px !important;
-        min-height: 400px !important;
-        height: auto !important;
+        flex: 0 0 160px !important;
+        width: 160px !important;
+        max-width: 160px !important;
+        min-height: 300px !important;
+        height: 300px !important;
         margin: 0 !important;
         box-sizing: border-box !important;
         scroll-snap-align: center !important;
         background: rgba(255, 255, 255, 0.05) !important;
-        border-radius: 20px !important;
-        padding: 1.5rem !important;
+        border-radius: 12px !important;
+        padding: 0.5rem !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
