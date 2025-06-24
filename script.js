@@ -267,11 +267,231 @@ function isNewPlayerActive(joinedDate) {
     return diff < 1;
 }
 
+// LiquidChrome Background Effect
+function initLiquidChrome() {
+    const container = document.querySelector('.liquidChrome-container');
+    if (!container) return;
+
+    console.log('LiquidChrome: Container found');
+
+    // Create canvas manually
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    
+    if (!gl) {
+        console.error('WebGL not supported');
+        return;
+    }
+
+    console.log('LiquidChrome: WebGL context created');
+
+    // Configuration
+    const config = {
+        baseColor: [0.1, 0.1, 0.1],
+        speed: 0.2,
+        amplitude: 0.3,
+        frequencyX: 3,
+        frequencyY: 3,
+        interactive: true
+    };
+
+    // Vertex shader
+    const vertexShaderSource = `
+        attribute vec2 a_position;
+        varying vec2 vUv;
+        void main() {
+            vUv = a_position * 0.5 + 0.5;
+            gl_Position = vec4(a_position, 0.0, 1.0);
+        }
+    `;
+
+    // Fragment shader
+    const fragmentShaderSource = `
+        precision highp float;
+        uniform float uTime;
+        uniform vec2 uResolution;
+        uniform vec3 uBaseColor;
+        uniform float uAmplitude;
+        uniform float uFrequencyX;
+        uniform float uFrequencyY;
+        uniform vec2 uMouse;
+        varying vec2 vUv;
+
+        vec4 renderImage(vec2 uvCoord) {
+            vec2 fragCoord = uvCoord * uResolution;
+            vec2 uv = (2.0 * fragCoord - uResolution) / min(uResolution.x, uResolution.y);
+
+            for (float i = 1.0; i < 10.0; i++){
+                uv.x += uAmplitude / i * cos(i * uFrequencyX * uv.y + uTime + uMouse.x * 3.14159);
+                uv.y += uAmplitude / i * cos(i * uFrequencyY * uv.x + uTime + uMouse.y * 3.14159);
+            }
+
+            vec2 diff = (uvCoord - uMouse);
+            float dist = length(diff);
+            float falloff = exp(-dist * 20.0);
+            float ripple = sin(10.0 * dist - uTime * 2.0) * 0.03;
+            uv += (diff / (dist + 0.0001)) * ripple * falloff;
+
+            vec3 color = uBaseColor / abs(sin(uTime - uv.y - uv.x));
+            return vec4(color, 1.0);
+        }
+
+        void main() {
+            vec4 col = vec4(0.0);
+            int samples = 0;
+            for (int i = -1; i <= 1; i++){
+                for (int j = -1; j <= 1; j++){
+                    vec2 offset = vec2(float(i), float(j)) * (1.0 / min(uResolution.x, uResolution.y));
+                    col += renderImage(vUv + offset);
+                    samples++;
+                }
+            }
+            gl_FragColor = col / float(samples);
+        }
+    `;
+
+    // Compile shader
+    function createShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            console.error('Shader compile error:', gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+            return null;
+        }
+        return shader;
+    }
+
+    // Create program
+    function createProgram(gl, vertexShader, fragmentShader) {
+        const program = gl.createProgram();
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+        
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            console.error('Program link error:', gl.getProgramInfoLog(program));
+            gl.deleteProgram(program);
+            return null;
+        }
+        return program;
+    }
+
+    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+    const program = createProgram(gl, vertexShader, fragmentShader);
+
+    if (!program) {
+        console.error('Failed to create shader program');
+        return;
+    }
+
+    console.log('LiquidChrome: Shaders compiled successfully');
+
+    // Create geometry (fullscreen quad)
+    const positions = new Float32Array([
+        -1, -1,
+         1, -1,
+        -1,  1,
+         1,  1,
+    ]);
+
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+    // Get attribute and uniform locations
+    const positionLocation = gl.getAttribLocation(program, 'a_position');
+    const timeLocation = gl.getUniformLocation(program, 'uTime');
+    const resolutionLocation = gl.getUniformLocation(program, 'uResolution');
+    const baseColorLocation = gl.getUniformLocation(program, 'uBaseColor');
+    const amplitudeLocation = gl.getUniformLocation(program, 'uAmplitude');
+    const frequencyXLocation = gl.getUniformLocation(program, 'uFrequencyX');
+    const frequencyYLocation = gl.getUniformLocation(program, 'uFrequencyY');
+    const mouseLocation = gl.getUniformLocation(program, 'uMouse');
+
+    let mouseX = 0, mouseY = 0;
+
+    function resize() {
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
+        canvas.style.width = container.offsetWidth + 'px';
+        canvas.style.height = container.offsetHeight + 'px';
+        gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+
+    function handleMouseMove(event) {
+        const rect = container.getBoundingClientRect();
+        mouseX = (event.clientX - rect.left) / rect.width;
+        mouseY = 1 - (event.clientY - rect.top) / rect.height;
+    }
+
+    function handleTouchMove(event) {
+        if (event.touches.length > 0) {
+            const touch = event.touches[0];
+            const rect = container.getBoundingClientRect();
+            mouseX = (touch.clientX - rect.left) / rect.width;
+            mouseY = 1 - (touch.clientY - rect.top) / rect.height;
+        }
+    }
+
+    // Event listeners
+    window.addEventListener('resize', resize);
+    if (config.interactive) {
+        container.addEventListener('mousemove', handleMouseMove);
+        container.addEventListener('touchmove', handleTouchMove);
+    }
+
+    container.appendChild(canvas);
+    resize();
+
+    console.log('LiquidChrome: Canvas added to DOM');
+
+    let startTime = Date.now();
+    let animationId;
+
+    function render() {
+        const currentTime = (Date.now() - startTime) * 0.001 * config.speed;
+        
+        gl.clearColor(0, 0, 0, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        
+        gl.useProgram(program);
+        
+        // Bind position buffer
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.enableVertexAttribArray(positionLocation);
+        gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+        
+        // Set uniforms
+        gl.uniform1f(timeLocation, currentTime);
+        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+        gl.uniform3f(baseColorLocation, config.baseColor[0], config.baseColor[1], config.baseColor[2]);
+        gl.uniform1f(amplitudeLocation, config.amplitude);
+        gl.uniform1f(frequencyXLocation, config.frequencyX);
+        gl.uniform1f(frequencyYLocation, config.frequencyY);
+        gl.uniform2f(mouseLocation, mouseX, mouseY);
+        
+        // Draw
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        
+        animationId = requestAnimationFrame(render);
+    }
+
+    render();
+    console.log('LiquidChrome: Animation started');
+}
+
 // Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
     displayPlayers();
     initMobileMenu();
     optimizeAnimations();
+    
+    // Initialize LiquidChrome background
+    initLiquidChrome();
     
     if (window.innerWidth > 768) {
         window.addEventListener('scroll', handleScroll);

@@ -12,11 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="images/GOATS.png">
     
-    <!-- Three.js and React dependencies for Silk background -->
-    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@react-three/fiber@8.15.11/dist/react-three-fiber.umd.js"></script>
+
     
     <!-- GSAP for SplitText effect -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -795,13 +791,31 @@
                 animation: none;
             }
         }
+
+        /* LiquidChrome Background */
+        .liquidChrome-container {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .liquidChrome-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+        }
     </style>
 </head>
 <body>
     <!-- Silk Background Container -->
-    <div id="silk-background"></div>
 
 
+    <!-- LiquidChrome Background -->
+    <div class="liquidChrome-container"></div>
 
     <header>
         <nav>
@@ -825,9 +839,9 @@
         </nav>
     </header>
 
-            <div class="hero-title-container">
-            <h1 class="hero-title" data-text="GOATS FC">GOATS FC</h1>
-            <p class="hero-subtitle">// one team, one legacy //</p>
+    <div class="hero-title-container">
+        <h1 class="hero-title" data-text="GOATS FC">GOATS FC</h1>
+        <p class="hero-subtitle">// one team, one legacy //</p>
     </div>
 
     <main>
@@ -836,10 +850,9 @@
 
     <footer>Created by Dragos Zughy</footer>
 
-    <script src="silk-background.js"></script>
+
     <script src="profile-card.js"></script>
     
-
     <script src="script.js"></script>
     
     <script>
@@ -1272,5 +1285,63 @@
         initMobileMenu();
     </script>
     <script src="script.js"></script>
+    <script>
+        // Stadium Scroll-Through Effect
+        function initStadiumScrollEffect() {
+            // Wait for GSAP to load
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+                setTimeout(initStadiumScrollEffect, 100);
+                return;
+            }
+
+            // Register ScrollTrigger
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Get stadium layer
+            const stadiumLayer = document.querySelector('.stadium-scroll-layer');
+            
+            if (!stadiumLayer) {
+                console.error('Stadium layer not found');
+                return;
+            }
+
+            // Main stadium scroll effect - moves from top of stadium to field
+            gsap.to(stadiumLayer, {
+                yPercent: -75, // Move the tall image up to show different parts
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "body",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 1, // Smooth scroll sync
+                    pin: false
+                }
+            });
+
+            // Entrance animation
+            gsap.fromTo(stadiumLayer, 
+                { 
+                    scale: 1.1,
+                    opacity: 0
+                },
+                { 
+                    scale: 1,
+                    opacity: 1,
+                    duration: 2,
+                    ease: "power2.out"
+                }
+            );
+
+            // Refresh ScrollTrigger on window resize
+            window.addEventListener("resize", () => {
+                ScrollTrigger.refresh();
+            });
+
+            console.log("Stadium Scroll-Through Effect initialized");
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initStadiumScrollEffect);
+    </script>
 </body>
 </html>
