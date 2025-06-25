@@ -1026,12 +1026,16 @@
             top: 0;
             left: 0;
             object-fit: cover;
-            object-position: center 15%;
+            object-position: center 10%;
             opacity: 1 !important;
             filter: none;
             mix-blend-mode: normal;
             transition: none;
             will-change: auto;
+        }
+
+        body:not(.team-generator-page) .pc-avatar-content .avatar[src*="default"] {
+            display: none !important;
         }
 
         body:not(.team-generator-page) .pc-avatar-content::before {
@@ -1234,8 +1238,8 @@
             }
 
             body:not(.team-generator-page) .pc-card {
-                height: 50dvh;
-                max-height: 350px;
+                height: 40dvh;
+                max-height: 320px;
             }
 
             body:not(.team-generator-page) .pc-user-info {
@@ -1270,7 +1274,7 @@
 
         @media (max-width: 480px) {
             body:not(.team-generator-page) .pc-card {
-                height: 45dvh;
+                height: 38dvh;
                 max-height: 300px;
             }
 
@@ -1308,8 +1312,8 @@
 
         @media (max-width: 320px) {
             body:not(.team-generator-page) .pc-card {
-                height: 40dvh;
-                max-height: 250px;
+                height: 35dvh;
+                max-height: 280px;
             }
 
             body:not(.team-generator-page) .pc-user-info {
