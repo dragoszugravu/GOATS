@@ -188,14 +188,14 @@
             body {
                 overflow-x: hidden;
                 font-size: 14px;
-                padding-top: 50px; /* Space for fixed header */
+                padding-top: 60px; /* Space for fixed header */
             }
 
             /* Header adjustments */
             header {
-                padding: 0.5rem 1rem;
+                padding: 0.3rem 1rem;
                 height: auto;
-                min-height: 70px;
+                min-height: 50px;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -220,8 +220,9 @@
 
             /* Hero title container */
             .hero-title-container {
-                padding: 0.2rem 1rem;
-                min-height: 30px;
+                padding: 1rem 1rem;
+                min-height: 60px;
+                margin-top: 20px;
             }
 
             .hero-title {
@@ -1013,6 +1014,9 @@
         body:not(.team-generator-page) .pc-avatar-content {
             mix-blend-mode: normal;
             overflow: hidden;
+            position: relative;
+            height: 100%;
+            width: 100%;
         }
 
         body:not(.team-generator-page) .pc-avatar-content .avatar {
@@ -1230,7 +1234,7 @@
             }
 
             body:not(.team-generator-page) .pc-card {
-                height: 50svh;
+                height: 50dvh;
                 max-height: 350px;
             }
 
@@ -1266,7 +1270,7 @@
 
         @media (max-width: 480px) {
             body:not(.team-generator-page) .pc-card {
-                height: 45svh;
+                height: 45dvh;
                 max-height: 300px;
             }
 
@@ -1304,7 +1308,7 @@
 
         @media (max-width: 320px) {
             body:not(.team-generator-page) .pc-card {
-                height: 40svh;
+                height: 40dvh;
                 max-height: 250px;
             }
 
