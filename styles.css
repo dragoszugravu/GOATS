@@ -27,6 +27,15 @@ body {
     position: relative;
 }
 
+/* ProfileCard text color overrides */
+body:not(.team-generator-page) .pc-handle {
+    color: rgba(200, 200, 200, 0.8) !important;
+}
+
+body:not(.team-generator-page) .pc-status {
+    color: rgba(160, 160, 160, 0.7) !important;
+}
+
 /* Show enhanced cards - MAIN PAGE ONLY */
 body:not(.team-generator-page) .pc-card-wrapper {
     visibility: visible !important;
@@ -1140,7 +1149,8 @@ footer {
     }
 
     /* Player cards override - Consistent sizing for ALL sections (MAIN PAGE ONLY) */
-    body:not(.team-generator-page) .player-card {
+    body:not(.team-generator-page) .player-card,
+    body:not(.team-generator-page) .pc-card-wrapper {
         flex: 0 0 160px !important;
         width: 160px !important;
         max-width: 160px !important;
@@ -1187,6 +1197,15 @@ footer {
         font-weight: 500 !important;
     }
 
+    /* ProfileCard text overrides for mobile */
+    body:not(.team-generator-page) .pc-handle {
+        color: rgba(200, 200, 200, 0.8) !important;
+    }
+
+    body:not(.team-generator-page) .pc-status {
+        color: rgba(160, 160, 160, 0.7) !important;
+    }
+
     /* Consistent logo positioning for mobile */
     body:not(.team-generator-page) .player-logo {
         position: absolute !important;
@@ -1229,6 +1248,26 @@ footer {
         justify-content: space-between !important;
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
         backdrop-filter: blur(10px) !important;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    }
+
+    /* ProfileCard wrappers without grey background */
+    body:not(.team-generator-page) .section .players-grid .pc-card-wrapper,
+    body:not(.team-generator-page) .section .pc-card-wrapper,
+    body:not(.team-generator-page) .players-grid .pc-card-wrapper {
+        flex: 0 0 160px !important;
+        width: 160px !important;
+        max-width: 160px !important;
+        min-height: 300px !important;
+        height: 300px !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        scroll-snap-align: center !important;
+        border-radius: 12px !important;
+        padding: 0.5rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
         transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
     }
 
@@ -1313,7 +1352,8 @@ footer {
         padding: 0 0.5rem !important;
     }
 
-    body:not(.team-generator-page) .player-card {
+    body:not(.team-generator-page) .player-card,
+    body:not(.team-generator-page) .pc-card-wrapper {
         flex: 0 0 260px !important;
         width: 260px !important;
         max-width: 260px !important;
