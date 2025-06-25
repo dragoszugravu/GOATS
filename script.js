@@ -437,11 +437,116 @@ function initLiquidChrome() {
         }
     }
 
+    let isAnimating = false;
+    const baseConfig = {
+        amplitude: config.amplitude,
+        frequencyX: config.frequencyX,
+        frequencyY: config.frequencyY
+    };
+
+    function handleClick(event) {
+        // Prevent multiple simultaneous animations
+        if (isAnimating) return;
+        
+        console.log('LiquidChrome: Click detected at', event.clientX, event.clientY);
+        const rect = container.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = 1 - (event.clientY - rect.top) / rect.height;
+        
+        // Create ripple effect on click
+        mouseX = x;
+        mouseY = y;
+        isAnimating = true;
+        
+        // Use moderate values to avoid glitch
+        config.amplitude = baseConfig.amplitude * 1.8;
+        config.frequencyX = baseConfig.frequencyX * 1.3;
+        config.frequencyY = baseConfig.frequencyY * 1.3;
+        
+        // Gradually reset values for smoother transition
+        let progress = 0;
+        const duration = 600; // ms
+        const startTime = Date.now();
+        
+        function resetValues() {
+            const now = Date.now();
+            progress = Math.min((now - startTime) / duration, 1);
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            
+            config.amplitude = baseConfig.amplitude * (1.8 - 0.8 * easeOut);
+            config.frequencyX = baseConfig.frequencyX * (1.3 - 0.3 * easeOut);
+            config.frequencyY = baseConfig.frequencyY * (1.3 - 0.3 * easeOut);
+            
+            if (progress < 1) {
+                requestAnimationFrame(resetValues);
+            } else {
+                // Ensure exact reset to base values
+                config.amplitude = baseConfig.amplitude;
+                config.frequencyX = baseConfig.frequencyX;
+                config.frequencyY = baseConfig.frequencyY;
+                isAnimating = false;
+            }
+        }
+        
+        requestAnimationFrame(resetValues);
+    }
+
+    function handleTouchStart(event) {
+        if (event.touches.length > 0) {
+            // Prevent multiple simultaneous animations
+            if (isAnimating) return;
+            
+            const touch = event.touches[0];
+            const rect = container.getBoundingClientRect();
+            const x = (touch.clientX - rect.left) / rect.width;
+            const y = 1 - (touch.clientY - rect.top) / rect.height;
+            
+            // Create ripple effect on touch
+            mouseX = x;
+            mouseY = y;
+            isAnimating = true;
+            
+            // Use moderate values to avoid glitch
+            config.amplitude = baseConfig.amplitude * 1.8;
+            config.frequencyX = baseConfig.frequencyX * 1.3;
+            config.frequencyY = baseConfig.frequencyY * 1.3;
+            
+            // Gradually reset values for smoother transition
+            let progress = 0;
+            const duration = 600; // ms
+            const startTime = Date.now();
+            
+            function resetValues() {
+                const now = Date.now();
+                progress = Math.min((now - startTime) / duration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                
+                config.amplitude = baseConfig.amplitude * (1.8 - 0.8 * easeOut);
+                config.frequencyX = baseConfig.frequencyX * (1.3 - 0.3 * easeOut);
+                config.frequencyY = baseConfig.frequencyY * (1.3 - 0.3 * easeOut);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(resetValues);
+                } else {
+                    // Ensure exact reset to base values
+                    config.amplitude = baseConfig.amplitude;
+                    config.frequencyX = baseConfig.frequencyX;
+                    config.frequencyY = baseConfig.frequencyY;
+                    isAnimating = false;
+                }
+            }
+            
+            requestAnimationFrame(resetValues);
+        }
+    }
+
     // Event listeners
     window.addEventListener('resize', resize);
     if (config.interactive) {
         container.addEventListener('mousemove', handleMouseMove);
         container.addEventListener('touchmove', handleTouchMove);
+        container.addEventListener('click', handleClick);
+        container.addEventListener('touchstart', handleTouchStart);
     }
 
     container.appendChild(canvas);
