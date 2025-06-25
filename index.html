@@ -1026,7 +1026,7 @@
             top: 0;
             left: 0;
             object-fit: cover;
-            object-position: center 10%;
+            object-position: center 50%;
             opacity: 1 !important;
             filter: none;
             mix-blend-mode: normal;
@@ -1050,9 +1050,10 @@
 
         body:not(.team-generator-page) .pc-user-info {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
             z-index: 2;
             display: flex;
             align-items: center;
@@ -1061,7 +1062,7 @@
             backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            padding: 12px 14px;
+            padding: 8px 12px;
             pointer-events: auto;
         }
 
@@ -1238,15 +1239,33 @@
             }
 
             body:not(.team-generator-page) .pc-card {
-                height: 40dvh;
-                max-height: 320px;
+                height: 50dvh;
+                max-height: 400px;
             }
 
             body:not(.team-generator-page) .pc-user-info {
-                bottom: 15px;
-                left: 15px;
-                right: 15px;
-                padding: 10px 12px;
+                position: absolute;
+                top: -5px;
+                left: 50%;
+                transform: translateX(-50%);
+                max-width: 90%;
+                padding: 4px 12px;
+                border-radius: 12px;
+                text-align: center;
+                white-space: nowrap;
+                margin-top: -15px;
+            }
+
+            body:not(.team-generator-page) .pc-handle {
+                font-size: 11px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
+            body:not(.team-generator-page) .pc-status {
+                font-size: 10px;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
 
             body:not(.team-generator-page) .pc-mini-avatar {
@@ -1274,16 +1293,17 @@
 
         @media (max-width: 480px) {
             body:not(.team-generator-page) .pc-card {
-                height: 38dvh;
-                max-height: 300px;
+                height: 45dvh;
+                max-height: 350px;
             }
 
             body:not(.team-generator-page) .pc-user-info {
-                bottom: 12px;
-                left: 12px;
-                right: 12px;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 70%;
                 padding: 8px 10px;
-                border-radius: 50px;
+                border-radius: 15px;
             }
 
             body:not(.team-generator-page) .pc-mini-avatar {
@@ -1312,13 +1332,17 @@
 
         @media (max-width: 320px) {
             body:not(.team-generator-page) .pc-card {
-                height: 35dvh;
-                max-height: 280px;
+                height: 43dvh;
+                max-height: 330px;
             }
 
             body:not(.team-generator-page) .pc-user-info {
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 70%;
                 padding: 6px 8px;
-                border-radius: 50px;
+                border-radius: 15px;
             }
 
             body:not(.team-generator-page) .pc-mini-avatar {
