@@ -139,16 +139,9 @@
             }
             
             .hero-title-container {
-                padding: 1rem 1rem;
-                min-height: 60px;
-                margin-top: 20px;
-            }
-
-            body:not(.team-generator-page) .players-grid {
-            }
-
-            body:not(.team-generator-page) .player-card {
-                margin: 0 10px !important;
+                padding: 1rem 0.5rem;
+                min-height: 120px;
+                margin-top: 0;
             }
         }
 
@@ -195,14 +188,14 @@
             body {
                 overflow-x: hidden;
                 font-size: 14px;
-                padding-top: 60px; /* Space for fixed header */
+                padding-top: 70px; /* Space for fixed header */
             }
 
             /* Header adjustments */
             header {
-                padding: 0.3rem 1rem;
+                padding: 0.5rem 1rem;
                 height: auto;
-                min-height: 50px;
+                min-height: 70px;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -227,9 +220,8 @@
 
             /* Hero title container */
             .hero-title-container {
-                padding: 1rem 1rem;
-                min-height: 60px;
-                margin-top: 20px;
+                padding: 2rem 1rem;
+                min-height: 120px;
             }
 
             .hero-title {
@@ -378,8 +370,8 @@
             }
 
             .hero-title-container {
-                padding: 0rem 0.5rem;
-                min-height: 10px;
+                padding: 1.5rem 0.5rem;
+                min-height: 100px;
             }
 
 
@@ -864,12 +856,7 @@
             transform: translate3d(0, 0, 0.1px);
             position: relative;
             touch-action: manipulation;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-touch-callout: none;
-            -webkit-tap-highlight-color: transparent;
+            border-radius: var(--card-radius);
         }
 
         body:not(.team-generator-page) .pc-card-wrapper::before {
@@ -913,12 +900,6 @@
             background-position: 0 0, 0 0, 50% 50%, 0 0;
             background-image: radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y), hsla(266, 100%, 90%, var(--card-opacity)) 4%, hsla(266, 50%, 80%, calc(var(--card-opacity) * 0.75)) 10%, hsla(266, 25%, 70%, calc(var(--card-opacity) * 0.5)) 50%, hsla(266, 0%, 60%, 0) 100%), radial-gradient(35% 52% at 55% 20%, #00ffaac4 0%, #073aff00 100%), radial-gradient(100% 100% at 50% 50%, #00c1ffff 1%, #073aff00 76%), conic-gradient(from 124deg at 50% 50%, #c137ffff 0%, #07c6ffff 40%, #07c6ffff 60%, #c137ffff 100%);
             overflow: hidden;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-touch-callout: none;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body:not(.team-generator-page) .pc-card:hover,
@@ -1021,28 +1002,21 @@
         body:not(.team-generator-page) .pc-avatar-content {
             mix-blend-mode: normal;
             overflow: hidden;
-            position: relative;
-            height: 100%;
-            width: 100%;
+            border-radius: var(--card-radius);
         }
 
         body:not(.team-generator-page) .pc-avatar-content .avatar {
             width: 100%;
-            height: 100%;
             position: absolute;
-            top: 0;
-            left: 0;
-            object-fit: cover;
-            object-position: center 50%;
+            left: 50%;
+            transform: translateX(-50%) scale(1) !important;
+            bottom: 2px;
             opacity: 1 !important;
             filter: none;
             mix-blend-mode: normal;
             transition: none;
             will-change: auto;
-        }
-
-        body:not(.team-generator-page) .pc-avatar-content .avatar[src*="default"] {
-            display: none !important;
+            border-radius: var(--card-radius);
         }
 
         body:not(.team-generator-page) .pc-avatar-content::before {
@@ -1057,10 +1031,9 @@
 
         body:not(.team-generator-page) .pc-user-info {
             position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70%;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
             z-index: 2;
             display: flex;
             align-items: center;
@@ -1069,7 +1042,7 @@
             backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            padding: 8px 12px;
+            padding: 12px 14px;
             pointer-events: auto;
         }
 
@@ -1246,33 +1219,15 @@
             }
 
             body:not(.team-generator-page) .pc-card {
-                height: 50dvh;
-                max-height: 400px;
+                height: 50svh;
+                max-height: 350px;
             }
 
             body:not(.team-generator-page) .pc-user-info {
-                position: absolute;
-                top: -5px;
-                left: 50%;
-                transform: translateX(-50%);
-                max-width: 90%;
-                padding: 4px 12px;
-                border-radius: 12px;
-                text-align: center;
-                white-space: nowrap;
-                margin-top: -15px;
-            }
-
-            body:not(.team-generator-page) .pc-handle {
-                font-size: 11px;
-                text-overflow: ellipsis;
-                overflow: hidden;
-            }
-
-            body:not(.team-generator-page) .pc-status {
-                font-size: 10px;
-                text-overflow: ellipsis;
-                overflow: hidden;
+                bottom: 15px;
+                left: 15px;
+                right: 15px;
+                padding: 10px 12px;
             }
 
             body:not(.team-generator-page) .pc-mini-avatar {
@@ -1300,17 +1255,16 @@
 
         @media (max-width: 480px) {
             body:not(.team-generator-page) .pc-card {
-                height: 45dvh;
-                max-height: 350px;
+                height: 45svh;
+                max-height: 300px;
             }
 
             body:not(.team-generator-page) .pc-user-info {
-                top: 10px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 70%;
+                bottom: 12px;
+                left: 12px;
+                right: 12px;
                 padding: 8px 10px;
-                border-radius: 15px;
+                border-radius: 50px;
             }
 
             body:not(.team-generator-page) .pc-mini-avatar {
@@ -1339,17 +1293,13 @@
 
         @media (max-width: 320px) {
             body:not(.team-generator-page) .pc-card {
-                height: 43dvh;
-                max-height: 330px;
+                height: 40svh;
+                max-height: 250px;
             }
 
             body:not(.team-generator-page) .pc-user-info {
-                top: 10px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 70%;
                 padding: 6px 8px;
-                border-radius: 15px;
+                border-radius: 50px;
             }
 
             body:not(.team-generator-page) .pc-mini-avatar {
