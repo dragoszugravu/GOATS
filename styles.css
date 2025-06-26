@@ -1158,13 +1158,11 @@ footer {
     /* Player cards override - Consistent sizing for ALL sections (MAIN PAGE ONLY) */
     body:not(.team-generator-page) .player-card,
     body:not(.team-generator-page) .pc-card-wrapper {
-        flex: 0 0 160px !important;
-        width: 160px !important;
-        max-width: 160px !important;
-        min-height: 300px !important;
-        height: 300px !important;
-        padding: 0.5rem !important;
-        border-radius: 12px !important;
+        flex: 0 0 80px !important;
+        width: 80px !important;
+        max-width: 80px !important;
+        min-height: 150px !important;
+        height: 150px !important;
     }
 
     /* Ensure consistent image sizing across ALL sections */
@@ -1232,25 +1230,6 @@ footer {
         height: 12px !important;
         object-fit: contain !important;
         filter: brightness(1.2) !important;
-    }
-
-    /* FORCE UNIFORM CARD LAYOUT ON MOBILE - 3X SMALLER CARDS */
-    body:not(.team-generator-page) .section .players-grid .player-card,
-    body:not(.team-generator-page) .section .player-card,
-    body:not(.team-generator-page) .players-grid .player-card {
-        flex: 0 0 140px !important;
-        width: 140px !important;
-        max-width: 140px !important;
-        margin: 0 10px !important;
-    }
-
-    body:not(.team-generator-page) .section .players-grid .pc-card-wrapper,
-    body:not(.team-generator-page) .section .pc-card-wrapper,
-    body:not(.team-generator-page) .players-grid .pc-card-wrapper {
-        flex: 0 0 140px !important;
-        width: 140px !important;
-        max-width: 140px !important;
-        margin: 0 10px !important;
     }
 
     /* Scrollbar styling for each section carousel (MAIN PAGE ONLY) */
