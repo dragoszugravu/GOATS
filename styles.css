@@ -513,7 +513,8 @@ body:not(.team-generator-page) .player-card {
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    margin: 0 auto !important;
+    margin: 10px !important;
+    box-sizing: border-box;
     opacity: 1 !important;
     visibility: visible !important;
 }
