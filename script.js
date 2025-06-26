@@ -123,7 +123,7 @@ function createPlayerCard(player) {
                 <div class="pc-shine"></div>
                 <div class="pc-glare"></div>
                 <div class="pc-content pc-avatar-content">
-                    <img class="avatar" src="${avatarImage}" alt="${player.name} avatar" loading="lazy" onerror="this.src='images/default.jpg'">
+                    <img class="avatar" src="${avatarImage}" alt="${player.name} avatar" onerror="this.src='images/default.jpg'">
                     <div class="pc-user-info">
                         <div class="pc-user-details">
                             <div class="pc-mini-avatar">
@@ -143,9 +143,9 @@ function createPlayerCard(player) {
                     <div class="pc-details">
                         <h3>${player.name}</h3>
                         <p>${player.position}</p>
-                    </div>
-                </div>
-            </div>
+        </div>
+        </div>
+        </div>
         </section>
     `;
     
