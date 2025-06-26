@@ -67,9 +67,11 @@ body:not(.team-generator-page) .player-card.tilt-active {
 /* Mobile responsive sizes for player cards - 30% SMALLER */
 @media (max-width: 768px) {
     body:not(.team-generator-page) .player-card {
-        width: 260px !important;
-        min-width: 260px !important;
-        max-width: 260px !important;
+        flex: 0 0 240px !important;
+        width: 240px !important;
+        min-width: 240px !important;
+        max-width: 240px !important;
+        margin-right: 15px !important;
     }
     
     body:not(.team-generator-page) .player-image {
@@ -94,10 +96,11 @@ body:not(.team-generator-page) .player-card.tilt-active {
 
 @media (max-width: 480px) {
     body:not(.team-generator-page) .player-card {
-        width: 75px !important;
-        height: 95px !important;
-        margin: 1px !important;
-        padding: 0.3rem !important;
+        flex: 0 0 220px !important;
+        width: 220px !important;
+        min-width: 220px !important;
+        max-width: 220px !important;
+        margin-right: 15px !important;
     }
     body:not(.team-generator-page) .player-image {
         height: 50px !important;
