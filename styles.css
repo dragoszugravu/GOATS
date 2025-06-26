@@ -483,13 +483,20 @@ body.team-generator-page main {
 
 /* Main page only - players grid and cards */
 body:not(.team-generator-page) .players-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
-    padding: 2rem 0;
+    padding: 20px;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+body:not(.team-generator-page) .player-card {
+    flex: 0 1 240px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 /* FORCE ALL PLAYER CARDS TO BE IDENTICAL - OVERRIDE ANY OTHER STYLES */
