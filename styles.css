@@ -769,7 +769,7 @@ body:not(.team-generator-page) .player-card:hover .celebration-photo {
     }
 
     body:not(.team-generator-page) .players-grid {
-        gap: 0.8rem !important;
+        gap: 1.5rem !important;
     }
 }
 
