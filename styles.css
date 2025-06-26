@@ -483,20 +483,13 @@ body.team-generator-page main {
 
 /* Main page only - players grid and cards */
 body:not(.team-generator-page) .players-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    padding: 20px;
+    padding: 2rem 0;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-}
-
-body:not(.team-generator-page) .player-card {
-    flex: 0 1 240px;
-    max-width: 100%;
-    box-sizing: border-box;
 }
 
 /* FORCE ALL PLAYER CARDS TO BE IDENTICAL - OVERRIDE ANY OTHER STYLES */
@@ -1557,35 +1550,4 @@ body:not(.team-generator-page) .pc-handle {
   .player-label .team {
     font-size: 11px;
   }
-}
-
-/* Ensure proper gap between cards on mobile */
-@media (max-width: 768px) {
-  body:not(.team-generator-page) .section .players-grid,
-  body:not(.team-generator-page) .section .players-row,
-  body:not(.team-generator-page) .players-grid,
-  body:not(.team-generator-page) .players-row {
-    gap: 2rem !important;
-  }
-}
-
-@media (max-width: 768px) {
-    body:not(.team-generator-page) .section .players-grid,
-    body:not(.team-generator-page) .players-grid {
-        display: flex !important;
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-        gap: 2rem !important;
-        padding: 1rem !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        overflow: visible !important;
-        scroll-snap-type: none !important;
-    }
-
-    body:not(.team-generator-page) .section .players-grid .player-card,
-    body:not(.team-generator-page) .section .player-card,
-    body:not(.team-generator-page) .players-grid .player-card {
-        margin: 0 !important;
-    }
 } 
