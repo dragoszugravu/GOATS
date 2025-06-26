@@ -1550,4 +1550,14 @@ body:not(.team-generator-page) .pc-handle {
   .player-label .team {
     font-size: 11px;
   }
+}
+
+/* Ensure proper gap between cards on mobile */
+@media (max-width: 768px) {
+  body:not(.team-generator-page) .section .players-grid,
+  body:not(.team-generator-page) .section .players-row,
+  body:not(.team-generator-page) .players-grid,
+  body:not(.team-generator-page) .players-row {
+    gap: 2rem !important;
+  }
 } 
