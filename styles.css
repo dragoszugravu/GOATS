@@ -771,6 +771,10 @@ body:not(.team-generator-page) .player-card:hover .celebration-photo {
     body:not(.team-generator-page) .players-grid {
         gap: 1.5rem !important;
     }
+
+    body:not(.team-generator-page) .player-card {
+        margin: 0 0.75rem !important;
+    }
 }
 
 /* Landscape mode specific adjustments */
