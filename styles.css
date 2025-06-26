@@ -51,6 +51,7 @@ body:not(.team-generator-page) .player-card {
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
     -webkit-transform-style: preserve-3d !important;
+    margin: 0 10px !important;
 }
 
 body:not(.team-generator-page) .player-card:hover {
