@@ -1560,4 +1560,25 @@ body:not(.team-generator-page) .pc-handle {
   body:not(.team-generator-page) .players-row {
     gap: 2rem !important;
   }
+}
+
+@media (max-width: 768px) {
+    body:not(.team-generator-page) .section .players-grid,
+    body:not(.team-generator-page) .players-grid {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 2rem !important;
+        padding: 1rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        scroll-snap-type: none !important;
+    }
+
+    body:not(.team-generator-page) .section .players-grid .player-card,
+    body:not(.team-generator-page) .section .player-card,
+    body:not(.team-generator-page) .players-grid .player-card {
+        margin: 0 !important;
+    }
 } 
