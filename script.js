@@ -107,34 +107,227 @@ const players = {
 };
 
 function createPlayerCard(player) {
-    const card = document.createElement('div');
-    card.className = 'player-card';
+    const wrapper = document.createElement('div');
+    wrapper.className = 'pc-card-wrapper';
+    
+    // Check if player image exists, otherwise use default
+    const avatarImage = player.image || 'images/default.jpg';
+    const celebrationImage = player.image ? player.image.replace('.jpg', '_celebration.jpg') : 'images/default_celebration.jpg';
+    
+    // Generate player handle from name
+    const handle = player.name.toLowerCase().replace(/\s+/g, '');
+    
+    wrapper.innerHTML = `
+        <section class="pc-card">
+            <div class="pc-inside">
+                <div class="pc-shine"></div>
+                <div class="pc-glare"></div>
+                <div class="pc-content pc-avatar-content">
+                    <img class="avatar" src="${avatarImage}" alt="${player.name} avatar" onerror="this.src='images/default.jpg'">
+                    <div class="pc-user-info">
+                        <div class="pc-user-details">
+                            <div class="pc-mini-avatar">
+                                <img src="${avatarImage}" alt="${player.name} mini avatar" loading="lazy" onerror="this.src='images/default.jpg'">
+                            </div>
+                            <div class="pc-user-text">
+                                <div class="pc-handle">@${handle}</div>
+                                <div class="pc-status">GOATS</div>
+                            </div>
+                        </div>
+                        <button class="pc-contact-btn" type="button" aria-label="Contact ${player.name}">
+                            View
+                        </button>
+                    </div>
+                </div>
+                <div class="pc-content">
+                    <div class="pc-details">
+                        <h3>${player.name}</h3>
+                        <p>${player.position}</p>
+        </div>
+        </div>
+        </div>
+        </section>
+    `;
     
     // Special card for new player (visible for 1 day)
     if (player.newPlayer && isNewPlayerActive(player.joinedDate)) {
-        card.classList.add('special-new-player');
-        card.innerHTML += `<div class="new-player-badge">NEW!</div>`;
+        wrapper.classList.add('special-new-player');
+        wrapper.innerHTML += `<div class="new-player-badge">NEW!</div>`;
     }
     
-    // Check if player image exists, otherwise use default
-    const seriousImage = player.image || 'images/default.jpg';
-    const celebrationImage = player.image ? player.image.replace('.jpg', '_celebration.jpg') : 'images/default_celebration.jpg';
+    return wrapper;
+}
+
+// ProfileCard Tilt Effect Implementation
+class ProfileCardTilt {
+    constructor(element, options = {}) {
+        this.element = element;
+        this.card = element.querySelector('.pc-card');
+        this.options = {
+            enableTilt: true,
+            ...options
+        };
+        
+        this.animationHandlers = null;
+        
+        if (this.options.enableTilt && this.card) {
+            this.init();
+        }
+    }
     
-    card.innerHTML = `
-        <div class="player-image">
-            <img src="${seriousImage}" alt="${player.name}" class="serious-photo" onerror="this.src='images/default.jpg'">
-            <img src="${celebrationImage}" alt="${player.name}" class="celebration-photo" onerror="this.src='images/default_celebration.jpg'">
-        </div>
-        <div class="player-info">
-            <div class="player-name">${player.name}</div>
-            <div class="player-position">${player.position}</div>
-        </div>
-        <div class="player-logo">
-            <img src="images/GOATS.png" alt="GOATS FC Logo">
-        </div>
-    `;
+    init() {
+        const ANIMATION_CONFIG = {
+            SMOOTH_DURATION: 600,
+            INITIAL_DURATION: 1500,
+            INITIAL_X_OFFSET: 70,
+            INITIAL_Y_OFFSET: 60,
+        };
+        
+        const clamp = (value, min = 0, max = 100) =>
+            Math.min(Math.max(value, min), max);
+        
+        const round = (value, precision = 3) =>
+            parseFloat(value.toFixed(precision));
+        
+        const adjust = (value, fromMin, fromMax, toMin, toMax) =>
+            round(toMin + ((toMax - toMin) * (value - fromMin)) / (fromMax - fromMin));
+        
+        const easeInOutCubic = (x) =>
+            x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+        
+        let rafId = null;
+        
+        const updateCardTransform = (offsetX, offsetY, card, wrap) => {
+            const width = card.clientWidth;
+            const height = card.clientHeight;
+            
+            const percentX = clamp((100 / width) * offsetX);
+            const percentY = clamp((100 / height) * offsetY);
+            
+            const centerX = percentX - 50;
+            const centerY = percentY - 50;
+            
+            const properties = {
+                "--pointer-x": `${percentX}%`,
+                "--pointer-y": `${percentY}%`,
+                "--background-x": `${adjust(percentX, 0, 100, 35, 65)}%`,
+                "--background-y": `${adjust(percentY, 0, 100, 35, 65)}%`,
+                "--pointer-from-center": `${clamp(Math.hypot(percentY - 50, percentX - 50) / 50, 0, 1)}`,
+                "--pointer-from-top": `${percentY / 100}`,
+                "--pointer-from-left": `${percentX / 100}`,
+                "--rotate-x": `${round(-(centerX / 5))}deg`,
+                "--rotate-y": `${round(centerY / 4)}deg`,
+            };
+            
+            Object.entries(properties).forEach(([property, value]) => {
+                wrap.style.setProperty(property, value);
+            });
+        };
+        
+        const createSmoothAnimation = (duration, startX, startY, card, wrap) => {
+            const startTime = performance.now();
+            const targetX = wrap.clientWidth / 2;
+            const targetY = wrap.clientHeight / 2;
+            
+            const animationLoop = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = clamp(elapsed / duration);
+                const easedProgress = easeInOutCubic(progress);
+                
+                const currentX = adjust(easedProgress, 0, 1, startX, targetX);
+                const currentY = adjust(easedProgress, 0, 1, startY, targetY);
+                
+                updateCardTransform(currentX, currentY, card, wrap);
+                
+                if (progress < 1) {
+                    rafId = requestAnimationFrame(animationLoop);
+                }
+            };
+            
+            rafId = requestAnimationFrame(animationLoop);
+        };
+        
+        const handlePointerMove = (event) => {
+            if (!this.card || !this.element) return;
+            
+            // On mobile, only respond to mouse events, not touch events to avoid interfering with scroll
+            if (window.innerWidth <= 768 && event.pointerType === 'touch') {
+                return;
+            }
+            
+            const rect = this.card.getBoundingClientRect();
+            updateCardTransform(
+                event.clientX - rect.left,
+                event.clientY - rect.top,
+                this.card,
+                this.element
+            );
+        };
+        
+        const handlePointerEnter = (event) => {
+            if (!this.card || !this.element) return;
+            
+            // On mobile, only respond to mouse events, not touch events to avoid interfering with scroll
+            if (window.innerWidth <= 768 && event.pointerType === 'touch') {
+                return;
+            }
+            
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+            this.element.classList.add('active');
+            this.card.classList.add('active');
+        };
+        
+        const handlePointerLeave = (event) => {
+            if (!this.card || !this.element) return;
+            
+            createSmoothAnimation(
+                ANIMATION_CONFIG.SMOOTH_DURATION,
+                event.offsetX,
+                event.offsetY,
+                this.card,
+                this.element
+            );
+            this.element.classList.remove('active');
+            this.card.classList.remove('active');
+        };
+        
+        // Add event listeners
+        this.card.addEventListener('pointerenter', handlePointerEnter);
+        this.card.addEventListener('pointermove', handlePointerMove);
+        this.card.addEventListener('pointerleave', handlePointerLeave);
+        
+        // Initial animation
+        const initialX = this.element.clientWidth - ANIMATION_CONFIG.INITIAL_X_OFFSET;
+        const initialY = ANIMATION_CONFIG.INITIAL_Y_OFFSET;
+        
+        updateCardTransform(initialX, initialY, this.card, this.element);
+        createSmoothAnimation(
+            ANIMATION_CONFIG.INITIAL_DURATION,
+            initialX,
+            initialY,
+            this.card,
+            this.element
+        );
+        
+        // Store cleanup function
+        this.cleanup = () => {
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+            }
+            this.card.removeEventListener('pointerenter', handlePointerEnter);
+            this.card.removeEventListener('pointermove', handlePointerMove);
+            this.card.removeEventListener('pointerleave', handlePointerLeave);
+        };
+    }
     
-    return card;
+    destroy() {
+        if (this.cleanup) {
+            this.cleanup();
+        }
+    }
 }
 
 function createSection(title, players) {
@@ -186,6 +379,21 @@ function displayPlayers() {
     
     // Add Forwards section
     main.appendChild(createSection('Forwards', players.forwards));
+    
+    // Initialize ProfileCard tilt effects
+    initProfileCardTilts();
+}
+
+function initProfileCardTilts() {
+    // Wait for DOM to be ready
+    setTimeout(() => {
+        const cardWrappers = document.querySelectorAll('.pc-card-wrapper');
+        cardWrappers.forEach(wrapper => {
+            new ProfileCardTilt(wrapper, {
+                enableTilt: true
+            });
+        });
+    }, 100);
 }
 
 // Mobile Menu Functionality
@@ -437,11 +645,116 @@ function initLiquidChrome() {
         }
     }
 
+    let isAnimating = false;
+    const baseConfig = {
+        amplitude: config.amplitude,
+        frequencyX: config.frequencyX,
+        frequencyY: config.frequencyY
+    };
+
+    function handleClick(event) {
+        // Prevent multiple simultaneous animations
+        if (isAnimating) return;
+        
+        console.log('LiquidChrome: Click detected at', event.clientX, event.clientY);
+        const rect = container.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = 1 - (event.clientY - rect.top) / rect.height;
+        
+        // Create ripple effect on click
+        mouseX = x;
+        mouseY = y;
+        isAnimating = true;
+        
+        // Use moderate values to avoid glitch
+        config.amplitude = baseConfig.amplitude * 1.8;
+        config.frequencyX = baseConfig.frequencyX * 1.3;
+        config.frequencyY = baseConfig.frequencyY * 1.3;
+        
+        // Gradually reset values for smoother transition
+        let progress = 0;
+        const duration = 600; // ms
+        const startTime = Date.now();
+        
+        function resetValues() {
+            const now = Date.now();
+            progress = Math.min((now - startTime) / duration, 1);
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            
+            config.amplitude = baseConfig.amplitude * (1.8 - 0.8 * easeOut);
+            config.frequencyX = baseConfig.frequencyX * (1.3 - 0.3 * easeOut);
+            config.frequencyY = baseConfig.frequencyY * (1.3 - 0.3 * easeOut);
+            
+            if (progress < 1) {
+                requestAnimationFrame(resetValues);
+            } else {
+                // Ensure exact reset to base values
+                config.amplitude = baseConfig.amplitude;
+                config.frequencyX = baseConfig.frequencyX;
+                config.frequencyY = baseConfig.frequencyY;
+                isAnimating = false;
+            }
+        }
+        
+        requestAnimationFrame(resetValues);
+    }
+
+    function handleTouchStart(event) {
+        if (event.touches.length > 0) {
+            // Prevent multiple simultaneous animations
+            if (isAnimating) return;
+            
+            const touch = event.touches[0];
+            const rect = container.getBoundingClientRect();
+            const x = (touch.clientX - rect.left) / rect.width;
+            const y = 1 - (touch.clientY - rect.top) / rect.height;
+            
+            // Create ripple effect on touch
+            mouseX = x;
+            mouseY = y;
+            isAnimating = true;
+            
+            // Use moderate values to avoid glitch
+            config.amplitude = baseConfig.amplitude * 1.8;
+            config.frequencyX = baseConfig.frequencyX * 1.3;
+            config.frequencyY = baseConfig.frequencyY * 1.3;
+            
+            // Gradually reset values for smoother transition
+            let progress = 0;
+            const duration = 600; // ms
+            const startTime = Date.now();
+            
+            function resetValues() {
+                const now = Date.now();
+                progress = Math.min((now - startTime) / duration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                
+                config.amplitude = baseConfig.amplitude * (1.8 - 0.8 * easeOut);
+                config.frequencyX = baseConfig.frequencyX * (1.3 - 0.3 * easeOut);
+                config.frequencyY = baseConfig.frequencyY * (1.3 - 0.3 * easeOut);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(resetValues);
+                } else {
+                    // Ensure exact reset to base values
+                    config.amplitude = baseConfig.amplitude;
+                    config.frequencyX = baseConfig.frequencyX;
+                    config.frequencyY = baseConfig.frequencyY;
+                    isAnimating = false;
+                }
+            }
+            
+            requestAnimationFrame(resetValues);
+        }
+    }
+
     // Event listeners
     window.addEventListener('resize', resize);
     if (config.interactive) {
         container.addEventListener('mousemove', handleMouseMove);
         container.addEventListener('touchmove', handleTouchMove);
+        container.addEventListener('click', handleClick);
+        container.addEventListener('touchstart', handleTouchStart);
     }
 
     container.appendChild(canvas);
