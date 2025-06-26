@@ -145,13 +145,6 @@
             }
 
             body:not(.team-generator-page) .players-grid {
-                display: flex !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                -webkit-overflow-scrolling: touch !important;
-                scroll-snap-type: x mandatory !important;
-                flex-wrap: nowrap !important;
-                padding: 0 !important;
             }
 
             body:not(.team-generator-page) .player-card {
@@ -1229,6 +1222,7 @@
 
         /* ProfileCard Mobile Styles */
         @media (max-width: 768px) {
+            /* Enable horizontal scrolling for player cards on mobile */
             body:not(.team-generator-page) .players-grid {
                 display: flex !important;
                 overflow-x: auto !important;
@@ -1236,12 +1230,14 @@
                 -webkit-overflow-scrolling: touch !important;
                 scroll-snap-type: x mandatory !important;
                 flex-wrap: nowrap !important;
+                gap: 0 !important;
                 padding: 0 !important;
             }
 
             body:not(.team-generator-page) .pc-card-wrapper {
                 flex: 0 0 auto !important;
                 scroll-snap-align: start !important;
+                margin: 0 !important;
                 padding: 0 !important;
             }
 
