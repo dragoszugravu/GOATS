@@ -1238,43 +1238,19 @@ footer {
     body:not(.team-generator-page) .section .players-grid .player-card,
     body:not(.team-generator-page) .section .player-card,
     body:not(.team-generator-page) .players-grid .player-card {
-        flex: 0 0 160px !important;
-        width: 160px !important;
-        max-width: 160px !important;
-        min-height: 300px !important;
-        height: 300px !important;
-        margin: 10px !important;
-        box-sizing: border-box !important;
-        scroll-snap-align: center !important;
-        background: rgba(255, 255, 255, 0.05) !important;
-        border-radius: 12px !important;
-        padding: 0.5rem !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: space-between !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        backdrop-filter: blur(10px) !important;
-        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        flex: 0 0 140px !important;
+        width: 140px !important;
+        max-width: 140px !important;
+        margin: 0 10px !important;
     }
 
-    /* ProfileCard wrappers without grey background */
     body:not(.team-generator-page) .section .players-grid .pc-card-wrapper,
     body:not(.team-generator-page) .section .pc-card-wrapper,
     body:not(.team-generator-page) .players-grid .pc-card-wrapper {
-        flex: 0 0 160px !important;
-        width: 160px !important;
-        max-width: 160px !important;
-        min-height: 300px !important;
-        height: 300px !important;
-        margin: 10px !important;
-        box-sizing: border-box !important;
-        scroll-snap-align: center !important;
-        border-radius: 12px !important;
-        padding: 0.5rem !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: space-between !important;
-        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        flex: 0 0 140px !important;
+        width: 140px !important;
+        max-width: 140px !important;
+        margin: 0 10px !important;
     }
 
     /* Scrollbar styling for each section carousel (MAIN PAGE ONLY) */
