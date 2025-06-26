@@ -767,6 +767,10 @@ body:not(.team-generator-page) .player-card:hover .celebration-photo {
     .player-card:hover .celebration-photo {
         transform: scale(1);
     }
+
+    body:not(.team-generator-page) .players-grid {
+        gap: 0.8rem !important;
+    }
 }
 
 /* Landscape mode specific adjustments */
