@@ -1767,3 +1767,53 @@ body:not(.team-generator-page) .section .players-grid .player-card {
     }
   }
   
+/* Photo expansion on click - for all views */
+body:not(.team-generator-page) .pc-avatar-content img {
+  transition: transform 0.2s ease-out !important;
+  transform-origin: center !important;
+}
+
+body:not(.team-generator-page) .pc-card-wrapper:active .pc-avatar-content img {
+  transform: scale(1.3) !important;
+  z-index: 3 !important;
+}
+
+/* Ensure text stays fixed */
+body:not(.team-generator-page) .pc-user-info {
+  z-index: 4 !important;
+  transform: translateX(-50%) !important;
+}
+
+@media (min-width: 769px) {
+  /* Desktop - also support click */
+  body:not(.team-generator-page) .pc-card-wrapper:active .pc-avatar-content img {
+    transform: scale(1.3) !important;
+    z-index: 3 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Keep existing mobile styles */
+  body:not(.team-generator-page) .player-card {
+    transform-style: preserve-3d !important;
+    transition: transform 0.05s linear !important;
+    will-change: transform !important;
+    perspective: 400px !important;
+    transform: rotateX(0deg) rotateY(0deg) !important;
+    touch-action: none !important;
+    cursor: grab !important;
+    overflow: hidden !important;
+  }
+
+  /* Ensure expansion stays within card bounds */
+  body:not(.team-generator-page) .pc-avatar-content img {
+    transition: transform 0.2s ease-out !important;
+    transform-origin: center !important;
+  }
+
+  body:not(.team-generator-page) .pc-card-wrapper:active .pc-avatar-content img {
+    transform: scale(1.3) !important;
+    z-index: 3 !important;
+  }
+}
+  
