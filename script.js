@@ -196,6 +196,7 @@ class ProfileCardTilt {
             x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
         
         let rafId = null;
+        let isTouching = false;
         
         const updateCardTransform = (offsetX, offsetY, card, wrap) => {
             const width = card.clientWidth;
@@ -248,79 +249,73 @@ class ProfileCardTilt {
         };
         
         const handlePointerMove = (event) => {
-            if (!this.card || !this.element) return;
-            
-            // On mobile, only respond to mouse events, not touch events to avoid interfering with scroll
-            if (window.innerWidth <= 768 && event.pointerType === 'touch') {
-                return;
+            if (rafId) {
+                cancelAnimationFrame(rafId);
             }
             
-            const rect = this.card.getBoundingClientRect();
-            updateCardTransform(
-                event.clientX - rect.left,
-                event.clientY - rect.top,
-                this.card,
-                this.element
-            );
+            const rect = this.element.getBoundingClientRect();
+            const offsetX = (event.touches ? event.touches[0].clientX : event.clientX) - rect.left;
+            const offsetY = (event.touches ? event.touches[0].clientY : event.clientY) - rect.top;
+            
+            updateCardTransform(offsetX, offsetY, this.card, this.element);
         };
         
         const handlePointerEnter = (event) => {
-            if (!this.card || !this.element) return;
-            
-            // On mobile, only respond to mouse events, not touch events to avoid interfering with scroll
-            if (window.innerWidth <= 768 && event.pointerType === 'touch') {
-                return;
-            }
-            
             if (rafId) {
                 cancelAnimationFrame(rafId);
-                rafId = null;
             }
-            this.element.classList.add('active');
-            this.card.classList.add('active');
+            
+            const rect = this.element.getBoundingClientRect();
+            const offsetX = (event.touches ? event.touches[0].clientX : event.clientX) - rect.left;
+            const offsetY = (event.touches ? event.touches[0].clientY : event.clientY) - rect.top;
+            
+            updateCardTransform(offsetX, offsetY, this.card, this.element);
         };
         
         const handlePointerLeave = (event) => {
-            if (!this.card || !this.element) return;
-            
-            createSmoothAnimation(
-                ANIMATION_CONFIG.SMOOTH_DURATION,
-                event.offsetX,
-                event.offsetY,
-                this.card,
-                this.element
-            );
-            this.element.classList.remove('active');
-            this.card.classList.remove('active');
-        };
-        
-        // Add event listeners
-        this.card.addEventListener('pointerenter', handlePointerEnter);
-        this.card.addEventListener('pointermove', handlePointerMove);
-        this.card.addEventListener('pointerleave', handlePointerLeave);
-        
-        // Initial animation
-        const initialX = this.element.clientWidth - ANIMATION_CONFIG.INITIAL_X_OFFSET;
-        const initialY = ANIMATION_CONFIG.INITIAL_Y_OFFSET;
-        
-        updateCardTransform(initialX, initialY, this.card, this.element);
-        createSmoothAnimation(
-            ANIMATION_CONFIG.INITIAL_DURATION,
-            initialX,
-            initialY,
-            this.card,
-            this.element
-        );
-        
-        // Store cleanup function
-        this.cleanup = () => {
-            if (rafId) {
-                cancelAnimationFrame(rafId);
+            if (!isTouching) {
+                const rect = this.element.getBoundingClientRect();
+                const offsetX = (event.touches ? event.touches[0].clientX : event.clientX) - rect.left;
+                const offsetY = (event.touches ? event.touches[0].clientY : event.clientY) - rect.top;
+                
+                createSmoothAnimation(
+                    ANIMATION_CONFIG.SMOOTH_DURATION,
+                    offsetX,
+                    offsetY,
+                    this.card,
+                    this.element
+                );
             }
-            this.card.removeEventListener('pointerenter', handlePointerEnter);
-            this.card.removeEventListener('pointermove', handlePointerMove);
-            this.card.removeEventListener('pointerleave', handlePointerLeave);
         };
+        
+        const handleTouchStart = (event) => {
+            isTouching = true;
+            handlePointerEnter(event);
+        };
+        
+        const handleTouchMove = (event) => {
+            event.preventDefault();
+            handlePointerMove(event);
+        };
+        
+        const handleTouchEnd = (event) => {
+            isTouching = false;
+            handlePointerLeave(event);
+        };
+        
+        this.animationHandlers = {
+            mousemove: handlePointerMove,
+            mouseenter: handlePointerEnter,
+            mouseleave: handlePointerLeave,
+            touchstart: handleTouchStart,
+            touchmove: handleTouchMove,
+            touchend: handleTouchEnd,
+            touchcancel: handleTouchEnd
+        };
+        
+        Object.entries(this.animationHandlers).forEach(([event, handler]) => {
+            this.element.addEventListener(event, handler, { passive: event === 'touchstart' });
+        });
     }
     
     destroy() {

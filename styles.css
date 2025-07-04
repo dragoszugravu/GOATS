@@ -29,17 +29,22 @@ body {
 
 /* ProfileCard text color overrides */
 body:not(.team-generator-page) .pc-handle {
-    color: rgba(200, 200, 200, 0.8) !important;
+    color: rgba(200, 200, 200, 0.6) !important; /* More transparent */
 }
 
 body:not(.team-generator-page) .pc-status {
-    color: rgba(160, 160, 160, 0.7) !important;
+    color: rgba(160, 160, 160, 0.5) !important; /* More transparent */
 }
 
 /* Show enhanced cards - MAIN PAGE ONLY */
 body:not(.team-generator-page) .pc-card-wrapper {
     visibility: visible !important;
-    opacity: 1 !important;
+    opacity: 0.85 !important; /* Added transparency to the entire card */
+    transition: opacity 0.3s ease !important;
+}
+
+body:not(.team-generator-page) .pc-card-wrapper:hover {
+    opacity: 1 !important; /* Full opacity on hover */
 }
 
 /* Simple 3D Tilt Effect for Player Cards - MAIN PAGE ONLY - HIGHEST PRIORITY */
