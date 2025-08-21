@@ -1,0 +1,42 @@
+name: Seed Players
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_ROLE_ARN: arn:aws:iam::886108961664:role/goats-deploy-role
+  AWS_REGION: eu-west-1
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-session-name: goats-seed
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install seed deps
+        run: npm i @aws-sdk/client-dynamodb @aws-sdk/lib-dynamodb
+
+      - name: Determine table name
+        run: echo "TABLE_NAME=$(terraform -chdir=infra/terraform output -raw dynamodb_table_name)" >> $GITHUB_ENV
+
+      - name: Seed
+        working-directory: scripts/seed
+        run: node seed-players.js
+
+

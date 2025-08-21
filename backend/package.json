@@ -1,0 +1,24 @@
+{
+  "name": "goats-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "npm run build:getPlayers && npm run build:getPlayerById && npm run build:admin && npm run zip",
+    "build:getPlayers": "esbuild src/getPlayers.js --bundle --platform=node --target=node20 --format=cjs --outfile=dist/zips/getPlayers/index.js",
+    "build:getPlayerById": "esbuild src/getPlayerById.js --bundle --platform=node --target=node20 --format=cjs --outfile=dist/zips/getPlayerById/index.js",
+    "build:admin": "esbuild src/adminCreatePlayer.js --bundle --platform=node --target=node20 --format=cjs --outfile=dist/zips/adminCreatePlayer/index.js && esbuild src/adminUpdatePlayer.js --bundle --platform=node --target=node20 --format=cjs --outfile=dist/zips/adminUpdatePlayer/index.js && esbuild src/adminDeletePlayer.js --bundle --platform=node --target=node20 --format=cjs --outfile=dist/zips/adminDeletePlayer/index.js && esbuild src/adminSignUpload.js --bundle --platform=node --target=node20 --format=cjs --outfile=dist/zips/adminSignUpload/index.js",
+    "zip": "cd dist/zips && zip -r getPlayers.zip getPlayers && zip -r getPlayerById.zip getPlayerById && zip -r adminCreatePlayer.zip adminCreatePlayer && zip -r adminUpdatePlayer.zip adminUpdatePlayer && zip -r adminDeletePlayer.zip adminDeletePlayer && zip -r adminSignUpload.zip adminSignUpload"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.645.0",
+    "@aws-sdk/lib-dynamodb": "^3.645.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.0",
+    "@aws-sdk/client-s3": "^3.645.0",
+    "@aws-sdk/s3-request-presigner": "^3.645.0"
+  }
+}
+
+

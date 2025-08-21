@@ -1,0 +1,128 @@
+Product name: GOATS (Ultra-Lean AWS)
+
+I want to migrate my existing GOATS website (currently a static HTML site on GitHub Pages at fg-goats.com) into AWS in the least expensive way possible and make it dynamic with an admin console.
+
+Goals:
+
+Keep current look/sections but render data from a database.
+
+Admins can log in and add/edit/delete players; updates show under the correct position (Defender, Midfielder, Forward, Goalkeeper, etc.).
+
+Zero-idle-cost hosting and CI/CD.
+
+Preserve SEO and existing URLs where possible.
+
+Key features:
+
+Public roster with filters (position, search).
+
+Admin login (Cognito) and player CRUD UI.
+
+Image upload to S3 via presigned URLs.
+
+CI/CD: GitHub → CodeBuild/CodePipeline (or GitHub Actions) → SonarCloud (optional) → deploy → notify.
+
+Exclude Snyk and Nexus.
+
+Target users:
+
+Public visitors (read-only).
+
+Admins (manage roster and photos).
+
+Tech stack (cost-optimized):
+
+Frontend: React + Vite; host on S3 + CloudFront + ACM (free TLS).
+
+Backend: API Gateway HTTP API → AWS Lambda (Node.js, Graviton, 128–256MB).
+
+Data: DynamoDB On-Demand (PITR optional off initially).
+
+Auth: Amazon Cognito User Pools (admin group).
+
+Storage: S3 (site bucket, uploads bucket).
+
+DNS: Route 53.
+
+Observability: CloudWatch logs (7–14 day retention) + basic alarms.
+
+Data model:
+
+Entity: Player { id (UUID), name, number (unique), position (enum: DEFENDER|MIDFIELDER|FORWARD|GOALKEEPER), bio, imageKey, active, createdAt, updatedAt }
+
+DynamoDB keys: PK=PLAYER#<id>; GSI1=POSITION#<position> (for listing); GSI2=NUMBER#<number> (uniqueness).
+
+API endpoints:
+
+GET /players?position=&q=
+
+GET /players/{id}
+
+POST /players (admin)
+
+PUT /players/{id} (admin)
+
+DELETE /players/{id} (admin)
+
+POST /uploads/sign (admin → returns presigned S3 URL)
+
+Security:
+
+JWT verification on admin routes (Cognito groups).
+
+S3 public read only via CloudFront OAI; uploads bucket private.
+
+Least-privilege IAM; secrets in SSM Parameter Store.
+
+HTTPS everywhere.
+
+CI/CD steps:
+
+Source: GitHub webhook on PRs and main.
+
+Build/Test (CodeBuild): npm ci && npm test && npm run build for both front/back; optional SonarCloud.
+
+Package/Deploy: CDK deploy (API, DB, Cognito), sync frontend to S3, CloudFront invalidation.
+
+Notify: SNS → email/Slack.
+Branches: PR → staging stack; main → prod (manual approval gate optional).
+
+Environments:
+
+dev/staging/prod (single AWS account with prefixes to minimize cost; prod only has CloudFront + higher cache).
+
+Cost guardrails:
+
+Prefer HTTP API over REST, DynamoDB On-Demand, Lambda small memory/timeouts, log retention ≤14d, long cache TTLs for static assets.
+
+No EC2, no RDS, no always-on services.
+
+Use GitHub Actions if cheaper than CodeBuild for your usage.
+
+Success metrics:
+
+Admin can publish a new player in <2 minutes.
+
+API error rate <0.1% 5xx; p95 page LCP <2.5s.
+
+Monthly AWS bill in low single digits at light traffic.
+
+Milestones:
+
+P0 (1–2 days): Scaffold CDK, S3+CloudFront, deploy current static build to AWS.
+
+P1 (2–4 days): DynamoDB table, read-only API + UI wired to API.
+
+P2 (3–5 days): Cognito auth, admin console, presigned uploads, CRUD.
+
+P3 (1–2 days): CI/CD pipeline, alarms, DNS cutover from GitHub Pages to Route 53/CloudFront.
+
+P4 (later): backups/export to S3, image resizing (only if needed).
+
+Constraints/notes:
+
+Keep URLs stable; add 301s if necessary.
+
+Exclude Snyk and Nexus; keep SonarCloud optional.
+
+Source of truth for initial data: players.seed.json derived from current HTML.

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "seed-1",
+    "name": "Example Goalkeeper",
+    "number": 1,
+    "position": "Goalkeeper",
+    "bio": "",
+    "imageKey": null,
+    "active": true
+  }
+]
+
+
