@@ -11,18 +11,20 @@ permissions:
 
 env:
   AWS_ROLE_ARN: arn:aws:iam::886108961664:role/goats-deploy-role
-  AWS_REGION: eu-west-1
+  AWS_REGION: eu-central-1
   DOMAIN_NAME: fg-goats.com
   HOSTED_ZONE_ID: ${{ secrets.HOSTED_ZONE_ID }}
   TF_STATE_BUCKET: ${{ secrets.TF_STATE_BUCKET }}
   TF_STATE_TABLE: ${{ secrets.TF_STATE_TABLE }}
   TF_VAR_project_name: goats
-  TF_VAR_region: eu-west-1
+  TF_VAR_region: ${{ env.AWS_REGION }}
   TF_VAR_domain_name: fg-goats.com
   TF_VAR_hosted_zone_id: ${{ secrets.HOSTED_ZONE_ID }}
   TF_VAR_github_owner: ${{ github.repository_owner }}
   TF_VAR_github_repo: ${{ github.event.repository.name }}
   TF_VAR_github_branch: ${{ github.ref_name }}
+  TF_VAR_site_bucket_name: goats-site-fg-goats-com-886108961664
+  TF_VAR_manage_custom_domain: false
 
 jobs:
   deploy:
